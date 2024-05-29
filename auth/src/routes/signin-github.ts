@@ -20,7 +20,7 @@ interface GitHubUserResponse {
     email: string | null;
 }
 
-router.post('/api/login-git', async (req: Request, res: Response) => {
+router.post('/api/users/login-git', async (req: Request, res: Response) => {
     const { code } = req.body;
 
     if (!code) {

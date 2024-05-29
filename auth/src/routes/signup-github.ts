@@ -17,10 +17,9 @@ interface GitHubUserResponse {
     id: number;
     login: string;
     email: string | null;
-    // Add other fields as necessary
 }
 
-router.post('/api/signup-git', async (req: Request, res: Response) => {
+router.post('/api/users/signup-git', async (req: Request, res: Response) => {
     const { code } = req.body;
     console.log(code);
     if (!code) {

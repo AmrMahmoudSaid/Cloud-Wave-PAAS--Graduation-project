@@ -16,7 +16,7 @@ router.post('/api/users/signup',[
     if (existingUser){
         throw new BadRequestError('Email in use');
     }
-    const githubId = "null";
+    const githubId = 0;
     const user = User.build({email,name,password,githubId});
     await user.save();
     const userJwt = jwt.sign({
