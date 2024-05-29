@@ -1,5 +1,5 @@
 import express, {Request,Response} from 'express';
- import {currentUser} from "@amtickets377/common";
+ import {currentUser} from "@cloud-wave/common";
 
 const router = express.Router();
 

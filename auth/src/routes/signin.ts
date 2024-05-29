@@ -1,6 +1,6 @@
 import express , {Request , Response} from 'express';
 import {body } from 'express-validator';
-import {validateRequest ,BadRequestError} from "@amtickets377/common";
+import {validateRequest ,BadRequestError} from "@cloud-wave/common";
 import {User} from "../models/user";
 import {Password} from "../service/password";
 import jwt from "jsonwebtoken";
