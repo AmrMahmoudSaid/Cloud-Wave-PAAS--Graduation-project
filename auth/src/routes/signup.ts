@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken'
 import {body} from "express-validator"
 import {validateRequest, BadRequestError} from "@cloud-wave/common";
 import {User} from "../models/user";
+import {UserCreatedPublisher} from "../event/publisher/user-created-publisher";
+import {natsWrapper} from "../nats-wrapper";
 const router = express.Router();
 
 router.post('/api/users/signup',[
@@ -19,6 +21,12 @@ router.post('/api/users/signup',[
     const githubId = 0;
     const user = User.build({email,name,password,githubId});
     await user.save();
+    await new UserCreatedPublisher(natsWrapper.client).publish({
+        name: user.name,
+        email: user.email,
+        id: user.id,
+        userId: user.id,
+    });
     const userJwt = jwt.sign({
         id: user.id,
         email: user.email
