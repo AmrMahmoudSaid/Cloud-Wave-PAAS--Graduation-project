@@ -14,6 +14,7 @@ export * from './event/base-listener';
 export * from './event/base-publesher';
 export * from './event/subjects';
 export * from './event/enums/order-status';
+export * from './event/enums/database-order-types';
 export * from './event/order-cancelled-event';
 export * from './event/order-created-event';
 export * from './event/user-created-event';
