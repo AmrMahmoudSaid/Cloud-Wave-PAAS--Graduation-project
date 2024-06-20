@@ -2,7 +2,7 @@ import {Subjects} from "./subjects";
 import {DatabaseOrderType} from "./enums/database-order-types";
 import {DatabasePlans} from "./enums/database-plans";
 import {OrderStatus} from "./enums/order-status";
-export interface DatabaseOrderCreate {
+export interface DatabaseOrderCreateEvent {
     subject: Subjects.DatabaseOrderCreate;
 
     data: {

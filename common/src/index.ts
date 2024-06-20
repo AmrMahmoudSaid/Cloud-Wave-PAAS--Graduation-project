@@ -17,5 +17,5 @@ export * from './event/enums/order-status';
 export * from './event/enums/database-order-types';
 export * from './event/enums/database-plans';
 export * from './event/order-cancelled-event';
-export * from './event/database-order-create';
+export * from './event/database-order-create-event';
 export * from './event/user-created-event';
