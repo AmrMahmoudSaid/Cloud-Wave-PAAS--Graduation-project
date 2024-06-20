@@ -15,11 +15,19 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
-    - image: amrmahmoud377/client-paas
-      context: client
-      docker:
-        dockerfile: Dockerfile
+    - image: amrmahmoud377/email-paas
+      context: email
       sync:
         manual:
-          - src: '**/*.js'
+          - src: src/**/*.js
             dest: .
+      docker:
+        dockerfile: Dockerfile
+#    - image: amrmahmoud377/client-paas
+#      context: client
+#      docker:
+#        dockerfile: Dockerfile
+#      sync:
+#        manual:
+#          - src: '**/*.js'
+#            dest: .
