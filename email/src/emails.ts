@@ -27,7 +27,6 @@ export class Emails {
         //     25, 587	(for unencrypted/TLS connections)
         // 465	(for SSL connections)
         // Username	apikey
-        // Password	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
             host: 'smtp.sendgrid.net',
             port: 587,
             // secure: false,
