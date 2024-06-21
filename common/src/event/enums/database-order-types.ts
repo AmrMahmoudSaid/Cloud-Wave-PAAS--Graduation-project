@@ -1,6 +1,6 @@
 export enum DatabaseOrderType {
-    DatabaseMongoDB = 'Database:MongoDB',
-    DatabasePostgresSQl = 'Database:PostgresSQL',
-    DatabaseMySQL = 'Database:MySQL',
+    DatabaseMongoDB = 'mongo',
+    DatabasePostgresSQl = 'postgres',
+    DatabaseMySQL = 'mysql',
     Redis = 'Redis'
 }
