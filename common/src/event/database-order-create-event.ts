@@ -12,7 +12,7 @@ export interface DatabaseOrderCreateEvent {
         databaseOrderType: DatabaseOrderType;
         price: number;
         plan: DatabasePlans;
-        RootPassword: string,
+        rootPassword: string,
         databaseName: string,
         userName: string,
         userPassword: string,
