@@ -17,6 +17,7 @@ export * from './event/enums/order-status';
 export * from './event/enums/database-order-types';
 export * from './event/enums/database-plans';
 export * from './event/enums/database-plan-config';
+export * from './event/enums/host';
 export * from './event/interfaces/postges-depl';
 export * from './event/interfaces/mysql-depl';
 export * from './event/interfaces/mongo-depl';
