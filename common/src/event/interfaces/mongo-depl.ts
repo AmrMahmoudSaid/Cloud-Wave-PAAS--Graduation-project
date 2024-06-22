@@ -1,0 +1,17 @@
+export interface MongoDBDeploymentConfig {
+    namespace: string;
+    deploymentName: string;
+    serviceName: string;
+    pvcName: string;
+    storageSize: string;
+    memoryRequest: string;
+    memoryLimit: string;
+    cpuRequest: string;
+    cpuLimit: string;
+    mongoRootPassword: string;
+    databaseName: string;
+    userName: string;
+    userPassword: string;
+    ingressHost: string;
+    ingressPath: string;
+}
