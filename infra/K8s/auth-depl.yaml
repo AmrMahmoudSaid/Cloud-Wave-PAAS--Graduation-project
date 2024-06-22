@@ -16,6 +16,14 @@ spec:
           - name: auth
             image: amrmahmoud377/auth-paas
             env:
+              - name: NATS_URL
+                value: 'http://nats-srv:4222'
+              - name: NATS_CLUSTER_ID
+                value: ticketing
+              - name: NATS_CLIENT_ID
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
               - name: MONGO_UR
                 value: 'mongodb://auth-mongo-srv:27017/auth'
               - name: JWT_KEY
@@ -35,5 +43,5 @@ spec:
   ports:
     - name: auth
       protocol: TCP
-      port: 3000
-      targetPort: 3000
+      port: 4000
+      targetPort: 4000
