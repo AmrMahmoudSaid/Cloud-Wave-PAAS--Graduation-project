@@ -1,4 +1,4 @@
 export enum Subjects{
     DatabaseOrderCreate = "DatabaseOrderCreate",
-    UserCreated = "UserCreated"
+    UserCreated = 'user-created',
 }
