@@ -20,6 +20,8 @@ export * from './event/enums/database-plan-config';
 export * from './event/interfaces/postges-depl';
 export * from './event/interfaces/mysql-depl';
 export * from './event/interfaces/mongo-depl';
+export * from './event/interfaces/ingress-rule';
 export * from './event/order-cancelled-event';
 export * from './event/database-order-create-event';
 export * from './event/user-created-event';
+export * from './ingressConfig';
