@@ -8,7 +8,7 @@ export interface MongoDBDeploymentConfig {
     memoryLimit: string;
     cpuRequest: string;
     cpuLimit: string;
-    mongoRootPassword: string;
+    rootPassword: string;
     databaseName: string;
     userName: string;
     userPassword: string;

@@ -8,7 +8,7 @@ export interface MySQLDeploymentConfig {
     memoryLimit: string;
     cpuRequest: string;
     cpuLimit: string;
-    mysqlRootPassword: string;
+    rootPassword: string;
     databaseName: string;
     userName: string;
     userPassword: string;

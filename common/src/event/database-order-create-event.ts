@@ -11,6 +11,10 @@ export interface DatabaseOrderCreateEvent {
         expiresAt: Date;
         databaseOrderType: DatabaseOrderType;
         price: number;
-        plan: DatabasePlans
+        plan: DatabasePlans;
+        RootPassword: string,
+        databaseName: string,
+        userName: string,
+        userPassword: string,
     }
 }

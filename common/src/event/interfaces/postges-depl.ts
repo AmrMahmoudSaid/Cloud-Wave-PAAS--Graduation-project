@@ -8,7 +8,7 @@ export interface PostgreSQLDeploymentConfig {
     memoryLimit: string;
     cpuRequest: string;
     cpuLimit: string;
-    postgresPassword: string;
+    rootPassword: string;
     databaseName: string;
     userName: string;
     userPassword: string;
