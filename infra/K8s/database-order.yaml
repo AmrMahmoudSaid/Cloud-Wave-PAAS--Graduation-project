@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-order-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database-order
+  template:
+    metadata:
+      labels:
+        app: database-order
+    spec:
+      containers:
+        - name: database-order
+          image: amrmahmoud377/database-order-paas
+          env:
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: ticketing
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MONGO_UR
+              value: 'mongodb://database-order-mongo-srv:27017/database-order'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-order-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: database-order
+  ports:
+    - name: database-order
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

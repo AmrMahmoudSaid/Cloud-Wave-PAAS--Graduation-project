@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: email-depl
 spec:
+
   replicas: 1
   selector:
     matchLabels:
@@ -12,9 +13,14 @@ spec:
       labels:
         app: email
     spec:
+#      serviceAccountName: my-service-account
       containers:
         - name: email
           image: amrmahmoud377/email-paas
+#          volumeMounts:
+#            - name: k8s-token
+#              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+#              readOnly: true
           env:
             - name: NATS_URL
               value: 'http://nats-srv:4222'
@@ -24,3 +30,5 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+
+

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: engine-db-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: engine-db-mongo
+  template:
+    metadata:
+      labels:
+        app: engine-db-mongo
+    spec:
+      containers:
+        - name: engine-db-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: engine-db-mongo-srv
+spec:
+  selector:
+    app: engine-db-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
