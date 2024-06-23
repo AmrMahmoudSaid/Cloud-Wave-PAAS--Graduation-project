@@ -70,15 +70,15 @@ export class DatabaseOrderCompletedEvent extends Listener<DatabaseOrderCreateEve
             await createMongoDBDeploymentAndService(config);
         }
         console.log('tmam');
-        const ingress = new IngressManager();
-        const ingressRule : IngressRule ={
-            host: hosts.Dev,
-            path: `/${path}`,
-            serviceName: `${name}-srv`,
-            servicePort: port
-        }
-        console.log(path)
-        await ingress.updateIngress(ingressRule);
+        // const ingress = new IngressManager();
+        // const ingressRule : IngressRule ={
+        //     host: hosts.Dev,
+        //     path: `/${path}`,
+        //     serviceName: `${name}-srv`,
+        //     servicePort: port
+        // }
+        console.log(`${name}-srv`)
+        // await ingress.updateIngress(ingressRule);
         // console.log("tmam");
         msq.ack();
     }

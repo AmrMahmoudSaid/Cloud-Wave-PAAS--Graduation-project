@@ -25,7 +25,7 @@ export async function createMySQLDeploymentAndServiceWithIngress(config: MySQLDe
                 spec: {
                     containers: [{
                         name: config.deploymentName,
-                        image: 'mysql:latest', // Replace with desired MySQL image version
+                        image: 'mysql',
                         ports: [{ containerPort: 3306 }],
                         env: [{
                             name: 'MYSQL_ROOT_PASSWORD',
@@ -62,7 +62,7 @@ export async function createMySQLDeploymentAndServiceWithIngress(config: MySQLDe
         spec: {
             selector: { app: config.deploymentName },
             ports: [{ protocol: 'TCP', port: 3306, targetPort: 3306 }],
-            type: 'ClusterIP'
+            type: 'NodePort'
         }
     };
 
