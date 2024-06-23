@@ -7,7 +7,7 @@ import {DatabaseOrderCreateEventPublisher} from "../events/publisher/database-or
 import {natsWrapper} from "../nats-wrapper";
 
 const router = express.Router();
-router.post('/api/database/orders', requireAuth,[
+router.post('/api/database/orders/new', requireAuth,[
     body('databaseOrderType')
         .not()
         .isEmpty()
@@ -42,8 +42,14 @@ router.post('/api/database/orders', requireAuth,[
         expiresAt: expirationDate,
         databaseOrderType: req.body.databaseOrderType,
         price: price,
-        plan: req.body.plan
+        plan: req.body.plan,
+        rootPassword: req.body.databasePassword,
+        databaseName: req.body.databaseName,
+        userName: req.body.userName,
+        userPassword: req.body.userPassword,
     });
 
     res.status(201).send(order);
 })
+
+export {router as createNewOrder};

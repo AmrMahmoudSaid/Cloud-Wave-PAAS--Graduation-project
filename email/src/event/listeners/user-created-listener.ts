@@ -1,7 +1,8 @@
-import {Listener, Subjects, UserCreateEvent} from "@cloud-wave/common";
+import {Listener, UserCreateEvent} from "@cloud-wave/common";
 import {Message} from "node-nats-streaming";
 import {queueGroupName} from "./queu-group-name";
 import {Emails} from "../../emails";
+import {Subjects} from "@cloud-wave/common";
 
 export class UserCreatedListener extends Listener<UserCreateEvent>{
     readonly subject = Subjects.UserCreated;

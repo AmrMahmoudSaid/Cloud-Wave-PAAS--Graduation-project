@@ -1,20 +1,34 @@
-import {Listener, DatabaseOrderCreateEvent, Subjects, DatabasePlanConfig} from "@cloud-wave/common";
+import {
+    Listener,
+    DatabaseOrderCreateEvent,
+    Subjects,
+    DatabasePlanConfig,
+
+} from "@cloud-wave/common";
+import {IngressManager} from "@cloud-wave/common";
 import {queueGroupName} from "./queue-group-name";
 import {Message} from "node-nats-streaming";
 import {
-    MySQLDeploymentConfig,
-    PostgreSQLDeploymentConfig,
-    MongoDBDeploymentConfig
+    hosts,
+    IngressRule
 } from "@cloud-wave/common";
-import * as k8s from '@kubernetes/client-node';
+import {createMySQLDeploymentAndServiceWithIngress} from "../../databases-deployment-config/mysql";
+import {createMongoDBDeploymentAndService} from "../../databases-deployment-config/mongo";
+import {createPostgreSQLDeploymentAndServiceWithIngress} from "../../databases-deployment-config/postgres";
 
 export class DatabaseOrderCompletedEvent extends Listener<DatabaseOrderCreateEvent> {
     readonly subject = Subjects.DatabaseOrderCreate
     queueGroupName = queueGroupName;
+
     async onMessage(data: DatabaseOrderCreateEvent['data'], msq: Message){
-        let storage;
-        let ram;
-        let cpu;
+        const name = generateRandomString();
+        const path = generateRandomString();
+        console.log(name);
+        let storage='';
+        let ram='';
+        let cpu='';
+        let port=3000;
+        console.log(data.plan);
         if (data.plan=='Basic'){
             cpu = DatabasePlanConfig.CPUBasic;
             ram = DatabasePlanConfig.RAMBasic;
@@ -28,67 +42,55 @@ export class DatabaseOrderCompletedEvent extends Listener<DatabaseOrderCreateEve
             ram = DatabasePlanConfig.RAMSuper;
             storage = DatabasePlanConfig.StorageSuper;
         }
-
+        const config = {
+            namespace: 'default',
+            pvcName: `${name}-pvc`,
+            storageSize: `${storage}Gi`,
+            deploymentName: `${name}-depl`,
+            rootPassword: `${data.rootPassword}`,
+            databaseName: `${data.databaseName}`,
+            userName: `${data.userName}`,
+            userPassword: `${data.userPassword}`,
+            serviceName: `${name}-srv`,
+            memoryRequest: '512Mi',
+            cpuRequest: '0.5',
+            memoryLimit: `${ram}Gi`,
+            cpuLimit: cpu,
+            ingressHost: `/${hosts.Dev}`,
+            ingressPath: "/amr"
+        };
+        if (data.databaseOrderType==='mysql'){
+            port = 3306;
+            await createMySQLDeploymentAndServiceWithIngress(config);
+        }else if(data.databaseOrderType==='postgres'){
+            port = 5432;
+            await createPostgreSQLDeploymentAndServiceWithIngress(config);
+        }else if (data.databaseOrderType==='mongo'){
+            port = 27017;
+            await createMongoDBDeploymentAndService(config);
+        }
+        console.log('tmam');
+        const ingress = new IngressManager();
+        const ingressRule : IngressRule ={
+            host: hosts.Dev,
+            path: `/${path}`,
+            serviceName: `${name}-srv`,
+            servicePort: port
+        }
+        console.log(path)
+        await ingress.updateIngress(ingressRule);
+        // console.log("tmam");
+        msq.ack();
     }
 }
 
-const createDatabaseConfig = (data: DatabaseOrderCreateEvent['data'], storage: string, ram: string, cpu: string) => {
-    const name = `database-${data.databaseOrderType}-${data.userId}-${Date.now()}`;
-    if (data.databaseOrderType== 'mysql'){
-        const mysql : MySQLDeploymentConfig = {
-            namespace: name,
-            deploymentName: name,
-            serviceName: name,
-            pvcName: `${name}-pvc`,
-            storageSize: storage,
-            memoryRequest: "512m",
-            memoryLimit: ram,
-            cpuRequest: '',
-            cpuLimit: cpu,
-            mysqlRootPassword: 'data',
-            databaseName: '',
-            userName: '',
-            userPassword: '',
-            ingressHost: '',
-            ingressPath: '/'
-        }
-    }else if (data.databaseOrderType== 'postgres'){
-        const postgresql : PostgreSQLDeploymentConfig = {
-            namespace: name,
-            deploymentName: name,
-            serviceName: name,
-            pvcName: `${name}-pvc`,
-            storageSize: storage,
-            memoryRequest: "512m",
-            memoryLimit: ram,
-            cpuRequest: '',
-            cpuLimit: cpu,
-            postgresPassword: 'data',
-            databaseName: '',
-            userName: '',
-            userPassword: '',
-            ingressHost: '',
-            ingressPath: '/'
-        }
-
-    }else if (data.databaseOrderType== 'mongo'){
-        const mongos : MongoDBDeploymentConfig = {
-            namespace: name,
-            deploymentName: name,
-            serviceName: name,
-            pvcName: `${name}-pvc`,
-            storageSize: storage,
-            memoryRequest: "512m",
-            memoryLimit: ram,
-            cpuRequest: '',
-            cpuLimit: cpu,
-            mongoRootPassword: 'data',
-            databaseName: '',
-            userName: '',
-            userPassword: '',
-            ingressHost: '',
-            ingressPath: '/'
-        }
-
+function generateRandomString(length: number = 26): string {
+    const characters = 'abcdefghijklmnopqrstuvwxyz-';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charactersLength);
+        result += characters.charAt(randomIndex);
     }
+    return result;
 }

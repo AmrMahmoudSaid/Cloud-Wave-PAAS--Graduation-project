@@ -1,7 +1,6 @@
 import 'express-async-errors'
 import {natsWrapper} from "./nats-wrapper";
 import {UserCreatedListener} from "./event/listeners/user-created-listener";
-
 const start = async () => {
     if (!process.env.NATS_URL){
         throw  new Error('NATS_URL doesnt exist');

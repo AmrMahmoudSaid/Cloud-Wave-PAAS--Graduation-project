@@ -1,13 +1,8 @@
 import * as k8s from '@kubernetes/client-node';
-import {MongoDBDeploymentConfig} from "@cloud-wave/common";
+import {MongoDBDeploymentConfig, k8sCoreApi, k8sAppsApi} from "@cloud-wave/common";
 
-const kc = new k8s.KubeConfig();
-kc.loadFromDefault();
 
-const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
-const k8sCoreApi = kc.makeApiClient(k8s.CoreV1Api);
-
-async function createMongoDBDeploymentAndService(config: MongoDBDeploymentConfig) {
+export async function createMongoDBDeploymentAndService(config: MongoDBDeploymentConfig) {
     // Define the Persistent Volume Claim manifest
     const pvcManifest: k8s.V1PersistentVolumeClaim = {
         apiVersion: 'v1',
@@ -62,7 +57,7 @@ async function createMongoDBDeploymentAndService(config: MongoDBDeploymentConfig
                                 },
                                 {
                                     name: 'MONGO_INITDB_ROOT_PASSWORD',
-                                    value: config.mongoRootPassword,
+                                    value: config.rootPassword,
                                 },
                                 {
                                     name: 'MONGO_INITDB_DATABASE',

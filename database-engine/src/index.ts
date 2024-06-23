@@ -1,15 +1,9 @@
 import 'express-async-errors'
 import mongoose from 'mongoose';
 import {natsWrapper} from "./nats-wrapper";
+import {DatabaseOrderCompletedEvent} from "./events/listeners/database-order-completed";
 
 const start = async () => {
-    // process.env.JWT_KEY = "amrmahmoud"
-    // if (!process.env.JWT_KEY){
-    //     throw  new Error('jwt key doesnt exist');
-    // }
-    if (!process.env.MONGO_URL){
-        throw  new Error('Mongo url doesnt exist');
-    }
     if (!process.env.NATS_URL){
         throw  new Error('NATS_URL doesnt exist');
     }
@@ -32,12 +26,11 @@ const start = async () => {
         process.on('SIGINT', ()=> natsWrapper.client.close());
         await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
         // await mongoose.connect('mongodb://localhost:27017/auth2' );
+        new DatabaseOrderCompletedEvent(natsWrapper.client).listen();
         console.log("DB connection");
     }catch (err){
         console.log(err);
     }
 };
-// app.listen(4000,() =>{
-//     console.log('Listening on port 4000');
-// });
 start();
+

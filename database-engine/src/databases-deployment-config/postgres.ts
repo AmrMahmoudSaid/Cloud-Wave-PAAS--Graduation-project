@@ -1,15 +1,9 @@
 import * as k8s from '@kubernetes/client-node';
-import {PostgreSQLDeploymentConfig} from "@cloud-wave/common";
-
-const kc = new k8s.KubeConfig();
-kc.loadFromDefault();
-
-const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
-const k8sCoreApi = kc.makeApiClient(k8s.CoreV1Api);
+import {PostgreSQLDeploymentConfig, k8sCoreApi, k8sAppsApi} from "@cloud-wave/common";
 
 
 
-async function createPostgreSQLDeploymentAndServiceWithIngress(config: PostgreSQLDeploymentConfig) {
+export async function createPostgreSQLDeploymentAndServiceWithIngress(config: PostgreSQLDeploymentConfig) {
     const pvcManifest: k8s.V1PersistentVolumeClaim = {
         apiVersion: 'v1',
         kind: 'PersistentVolumeClaim',
@@ -20,7 +14,6 @@ async function createPostgreSQLDeploymentAndServiceWithIngress(config: PostgreSQ
         },
     };
 
-    // Define Deployment manifest
     const deploymentManifest: k8s.V1Deployment = {
         apiVersion: 'apps/v1',
         kind: 'Deployment',
@@ -33,11 +26,11 @@ async function createPostgreSQLDeploymentAndServiceWithIngress(config: PostgreSQ
                 spec: {
                     containers: [{
                         name: config.deploymentName,
-                        image: 'postgres:latest', // Replace with desired PostgreSQL image version
+                        image: 'postgres:latest',
                         ports: [{ containerPort: 5432 }],
                         env: [{
                             name: 'POSTGRES_PASSWORD',
-                            value: config.postgresPassword
+                            value: config.rootPassword
                         }, {
                             name: 'POSTGRES_DB',
                             value: config.databaseName
@@ -63,7 +56,6 @@ async function createPostgreSQLDeploymentAndServiceWithIngress(config: PostgreSQ
         }
     };
 
-    // Define Service manifest
     const serviceManifest: k8s.V1Service = {
         apiVersion: 'v1',
         kind: 'Service',
@@ -71,7 +63,7 @@ async function createPostgreSQLDeploymentAndServiceWithIngress(config: PostgreSQ
         spec: {
             selector: { app: config.deploymentName },
             ports: [{ protocol: 'TCP', port: 5432, targetPort: 5432 }],
-            type: 'ClusterIP'  // Change to 'NodePort' or 'LoadBalancer' as needed
+            type: 'ClusterIP'
         }
     };
 
