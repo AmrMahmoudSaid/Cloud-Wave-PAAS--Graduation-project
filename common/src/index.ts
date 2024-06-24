@@ -30,3 +30,4 @@ export * from './event/database-engine-create-event';
 export * from './event/database-delete-event';
 export * from './ingressConfig';
 export * from './kubctl-connection';
+export * from './kubectl-fun';
