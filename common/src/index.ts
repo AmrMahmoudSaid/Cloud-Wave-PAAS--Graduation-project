@@ -27,5 +27,6 @@ export * from './event/order-cancelled-event';
 export * from './event/database-order-create-event';
 export * from './event/user-created-event';
 export * from './event/database-engine-create-event';
+export * from './event/database-delete-event';
 export * from './ingressConfig';
 export * from './kubctl-connection';
