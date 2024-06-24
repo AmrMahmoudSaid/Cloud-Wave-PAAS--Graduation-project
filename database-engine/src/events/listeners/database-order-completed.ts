@@ -73,6 +73,7 @@ export class DatabaseOrderCompletedEvent extends Listener<DatabaseOrderCreateEve
         //     servicePort: port
         // }
         await new DatabaseEngineCreatePublisher(natsWrapper.client).publish({
+            userId: data.userId,
             namespace: 'default',
             pvcName: `${name}-pvc`,
             deploymentName: `${name}-depl`,

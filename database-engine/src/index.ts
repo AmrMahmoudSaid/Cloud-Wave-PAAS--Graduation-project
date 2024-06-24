@@ -2,6 +2,7 @@ import 'express-async-errors'
 import mongoose from 'mongoose';
 import {natsWrapper} from "./nats-wrapper";
 import {DatabaseOrderCompletedEvent} from "./events/listeners/database-order-completed";
+import {DatabaseDeleteListener} from "./events/listeners/database-delete-listener";
 
 const start = async () => {
     if (!process.env.NATS_URL){
@@ -27,6 +28,7 @@ const start = async () => {
         await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
         // await mongoose.connect('mongodb://localhost:27017/auth2' );
         new DatabaseOrderCompletedEvent(natsWrapper.client).listen();
+        new DatabaseDeleteListener(natsWrapper.client).listen();
         console.log("DB connection");
     }catch (err){
         console.log(err);
