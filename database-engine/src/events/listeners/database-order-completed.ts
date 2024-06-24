@@ -3,31 +3,29 @@ import {
     DatabaseOrderCreateEvent,
     Subjects,
     DatabasePlanConfig,
-
 } from "@cloud-wave/common";
-import {IngressManager} from "@cloud-wave/common";
 import {queueGroupName} from "./queue-group-name";
 import {Message} from "node-nats-streaming";
 import {
     hosts,
-    IngressRule
 } from "@cloud-wave/common";
 import {createMySQLDeploymentAndServiceWithIngress} from "../../databases-deployment-config/mysql";
 import {createMongoDBDeploymentAndService} from "../../databases-deployment-config/mongo";
 import {createPostgreSQLDeploymentAndServiceWithIngress} from "../../databases-deployment-config/postgres";
+import {DatabaseEngineCreatePublisher} from "../publisher/database-engine-create-publisher";
+import {natsWrapper} from "../../nats-wrapper";
 
 export class DatabaseOrderCompletedEvent extends Listener<DatabaseOrderCreateEvent> {
     readonly subject = Subjects.DatabaseOrderCreate
     queueGroupName = queueGroupName;
 
     async onMessage(data: DatabaseOrderCreateEvent['data'], msq: Message){
-        const name = generateRandomString();
-        const path = generateRandomString();
+        const name = data.databaseOrderType+generateRandomString();
+        // const path = generateRandomString();
         console.log(name);
         let storage='';
         let ram='';
         let cpu='';
-        let port=3000;
         console.log(data.plan);
         if (data.plan=='Basic'){
             cpu = DatabasePlanConfig.CPUBasic;
@@ -60,13 +58,10 @@ export class DatabaseOrderCompletedEvent extends Listener<DatabaseOrderCreateEve
             ingressPath: "/amr"
         };
         if (data.databaseOrderType==='mysql'){
-            port = 3306;
             await createMySQLDeploymentAndServiceWithIngress(config);
         }else if(data.databaseOrderType==='postgres'){
-            port = 5432;
             await createPostgreSQLDeploymentAndServiceWithIngress(config);
         }else if (data.databaseOrderType==='mongo'){
-            port = 27017;
             await createMongoDBDeploymentAndService(config);
         }
         console.log('tmam');
@@ -77,9 +72,16 @@ export class DatabaseOrderCompletedEvent extends Listener<DatabaseOrderCreateEve
         //     serviceName: `${name}-srv`,
         //     servicePort: port
         // }
-        console.log(`${name}-srv`)
-        // await ingress.updateIngress(ingressRule);
-        // console.log("tmam");
+        await new DatabaseEngineCreatePublisher(natsWrapper.client).publish({
+            namespace: 'default',
+            pvcName: `${name}-pvc`,
+            deploymentName: `${name}-depl`,
+            rootPassword: `${data.rootPassword}`,
+            databaseName: `${data.databaseName}`,
+            userName: `${data.userName}`,
+            userPassword: `${data.userPassword}`,
+            serviceName: `${name}-srv`,
+        })
         msq.ack();
     }
 }
