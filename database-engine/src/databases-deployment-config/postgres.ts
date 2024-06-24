@@ -63,7 +63,7 @@ export async function createPostgreSQLDeploymentAndServiceWithIngress(config: Po
         spec: {
             selector: { app: config.deploymentName },
             ports: [{ protocol: 'TCP', port: 5432, targetPort: 5432 }],
-            type: 'NodePort'
+            type: 'LoadBalancer'
         }
     };
 

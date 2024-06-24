@@ -39,5 +39,16 @@ export class KubectlFun {
             throw new Error('Failed to get pod port');
         }
     }
+
+    async getExternalIP(serviceName: string): Promise<string | undefined> {
+        try {
+            const svcRes = await k8sCoreApi.readNamespacedService(serviceName, this.namespace);
+            const externalIP = svcRes.body.status?.loadBalancer?.ingress?.[0]?.ip;
+            return externalIP;
+        } catch (error) {
+            console.error('Error getting external IP:', error);
+            throw new Error('Failed to get external IP');
+        }
+    }
 }
 

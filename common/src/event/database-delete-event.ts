@@ -5,5 +5,6 @@ export interface DatabaseDeleteEvent {
         userId: string,
         pvcName: string,
         deploymentName: string,
+        serviceName: string,
     }
 }

@@ -62,7 +62,7 @@ export async function createMySQLDeploymentAndServiceWithIngress(config: MySQLDe
         spec: {
             selector: { app: config.deploymentName },
             ports: [{ protocol: 'TCP', port: 3306, targetPort: 3306 }],
-            type: 'NodePort'
+            type: 'LoadBalancer'
         }
     };
 
