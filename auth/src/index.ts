@@ -8,9 +8,12 @@ const start = async () => {
     if (!process.env.JWT_KEY){
         throw  new Error('jwt key doesnt exist');
     }
-    // if (!process.env.MONGO_URL){
-    //     throw  new Error('Mongo url doesnt exist');
-    // }
+    if (!process.env.MONGO_URL){
+        throw  new Error('Mongo url doesnt exist');
+    }
+    if (!process.env.STRIPE_KEY){
+        throw  new Error('STRIPE KEY doesnt exist');
+    }
     if (!process.env.NATS_URL){
         throw  new Error('NATS_URL doesnt exist');
     }

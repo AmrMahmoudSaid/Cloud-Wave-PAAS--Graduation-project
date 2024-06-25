@@ -21,12 +21,7 @@ router.post('/api/users/signup',[
     const githubId = 0;
     const user = User.build({email,name,password,githubId});
     await user.save();
-    await new UserCreatedPublisher(natsWrapper.client).publish({
-        name: user.name,
-        email: user.email,
-        id: user.id,
-        userId: user.id,
-    });
+
     const userJwt = jwt.sign({
         id: user.id,
         email: user.email

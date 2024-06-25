@@ -16,6 +16,9 @@ interface UserDoc extends mongoose.Document {
     email: string;
     password: string;
     githubId: number;
+    active: boolean;
+    customerId: string;
+    cardNumber:string;
 }
 
 const userSchema = new mongoose.Schema({
@@ -33,6 +36,18 @@ const userSchema = new mongoose.Schema({
     },
     githubId: {
         type: Number,
+        required: false
+    },
+    active: {
+        type: Boolean,
+        default: false
+    },
+    customerId: {
+        type: String,
+        required: false
+    },
+    cardNumber: {
+        type: String,
         required: false
     }
 }, {

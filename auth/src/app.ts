@@ -11,6 +11,7 @@ import {signupGitRouter} from "./routes/signup-github";
 import {loginGitRouter} from "./routes/signin-github";
 import {errorHandler,NotFound} from "@amtickets377/common"
 import * as tty from "tty";
+import {createCustomer} from "./routes/create-customer";
 
 const app = express();
 app.set('trust proxy', true);
@@ -22,6 +23,7 @@ app.use(cookieSession({
 app.use(currentUserRouter);
 app.use(signupRouter);
 app.use(signupGitRouter);
+app.use(createCustomer);
 app.use(loginGitRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
