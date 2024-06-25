@@ -8,5 +8,6 @@ export interface UserCreateEvent{
         userId: string;
         email: string;
         name: string;
+        customerId: string;
     }
 }
