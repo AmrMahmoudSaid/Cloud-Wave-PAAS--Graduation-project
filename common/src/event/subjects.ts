@@ -3,4 +3,5 @@ export enum Subjects{
     UserCreated = 'user-created',
     DatabaseEngineCreate = "DatabaseEngineCreate",
     DatabaseDelete = "DatabaseDelete",
+    PaymentCompleted = "PaymentCompleted"
 }
