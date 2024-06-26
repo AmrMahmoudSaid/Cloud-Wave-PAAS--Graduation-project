@@ -2,6 +2,7 @@ import 'express-async-errors'
 import mongoose from 'mongoose';
 import {app} from "./app";
 import {natsWrapper} from "./nats-wrapper";
+import {PaymentCompletedListener} from "./events/listeners/payment-completed-listener";
 
 const start = async () => {
     process.env.JWT_KEY = "amrmahmoud"
@@ -33,6 +34,7 @@ const start = async () => {
         process.on('SIGINT', ()=> natsWrapper.client.close());
         await mongoose.connect("mongodb://order-db-mongo-srv:27017/auth");
         console.log("DB connection");
+        new PaymentCompletedListener(natsWrapper.client).listen();
     }catch (err){
         console.log(err);
     }

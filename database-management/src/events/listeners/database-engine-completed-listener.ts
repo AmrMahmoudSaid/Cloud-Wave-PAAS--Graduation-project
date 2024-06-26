@@ -18,12 +18,16 @@ export class DatabaseEngineCompletedListener extends Listener<DatabaseEngineCrea
         const kubectlFun = new KubectlFun();
         let podStatus = await kubectlFun.getPodStatus(data.deploymentName);
         let nodePort = await kubectlFun.getPodPort(data.serviceName);
+        let loadBalancer = await kubectlFun.getExternalIP(data.serviceName);
         console.log(nodePort);
         if (!nodePort){
             nodePort = 'null'
         }
         if (!podStatus) {
             podStatus= 'null'
+        }
+        if (!loadBalancer) {
+            loadBalancer = 'null';
         }
         const dataToSave = DatabaseConfig.build({
             userId: data.userId,
@@ -37,7 +41,7 @@ export class DatabaseEngineCompletedListener extends Listener<DatabaseEngineCrea
             serviceName: data.serviceName,
             nodePort: nodePort?.toString(),
             status : podStatus,
-            host: hosts.Dev,
+            host: loadBalancer,
         });
         await dataToSave.save();
         msq.ack();

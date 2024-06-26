@@ -1,6 +1,6 @@
 import {
     Listener,
-    DatabaseOrderCreateEvent,
+    PaymentCompletedEvent,
     Subjects,
     DatabasePlanConfig,
 } from "@cloud-wave/common";
@@ -15,11 +15,11 @@ import {createPostgreSQLDeploymentAndServiceWithIngress} from "../../databases-d
 import {DatabaseEngineCreatePublisher} from "../publisher/database-engine-create-publisher";
 import {natsWrapper} from "../../nats-wrapper";
 
-export class DatabaseOrderCompletedEvent extends Listener<DatabaseOrderCreateEvent> {
-    readonly subject = Subjects.DatabaseOrderCreate
+export class PaymentCompletedListener extends Listener<PaymentCompletedEvent> {
+    readonly subject = Subjects.PaymentCompleted;
     queueGroupName = queueGroupName;
 
-    async onMessage(data: DatabaseOrderCreateEvent['data'], msq: Message){
+    async onMessage(data: PaymentCompletedEvent['data'], msq: Message){
         const name = data.databaseOrderType+generateRandomString();
         // const path = generateRandomString();
         console.log(name);

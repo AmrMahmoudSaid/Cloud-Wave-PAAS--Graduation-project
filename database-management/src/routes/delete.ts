@@ -1,8 +1,8 @@
 import express, {Request, Response} from "express";
-import {DatabaseConfig} from "../../models/database-config";
+import {DatabaseConfig} from "../models/database-config";
 import {NotAuthorizedError, NotFound, requireAuth} from "@cloud-wave/common";
-import {DatabaseDeletePublisher} from "../publishers/database-delete-publisher";
-import {natsWrapper} from "../../nats-wrapper";
+import {DatabaseDeletePublisher} from "../events/publishers/database-delete-publisher";
+import {natsWrapper} from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -19,7 +19,8 @@ router.delete('/api/database/management/:id', requireAuth
         await new DatabaseDeletePublisher(natsWrapper.client).publish({
             userId: req.currentUser!.id,
             deploymentName: databaseConfig.deploymentName,
-            pvcName: databaseConfig.pvcName
+            pvcName: databaseConfig.pvcName,
+            serviceName: databaseConfig.serviceName
         })
         databaseConfig.status = "deleted"
         databaseConfig.save();

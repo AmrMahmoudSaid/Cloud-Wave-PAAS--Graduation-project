@@ -29,7 +29,7 @@ router.post('/api/database/orders/new', requireAuth,[
     }
     const order = Order.build({
         userId: req.currentUser!.id,
-        status: OrderStatus.Created,
+        status: OrderStatus.AwaitingPayment,
         expiresAt: expirationDate,
         databaseOrderType: req.body.databaseOrderType,
         price: price,
@@ -47,6 +47,7 @@ router.post('/api/database/orders/new', requireAuth,[
         databaseName: req.body.databaseName,
         userName: req.body.userName,
         userPassword: req.body.userPassword,
+        orderId: order.id
     });
 
     res.status(201).send(order);

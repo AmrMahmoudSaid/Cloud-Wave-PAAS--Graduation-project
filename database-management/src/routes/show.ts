@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express";
 import {requireAuth} from "@cloud-wave/common";
 import {KubectlFun} from "@cloud-wave/common";
-import {DatabaseConfig} from "../../models/database-config";
+import {DatabaseConfig} from "../models/database-config";
 
 const router = express.Router();
 
@@ -17,6 +17,10 @@ router.get('/api/database/management/show', requireAuth
                 if (config.status!= "deleted"){
                     config.status = await kubectlFun.getPodStatus(config.deploymentName);
 
+                }
+                const loadBalancer = await kubectlFun.getExternalIP(config.serviceName);
+                if (loadBalancer){
+                    config.host = loadBalancer;
                 }
                 await config.save();
             });
