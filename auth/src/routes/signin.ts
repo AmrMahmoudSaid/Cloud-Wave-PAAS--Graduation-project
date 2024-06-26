@@ -29,7 +29,8 @@ router.post('/api/users/signin',[
     }
     const userJwt = jwt.sign({
         id: existingUser.id,
-        email: existingUser.email
+        email: existingUser.email,
+        githubId: existingUser.githubId
     },process.env.JWT_KEY!);
     req.session ={
         jwt: userJwt

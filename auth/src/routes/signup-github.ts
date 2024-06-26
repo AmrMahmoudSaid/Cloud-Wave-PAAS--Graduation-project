@@ -83,7 +83,8 @@ router.post('/api/users/signup-git', async (req: Request, res: Response) => {
     await user2.save();
     const userJwt = jwt.sign({
         id: user2.id,
-        email: user2.email
+        email: user2.email,
+        githubId: user2.githubId
     },process.env.JWT_KEY!);
     req.session ={
         jwt: userJwt
