@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 interface UserPayload {
     id: string;
     email: string;
+    githubId: string;
 }
 //to add UserPayload to req
 declare global{
