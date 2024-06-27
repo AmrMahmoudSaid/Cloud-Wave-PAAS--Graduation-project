@@ -28,15 +28,15 @@ export const currentUser = async (
     const payload = jwt.verify(req.session.jwt, process.env.JWT_KEY!) as UserPayload;
     if (payload.accessToken){
         try {
-            const response = await axios.get('https://api.github.com/user/repos', {
+            const response = await fetch('https://api.github.com/user', {
                 headers: {
                     'Authorization': `Bearer ${req.session.jwt}`,
                     'Accept': 'application/vnd.github.v3+json'
                 }
-            })
+            });
         }catch (error: any) {
             if (error.response && error.response.status === 401) {
-                res.status(401).send({ error: 'Invalid GitHub token' });
+                res.status(401).send({ error: 'Invalid GitHub token!!' });
             }
         }
     }
