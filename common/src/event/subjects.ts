@@ -5,5 +5,6 @@ export enum Subjects{
     DatabaseDelete = "DatabaseDelete",
     PaymentCompleted = "PaymentCompleted",
     ApplicationCreate = "ApplicationCreate",
+    OrderDeleted = "OrderDeleted",
     ApplicationPaymentCompleted = "ApplicationPaymentCompleted"
 }
