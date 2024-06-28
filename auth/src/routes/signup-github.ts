@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { body } from 'express-validator';
 import { validateRequest, BadRequestError } from '@cloud-wave/common';
 import { User } from '../models/user';
+import Stripe from "stripe";
 const router = express.Router();
 
 const CLIENT_ID = 'Ov23liAiGPUlEm4xMIgH';
@@ -18,15 +19,16 @@ interface GitHubUserResponse {
     login: string;
     email: string | null;
 }
-
-router.post('/api/users/signup-git', async (req: Request, res: Response) => {
+const stripe = new Stripe(process.env.STRIPE_KEY!, {
+    apiVersion: '2024-06-20',
+});
+router.post('/api/users/signup-git', [
+    body('token').notEmpty().withMessage('You must provide a token'),
+    body('code').notEmpty().withMessage('You must provide a code'),
+],validateRequest,async (req: Request, res: Response) => {
     const { code } = req.body;
     console.log(code);
-    if (!code) {
-        throw new BadRequestError('Authorization code is required');
-    }
 
-    // Step 1: Exchange authorization code for access token
     const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',
         headers: {
@@ -79,12 +81,19 @@ router.post('/api/users/signup-git', async (req: Request, res: Response) => {
         githubId = 0;
     }
     const password = "null"
-    const user2 = User.build({email,name,password,githubId});
+    const customer = await stripe.customers.create({
+        email: req.body.email,
+        source: req.body.token,
+    });
+    const user2 = User.build({email,name,password,githubId,
+        customerId: customer.id
+    });
     await user2.save();
     const userJwt = jwt.sign({
         id: user2.id,
         email: user2.email,
-        githubId: user2.githubId
+        githubId: user2.githubId,
+        accessToken
     },process.env.JWT_KEY!);
     req.session ={
         jwt: userJwt

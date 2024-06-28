@@ -5,6 +5,7 @@ interface UserAttrs {
     email: string;
     password: string;
     githubId: number;
+    customerId: string;
 }
 interface UserModel extends mongoose.Model<UserDoc> {
     build(attrs: UserAttrs): UserDoc;
