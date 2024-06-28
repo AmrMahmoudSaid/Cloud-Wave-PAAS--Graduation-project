@@ -5,7 +5,7 @@ import {OrderStatus} from "./enums/order-status";
 import {applicationOrderType} from "./enums/application-order-types";
 import {ApplicationPlan} from "./enums/application-plan";
 export interface ApplicationPaymentCompletedEvent {
-    subject: Subjects.PaymentCompleted;
+    subject: Subjects.ApplicationPaymentCompleted;
 
     data: {
         userId: string;
