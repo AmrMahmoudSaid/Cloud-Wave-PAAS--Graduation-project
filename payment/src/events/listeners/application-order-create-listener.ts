@@ -12,11 +12,12 @@ import {User} from "../../models/user";
 import {Order} from "../../models/order";
 import {PaymentCompletedPublisher} from "../publisher/payment-completed-publisher";
 import {natsWrapper} from "../../nats-wrapper";
+import {ApplicationPaymentCompletedPublisher} from "../publisher/application-payment-completed-publisher";
 const stripe = new Stripe(process.env.STRIPE_KEY!, {
     apiVersion: '2024-06-20'
 });
 
-export class AppliactionOrderCreate extends Listener<ApplicationOrderCreateEvent> {
+export class ApplicationOrderCreateListener extends Listener<ApplicationOrderCreateEvent> {
     readonly subject = Subjects.ApplicationCreate
     queueGroupName = queueGroupName;
 
@@ -72,18 +73,16 @@ export class AppliactionOrderCreate extends Listener<ApplicationOrderCreateEvent
             });
             await order.save();
 
-            await new PaymentCompletedPublisher(natsWrapper.client).publish({
+            await new ApplicationPaymentCompletedPublisher(natsWrapper.client).publish({
                 userId: data.userId,
                 status: OrderStatus.Created,
                 expiresAt: expirationDate,
                 databaseOrderType: data.databaseOrderType,
                 price: data.price,
-                plan: data.plan,
-                rootPassword: data.rootPassword,
-                databaseName: data.databaseName,
-                userName: data.userName,
-                userPassword: data.userPassword,
-                orderId: order.id
+                applicationName: data.applicationName,
+                orderId: order.id,
+                gitUrl: data.gitUrl,
+                plan: data.plan
             });
             msq.ack();
         } catch (error) {

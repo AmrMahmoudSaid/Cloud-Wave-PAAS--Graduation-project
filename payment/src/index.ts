@@ -81,6 +81,7 @@ import {UserCreatedListener} from "./events/listeners/user-created-listener";
 import {DatabaseDeleteListener} from "./events/listeners/database-delete-listener";
 import {DatabaseOrderCompletedListener} from "./events/listeners/database-order-completed";
 import mongoose from "mongoose";
+import {ApplicationOrderCreateListener} from "./events/listeners/application-order-create-listener";
 const start = async () => {
     if (!process.env.NATS_URL){
         throw  new Error('NATS_URL doesnt exist');
@@ -110,6 +111,7 @@ const start = async () => {
         new UserCreatedListener(natsWrapper.client).listen();
         new DatabaseDeleteListener(natsWrapper.client).listen();
         new DatabaseOrderCompletedListener(natsWrapper.client).listen();
+        new ApplicationOrderCreateListener(natsWrapper.client).listen();
     }catch (err){
         console.log(err);
     }
