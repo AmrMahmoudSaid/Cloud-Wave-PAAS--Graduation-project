@@ -1,4 +1,4 @@
-export interface AppDepl {
+export interface ApplicationDeploymentConfig {
     namespace: string;
     deploymentName: string;
     serviceName: string;

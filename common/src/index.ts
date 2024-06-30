@@ -38,3 +38,4 @@ export * from './event/Application-payment-completed-event';
 export * from './ingressConfig';
 export * from './kubctl-connection';
 export * from './kubectl-fun';
+export * from './event/interfaces/app-depl'
