@@ -55,6 +55,7 @@ export class ApplicationOrderCreateListener extends Listener<ApplicationOrderCre
             }
 
             const user = await User.findById(data.userId);
+            console.log(user);
             if (!user){
                 throw new NotAuthorizedError();
             }

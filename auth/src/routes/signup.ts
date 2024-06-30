@@ -31,6 +31,13 @@ router.post('/api/users/signup',[
         customerId: customer.id
     });
     await user.save();
+        await new UserCreatedPublisher(natsWrapper.client).publish({
+            name: user.name,
+            email: user.email,
+            id: user.id,
+            userId: user.id,
+            customerId: user.customerId,
+        });
     const userJwt = jwt.sign({
         id: user.id,
         email: user.email,

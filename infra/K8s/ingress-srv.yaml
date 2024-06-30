@@ -17,6 +17,13 @@ spec:
                 name: auth-srv
                 port:
                   number: 4000
+          - path: /api/applications/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: app-order-srv
+                port:
+                  number: 4000
           - path: /api/database/order/?(.*)
             pathType: Prefix
             backend:

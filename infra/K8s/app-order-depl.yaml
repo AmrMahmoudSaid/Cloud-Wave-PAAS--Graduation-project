@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-order-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-order
+  template:
+    metadata:
+      labels:
+        app: app-order
+    spec:
+      containers:
+        - name: app-order
+          image: amrmahmoud377/app-order
+          env:
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: ticketing
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MONGO_UR
+              value: 'mongodb://app-order-mongo-srv:27017/app-order'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-order-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: app-order
+  ports:
+    - name: app-order
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

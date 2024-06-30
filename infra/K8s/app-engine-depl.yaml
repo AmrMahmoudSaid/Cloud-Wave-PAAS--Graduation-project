@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-engine-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-engine
+  template:
+    metadata:
+      labels:
+        app: app-engine
+    spec:
+      containers:
+        - name: app-engine
+          image: amrmahmoud377/app-engine
+          env:
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: ticketing
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: DOCKER_HOST
+              value: 'unix:///var/run/docker.sock'
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: docker-socket
+              mountPath: /var/run/docker.sock  # Mount Docker socket
+
+#        - name: docker
+#          image: docker:20.10.7-dind  # Using a Docker-in-Docker image
+#          securityContext:
+#            privileged: true  # Necessary for Docker-in-Docker
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket
+#      imagePullSecrets:
+#        - name: regcred  # Assuming this is your image pull secret

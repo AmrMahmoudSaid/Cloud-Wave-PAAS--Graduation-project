@@ -20,7 +20,7 @@ router.post('/api/applications/orders/new', requireAuth,[
         .not()
         .isEmpty()
         .withMessage('order must have name'),
-    body('git url')
+    body('url')
         .not()
         .isEmpty()
         .withMessage('order must have git url')
@@ -28,9 +28,11 @@ router.post('/api/applications/orders/new', requireAuth,[
 ], validateRequest, async (req: Request, res: Response) => {
     const expirationDate = new Date();
     let price =0;
-    const orderWithSameName = await Order.find({
+    const orderWithSameName = await Order.findOne({
         name: req.body.name
     })
+    console.log(orderWithSameName)
+
     if (orderWithSameName){
         throw new Error("this name is not available")
     }

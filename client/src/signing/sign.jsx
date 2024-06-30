@@ -5,7 +5,10 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 function Signing() {
   const [isSignUp, setIsSignUp] = useState(false);
-
+  const CLIENT_ID ="Ov23liAiGPUlEm4xMIgH"
+  function loginWithGitHub() {
+    window.location.assign(`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`);
+  }
   return (
     <div className={`container ${isSignUp ? "active" : ""}`} id="container">
       <div className="form-container sign-up">
@@ -27,7 +30,7 @@ function Signing() {
         <form>
           <h1>Sign In</h1>
           <div className="social-icons">
-            <a href="#" className="icon">
+            <a href="#" className="icon" onClick={loginWithGitHub}>
               <FontAwesomeIcon icon={faGithub} />
             </a>
           </div>
