@@ -10,5 +10,6 @@ export interface ApplicationEngineCreateEvent {
         serviceName: string,
         gitUrl: string,
         path: string,
+        plan: string
     }
 }
