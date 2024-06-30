@@ -20,8 +20,17 @@ export class IngressManager {
                 throw new Error(`Ingress '${ingressName}' not found in namespace '${namespace}' or missing spec`);
             }
 
-            existingIngress.body.spec.rules = [
-                {
+            // Check if rules array exists, if not, initialize it
+            if (!existingIngress.body.spec.rules) {
+                existingIngress.body.spec.rules = [];
+            }
+
+            // Find the existing rule for the host
+            const existingRuleIndex = existingIngress.body.spec.rules.findIndex(r => r.host === rule.host);
+
+            if (existingRuleIndex === -1) {
+                // If the rule for the host does not exist, add a new rule
+                existingIngress.body.spec.rules.push({
                     host: rule.host,
                     http: {
                         paths: [
@@ -39,8 +48,22 @@ export class IngressManager {
                             },
                         ],
                     },
-                },
-            ];
+                });
+            } else {
+                // @ts-ignore
+                existingIngress.body.spec.rules[existingRuleIndex].http.paths.push({
+                    path: rule.path,
+                    pathType: 'Prefix',
+                    backend: {
+                        service: {
+                            name: rule.serviceName,
+                            port: {
+                                number: rule.servicePort,
+                            },
+                        },
+                    },
+                });
+            }
 
             const updatedIngress = await this.networkingApi.replaceNamespacedIngress(ingressName, namespace, existingIngress.body);
             console.log('Ingress updated successfully:', updatedIngress.body.metadata?.name);
@@ -48,7 +71,6 @@ export class IngressManager {
             console.error('Error updating Ingress:', err);
         }
     }
-
     async deletePathFromIngress(pathToDelete: string) {
         const ingressName = 'ingress-srv';
         const namespace = 'default';
