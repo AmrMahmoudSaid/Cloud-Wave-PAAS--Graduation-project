@@ -5,20 +5,17 @@ export {OrderStatus, applicationOrderType, ApplicationPlan}
 interface OrderAttrs{
     userId: string;
     imageName: string;
-    tage: string;
+    tag: string;
     gitUrl: string;
     applicationName: string;
 }
 
 interface OrderDoc extends mongoose.Document {
     userId: string;
-    status: OrderStatus;
-    expiresAt: Date;
-    applicationOrderType: applicationOrderType;
-    price: number;
+    imageName: string;
+    tag: string;
     gitUrl: string;
     applicationName: string;
-    plan: ApplicationPlan
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
@@ -30,37 +27,21 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    status: {
-        type: String,
-        required: true,
-        enum: Object.values(OrderStatus),
-        default: OrderStatus.AwaitingPayment
-    },
-    expiresAt: {
-        type: mongoose.Schema.Types.Date
-    },
-    applicationOrderType: {
-        type: String,
-        required: true,
-        enum: Object.values(applicationOrderType),
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
     gitUrl: {
+        type: String,
+        required: true,
+    },
+    tag: {
+        type: String,
+        required: true,
+    },
+    imageName: {
         type: String,
         required: true,
     },
     applicationName: {
         type: String,
         required: true,
-    },
-    plan : {
-        type: String,
-        required: true,
-        enum: Object.values(ApplicationPlan),
-        default: ApplicationPlan.Basic
     }
 
 }, {

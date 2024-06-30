@@ -1,7 +1,7 @@
 import * as k8s from '@kubernetes/client-node';
-import { appDeploymentConfig, k8sCoreApi, k8sAppsApi } from "@cloud-wave/common";
+import { ApplicationDeploymentConfig, k8sCoreApi, k8sAppsApi } from "@cloud-wave/common";
 
-async function createAppDeploymentAndService(config: appDeploymentConfig): Promise<void> {
+export async function createAppDeploymentAndService(config: ApplicationDeploymentConfig): Promise<void> {
     const deploymentManifest: k8s.V1Deployment = {
         apiVersion: 'apps/v1',
         kind: 'Deployment',
@@ -18,7 +18,7 @@ async function createAppDeploymentAndService(config: appDeploymentConfig): Promi
                         {
                             name: config.deploymentName,
                             image: config.imageName,
-                            ports: [{ containerPort: 8080 }],
+                            ports: [{ containerPort: config.port }],
                             resources: {
                                 requests: {
                                     memory: config.memoryRequest,
@@ -42,7 +42,7 @@ async function createAppDeploymentAndService(config: appDeploymentConfig): Promi
         metadata: { name: config.serviceName },
         spec: {
             selector: { app: config.deploymentName },
-            ports: [{ protocol: 'TCP', port: 80, targetPort: config.port }],
+            ports: [{ protocol: 'TCP', port: config.port, targetPort: config.port }],
             type: 'ClusterIP',
         },
     };

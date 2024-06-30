@@ -29,7 +29,7 @@ router.post('/api/applications/orders/new', requireAuth,[
     const expirationDate = new Date();
     let price =0;
     const orderWithSameName = await Order.findOne({
-        name: req.body.name
+        applicationName: req.body.name
     })
     console.log(orderWithSameName)
 

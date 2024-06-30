@@ -25,12 +25,11 @@ const start = async () => {
         });
         process.on('SIGTERM', ()=> natsWrapper.client.close());
         process.on('SIGINT', ()=> natsWrapper.client.close());
-        // await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
-        // await mongoose.connect('mongodb://localhost:27017/auth2' );
+        await mongoose.connect("mongodb://app-engine-db-mongo-srv:27017/app-engine");
+        // await mongoose.connect('mongodb://localhost:27017/app' );
+        console.log("DB connection");
         new AppDeleteListener(natsWrapper.client).listen();
         new AppPaymentCompletedListener(natsWrapper.client).listen();
-
-        console.log("DB connection");
     }catch (err){
         console.log(err);
     }
