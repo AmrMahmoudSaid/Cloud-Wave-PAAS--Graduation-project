@@ -26,6 +26,7 @@ export * from './event/interfaces/mysql-depl';
 export * from './event/interfaces/mongo-depl';
 export * from './event/interfaces/ingress-rule';
 export * from './event/interfaces/database-depl';
+export * from './event/interfaces/app-depl';
 export * from './event/order-cancelled-event';
 export * from './event/database-order-create-event';
 export * from './event/user-created-event';
