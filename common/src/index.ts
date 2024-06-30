@@ -35,6 +35,7 @@ export * from './event/payment-completed-event';
 export * from './event/database-delete-event';
 export * from './event/application-order-create-event';
 export * from './event/Application-payment-completed-event';
+export * from './event/application-engine-create-event';
 export * from './ingressConfig';
 export * from './kubctl-connection';
 export * from './kubectl-fun';
