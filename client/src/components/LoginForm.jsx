@@ -15,7 +15,7 @@ function LoginForm() {
     //   navigate("/login");
     // }
   }, [navigate]);
-  const url = "http://cloud.dev/api/users/signin";
+  const url = "https://cloud.dev/api/users/signin";
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -24,8 +24,8 @@ function LoginForm() {
         email: email,
         password: password,
       });
-
-      localStorage.setItem("userId", response.data.data.id);
+      console.log(response.data);
+      localStorage.setItem("userId", response.data.id);
 
       if (localStorage.getItem("userId")) {
         navigate("/homepage");

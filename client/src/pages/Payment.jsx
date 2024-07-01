@@ -43,7 +43,7 @@ const PaymentForm = () => {
       const name = localStorage.getItem("name");
       const email = localStorage.getItem("email");
       const password = localStorage.getItem("password");
-      const response = await fetch("http://cloud.dev/api/users/signup", {
+      const response = await fetch("https://cloud.dev/api/users/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -45,10 +45,10 @@ spec:
                 name: database-management-srv
                 port:
                   number: 4000
-#          - path: /?(.*)
-#            pathType: Prefix
-#            backend:
-#              service:
-#                name: client-srv
-#                port:
-#                  number: 3000
+          - path: /?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 5173

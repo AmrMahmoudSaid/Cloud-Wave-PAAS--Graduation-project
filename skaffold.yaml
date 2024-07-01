@@ -7,6 +7,14 @@ build:
   local:
     push: false
   artifacts:
+    - image: amrmahmoud377/client-paas
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
     - image: amrmahmoud377/auth-paas
       context: auth
       sync:
@@ -79,11 +87,3 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
-#    - image: amrmahmoud377/client-paas
-#      context: client
-#      docker:
-#        dockerfile: Dockerfile
-#      sync:
-#        manual:
-#          - src: '**/*.js'
-#            dest: .

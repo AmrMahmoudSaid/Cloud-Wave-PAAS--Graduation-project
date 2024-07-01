@@ -30,7 +30,7 @@ function AddDatabase() {
   const handlePriceChange = (e) => {
     setSelectedPrice(e.target.value);
   };
-  const url = "http://cloud.dev/api/database/orders/new";
+  const url = "https://cloud.dev/api/database/orders/new";
   const handleSubmit = async (e) => {
     e.preventDefault();
 
