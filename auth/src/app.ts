@@ -3,6 +3,7 @@ import 'express-async-errors'
 import cookieSession from "cookie-session";
 import {json} from "body-parser";
 import mongoose from 'mongoose';
+import cors from 'cors';
 import {currentUserRouter} from "./routes/currentuser";
 import {signinRouter} from "./routes/signin";
 import {signoutRouter} from "./routes/signout";
@@ -16,6 +17,7 @@ import {createCustomer} from "./routes/create-customer";
 const app = express();
 app.set('trust proxy', true);
 app.use(json());
+iapp.use(cors());
 app.use(cookieSession({
     signed: false
     // secure: true
