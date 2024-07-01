@@ -1,39 +1,33 @@
 import mongoose from "mongoose";
-import {DatabasePlans} from "@cloud-wave/common";
+import {ApplicationPlan} from "@cloud-wave/common";
 
 
-interface DatabaseConfigAttrs{
+interface ApplicationConfigAttrs{
     userId: string;
     namespace: string;
-    pvcName: string;
     deploymentName: string;
-    rootPassword: string;
-    databaseName: string;
-    databaseUsername: string;
-    databaseUsernamePass: string;
+    applicationName: string;
     serviceName: string;
     nodePort: string;
     status : string;
     host: string;
+    plan: string;
 }
 
-interface DatabaseConfigDoc extends mongoose.Document {
+interface ApplicationConfigDoc extends mongoose.Document {
     userId: string;
     namespace: string;
-    pvcName: string;
     deploymentName: string;
-    rootPassword: string;
-    databaseName: string;
-    databaseUsername: string;
-    databaseUsernamePass: string;
+    applicationName: string;
     serviceName: string;
     nodePort: string;
     status : string;
     host: string;
+    plan: string;
 }
 
-interface OrderModel extends mongoose.Model<DatabaseConfigDoc> {
-    build(attrs: DatabaseConfigAttrs): DatabaseConfigDoc;
+interface OrderModel extends mongoose.Model<ApplicationConfigDoc> {
+    build(attrs: ApplicationConfigAttrs): ApplicationConfigDoc;
 }
 
 
@@ -47,23 +41,11 @@ const dataConfigSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    databaseUsername: {
-        type: String,
-        required: true
-    },
-    databaseUsernamePass: {
+    applicationName: {
         type: String,
         required: true
     },
     deploymentName: {
-        type: String,
-        required: true
-    },
-    pvcName: {
-        type: String,
-        required: true
-    },
-    rootPassword: {
         type: String,
         required: true
     },
@@ -82,8 +64,8 @@ const dataConfigSchema = new mongoose.Schema({
     plan : {
         type: String,
         required: true,
-        enum: Object.values(DatabasePlans),
-        default: DatabasePlans.Basic
+        enum: Object.values(ApplicationPlan),
+        default: ApplicationPlan.Basic
     }
 
 }, {
@@ -95,10 +77,10 @@ const dataConfigSchema = new mongoose.Schema({
     }
 });
 
-dataConfigSchema.statics.build =(attrs: DatabaseConfigAttrs) =>{
+dataConfigSchema.statics.build =(attrs: ApplicationConfigAttrs) =>{
     return new AppConfig(attrs);
 }
 
-const AppConfig = mongoose.model<DatabaseConfigDoc, OrderModel>('Order', dataConfigSchema);
+const AppConfig = mongoose.model<ApplicationConfigDoc, OrderModel>('Order', dataConfigSchema);
 
 export {AppConfig};

@@ -14,6 +14,8 @@ import {GitFun} from "../../application-deployment-config/git-fun";
 import {Order} from "../../models/order-engine";
 import {DockerFun} from "../../application-deployment-config/docker-fun";
 import {createAppDeploymentAndService} from "../../application-deployment-config/app-depl-config";
+import {AppEngineCreatePublisher} from "../publisher/app-engine-create-publisher";
+import {natsWrapper} from "../../nats-wrapper";
 export class AppPaymentCompletedListener extends Listener<ApplicationPaymentCompletedEvent> {
     readonly subject = Subjects.ApplicationPaymentCompleted
     queueGroupName = queueGroupName;
@@ -62,18 +64,21 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
             await createAppDeploymentAndService(config);
             console.log("Created Successfully")
             const ingressManager=new IngressManager();
-            // host: string;
-            // path: string;
-            // serviceName: string;
-            // servicePort: number;
             const ingress:IngressRule = {
                 host: hosts.Dev,
-                path: `/${data.applicationName}-path`,
+                path: `/${data.applicationName}-path/?(.*)`,
+                serviceName: config.serviceName,
+                servicePort: config.port
+            }
+            const statices: IngressRule = {
+                host: hosts.Dev,
+                path: `/static/?(.*)`,
                 serviceName: config.serviceName,
                 servicePort: config.port
             }
             console.log(ingress);
             await ingressManager.updateIngress(ingress);
+            await ingressManager.updateIngress(statices);
             const orderEngine =  Order.build({
                 applicationName: data.applicationName,
                 tag: tag,
@@ -81,6 +86,16 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
                 userId: data.userId,
                 imageName: `amrmahmoud377/${data.applicationName}`
             })
+            await new AppEngineCreatePublisher(natsWrapper.client).publish({
+                userId: data.userId,
+                applicationName: data.applicationName,
+                gitUrl: data.gitUrl,
+                deploymentName: `${data.applicationName}-depl`,
+                serviceName: `${data.applicationName}-srv`,
+                path: `${hosts.Dev}/${data.applicationName}-path`,
+                namespace: 'default',
+                plan: data.plan.toString()
+            });
             msq.ack();
 
         }catch(error){

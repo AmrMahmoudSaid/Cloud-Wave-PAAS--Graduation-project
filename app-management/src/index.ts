@@ -2,7 +2,8 @@ import 'express-async-errors'
 import mongoose from 'mongoose';
 import {app} from "./app";
 import {natsWrapper} from "./nats-wrapper";
-import {DatabaseEngineCompletedListener} from "./events/listeners/database-engine-completed-listener";
+import {ApplicationEngineCompletedListener} from "./events/listeners/application-engine-completed-listener";
+import {AppPaymentCompletedListener} from "./events/listeners/app-payment-completed-listener";
 
 const start = async () => {
     if (!process.env.JWT_KEY){
@@ -34,7 +35,8 @@ const start = async () => {
         await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
         // await mongoose.connect('mongodb://localhost:27017/auth2' );
         console.log("DB connection");
-        new DatabaseEngineCompletedListener(natsWrapper.client).listen();
+        new ApplicationEngineCompletedListener(natsWrapper.client).listen();
+        new AppPaymentCompletedListener(natsWrapper.client).listen();
     }catch (err){
         console.log(err);
     }

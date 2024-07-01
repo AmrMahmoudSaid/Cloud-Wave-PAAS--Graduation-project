@@ -6,7 +6,7 @@ import {natsWrapper} from "../nats-wrapper";
 
 const router = express.Router();
 
-router.delete('/api/database/management/:id', requireAuth
+router.delete('/api/applications/management/:id', requireAuth
     , async (req: Request, res: Response) => {
         const id = req.params.id;
         const databaseConfig = await AppConfig.findById(id);
@@ -19,12 +19,12 @@ router.delete('/api/database/management/:id', requireAuth
         await new AppDeletePublisher(natsWrapper.client).publish({
             userId: req.currentUser!.id,
             deploymentName: databaseConfig.deploymentName,
-            pvcName: databaseConfig.pvcName,
-            serviceName: databaseConfig.serviceName
+            serviceName: databaseConfig.serviceName,
+            applicationName: databaseConfig.applicationName
         })
         databaseConfig.status = "deleted"
         databaseConfig.save();
-        res.status(201).send(databaseConfig);
+        res.status(200).send(databaseConfig);
     })
 
 export {router as deleteDatabase};

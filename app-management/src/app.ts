@@ -7,7 +7,7 @@ import {currentUser} from "@cloud-wave/common";
 
 import * as tty from "tty";
 import {errorHandler, NotFound} from "@cloud-wave/common";
-import {showDatabaseConfig} from "./routes/show";
+import {showApplicationConfig} from "./routes/show";
 import {deleteDatabase} from "./routes/delete";
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(cookieSession({
     // secure: true
 }))
 app.use(currentUser);
-app.use(showDatabaseConfig);
+app.use(showApplicationConfig);
 app.use(deleteDatabase);
 app.all('*', () => {
     throw new NotFound();
