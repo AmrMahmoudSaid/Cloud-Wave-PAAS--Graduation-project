@@ -1,31 +1,24 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Signing from "./signing/sign";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import LoginForm from "./components/LoginForm";
+import HomePage from "./pages/HomePage";
+import Payment from "./pages/Payment";
+import PaymentForm from "./pages/Payment";
+import AddDatabase from "./pages/AddDatabase";
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Signing />} />
-        {/* <Route path="/inctructorSign" element={<Instructorsign />} />
-        <Route path="/usersign" element={<Usersign />} />
-        <Route path="/user/home" element={<Userhome />} />
-        <Route path="/instructor/home" element={<Instercutorhome />} />
-        <Route path="/instructor/createcourse" element={<Createcourse />} />
-        <Route path="/instructor/instSearch" element={<Inssearch />} />
-        <Route
-          path="/instructor/courseInrollment"
-          element={<Courseinrollment />}
-        />
-        <Route path="/user/usersearch" element={<Usersearch />} />
-        <Route path="/user/allcourses" element={<Allcourses />} />
-        <Route path="/user/DisplayReview" element={<DisplayReview />} />
-        <Route path="/user/DisplayReview/makeReview" element={<Makereview />} />
-        <Route path="/admin/home" element={<Adminhmome />} />
-        <Route path="/admin/home/useraccounts" element={<Useraccounts />} />
-        <Route path="/admin/home/instaccounts" element={<Instaccounts />} />
-        <Route path="/admin/home/courses" element={<Courses />} />
-        <Route path="/user/notifications" element={<Notifications />} />
-        <Route path="/admin/home/courses/edit" element={<Edit />} />
-        <Route path="/admin/home/workflow" element={<Workflow />} /> */}
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/loginForm" element={<LoginForm />} />
+        <Route path="/homepage" element={<HomePage />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/paymentform" element={<PaymentForm />} />
+        <Route path="/createdatabase" element={<AddDatabase />} />
       </Routes>
     </BrowserRouter>
   );
