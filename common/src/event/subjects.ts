@@ -8,4 +8,5 @@ export enum Subjects{
     OrderDeleted = "OrderDeleted",
     ApplicationPaymentCompleted = "ApplicationPaymentCompleted",
     ApplicationEngineCreate = "ApplicationEngineCreate",
+    ApplicationDelete = "ApplicationDelete",
 }
