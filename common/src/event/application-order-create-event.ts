@@ -16,6 +16,7 @@ export interface ApplicationOrderCreateEvent {
         plan: ApplicationPlan;
         gitUrl: string,
         applicationName: string,
-        orderId: string
+        orderId: string,
+        port: number
     }
 }
