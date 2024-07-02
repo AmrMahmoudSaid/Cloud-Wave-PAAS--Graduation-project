@@ -113,7 +113,7 @@ export async function createMongoDBDeploymentAndService(config: MongoDBDeploymen
                     targetPort: 27017,
                 },
             ],
-            type: 'LoadBalancer',
+            type: 'NodePort',
         },
     };
     try {

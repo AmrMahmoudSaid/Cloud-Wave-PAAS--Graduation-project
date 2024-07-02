@@ -2,7 +2,7 @@ import {
     Listener,
     PaymentCompletedEvent,
     Subjects,
-    DatabasePlanConfig,
+    DatabasePlanConfig, IngressManager, IngressRule,
 } from "@cloud-wave/common";
 import {queueGroupName} from "./queue-group-name";
 import {Message} from "node-nats-streaming";
@@ -26,6 +26,7 @@ export class PaymentCompletedListener extends Listener<PaymentCompletedEvent> {
         let storage='';
         let ram='';
         let cpu='';
+        let port = 0;
         console.log(data.plan);
         if (data.plan=='Basic'){
             cpu = DatabasePlanConfig.CPUBasic;
@@ -59,19 +60,25 @@ export class PaymentCompletedListener extends Listener<PaymentCompletedEvent> {
         };
         if (data.databaseOrderType==='mysql'){
             await createMySQLDeploymentAndServiceWithIngress(config);
+            port = 3306
         }else if(data.databaseOrderType==='postgres'){
             await createPostgreSQLDeploymentAndServiceWithIngress(config);
+            port = 5432
         }else if (data.databaseOrderType==='mongo'){
             await createMongoDBDeploymentAndService(config);
+            port = 27017
         }
         console.log('tmam');
+        // new In
         // const ingress = new IngressManager();
         // const ingressRule : IngressRule ={
         //     host: hosts.Dev,
-        //     path: `/${path}`,
+        //     path: `/${name}`,
         //     serviceName: `${name}-srv`,
         //     servicePort: port
         // }
+        // await ingressManager.updateIngress(ingress);
+
         await new DatabaseEngineCreatePublisher(natsWrapper.client).publish({
             userId: data.userId,
             namespace: 'default',

@@ -9,6 +9,7 @@ import * as tty from "tty";
 import {errorHandler, NotFound} from "@cloud-wave/common";
 import {showApplicationConfig} from "./routes/show";
 import {deleteDatabase} from "./routes/delete";
+import {showApplicationLogs} from "./routes/logs";
 
 const app = express();
 app.set('trust proxy', true);
@@ -18,6 +19,7 @@ app.use(cookieSession({
     // secure: true
 }))
 app.use(currentUser);
+app.use(showApplicationLogs);
 app.use(showApplicationConfig);
 app.use(deleteDatabase);
 app.all('*', () => {

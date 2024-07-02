@@ -17,17 +17,9 @@ export class ApplicationEngineCompletedListener extends Listener<ApplicationEngi
     async onMessage(data: ApplicationEngineCreateEvent['data'], msq: Message){
         const kubectlFun = new KubectlFun();
         let podStatus = await kubectlFun.getPodStatus(data.deploymentName);
-        // let nodePort = await kubectlFun.getPodPort(data.serviceName);
-        // let loadBalancer = await kubectlFun.getExternalIP(data.serviceName);
-        // if (!nodePort){
-        //     nodePort = 'null'
-        // }
         if (!podStatus) {
             podStatus= 'null'
         }
-        // if (!loadBalancer) {
-        //     loadBalancer = 'null';
-        // }
         const app = await AppConfig.findOne({applicationName:data.applicationName});
         console.log(app);
         if (app!=null){
@@ -39,6 +31,7 @@ export class ApplicationEngineCompletedListener extends Listener<ApplicationEngi
             app.deploymentName=data.deploymentName;
             await app.save();
         }else {
+            msq.ack();
             throw new Error("Could not find a deployment name");
         }
         msq.ack();
