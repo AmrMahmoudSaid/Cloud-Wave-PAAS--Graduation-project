@@ -19,7 +19,7 @@ export class DockerFun {
 
     async  executeCommand(command: string) {
             try {
-                    const { stdout, stderr } = await this.execAsync(command);
+                    const { stdout, stderr } = await this.execAsync(command,{ maxBuffer: 1024 * 1024 * 10 });
                     console.log('stdout:', stdout);
                     console.error('stderr:', stderr);
             } catch (error) {
@@ -36,7 +36,7 @@ export class DockerFun {
                     await this.executeCommand(`docker build -t ${imageFullName} ${repoPath}`);
                     console.log(`Docker image ${imageFullName} built successfully!`);
 
-                    await this.delay(5000);
+                    await this.delay(30000);
 
                     const { stdout: images } = await this.execAsync(`docker images -q ${imageFullName}`);
                     if (!images.trim()) {

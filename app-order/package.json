@@ -19,8 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "@amtickets377/common": "^1.0.23",
-    "@cloud-wave/common": "^1.0.45",
-    "@octokit/core": "^6.1.2",
+    "@cloud-wave/common": "^1.0.54",
     "@types/cookie-session": "^2.0.48",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",

@@ -1,4 +1,4 @@
-import nats, { Stan } from 'node-nats-streaming';
+import nats, {Message, Stan, SubscriptionOptions} from 'node-nats-streaming';
 
 class NatsWrapper {
     private _client?: Stan;
@@ -7,7 +7,6 @@ class NatsWrapper {
         if (!this._client) {
             throw new Error('Cannot access NATS client before connecting');
         }
-
         return this._client;
     }
 
@@ -23,6 +22,25 @@ class NatsWrapper {
                 reject(err);
             });
         });
+    }
+
+    async publishWithRetry(subject: string, data: any, retryDelayMs: number = 15 * 60 * 1000) {
+        const publish = async () => {
+            try {
+                await this.client.publish(subject, JSON.stringify(data));
+                console.log(`Published message to ${subject}`);
+            } catch (error) {
+                console.error(`Failed to publish message to ${subject}:`, error);
+                // Retry after delay
+                setTimeout(publish, retryDelayMs);
+            }
+        };
+
+        await publish();
+    }
+
+    subscribe(subject: string, callback: (msg: Message) => void, options?: SubscriptionOptions) {
+        this.client.subscribe(subject, options );
     }
 }
 

@@ -21,7 +21,8 @@ export class GitFun {
                 await git.cwd(localPath).pull();
             } else {
                 console.log('Cloning the repository...');
-                await git.clone(repoUrl, localPath);
+                const res =await git.clone(repoUrl, localPath);
+                console.log(res);
             }
             console.log(`Repository cloned to ${localPath}`);
         } catch (error) {

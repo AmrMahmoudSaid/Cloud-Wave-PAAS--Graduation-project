@@ -16,6 +16,9 @@ import {DockerFun} from "../../application-deployment-config/docker-fun";
 import {createAppDeploymentAndService} from "../../application-deployment-config/app-depl-config";
 import {AppEngineCreatePublisher} from "../publisher/app-engine-create-publisher";
 import {natsWrapper} from "../../nats-wrapper";
+import {generateSpringDockerfile} from "../../static-docker-files/generateSpringDockerFile";
+import {generateReactDockerfile} from "../../static-docker-files/generateReactDockerFile";
+import {generateExpressDockerfile} from "../../static-docker-files/generateExpressDockerFile";
 export class AppPaymentCompletedListener extends Listener<ApplicationPaymentCompletedEvent> {
     readonly subject = Subjects.ApplicationPaymentCompleted
     queueGroupName = queueGroupName;
@@ -25,9 +28,21 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
             const path1 =  path.join(__dirname, `repository/${data.applicationName}`);
             console.log(path1);
             await gitFun.cloneRepo(data.gitUrl,path1);
+            msq.ack();
             const tag = '1';
             const dockerFun = new DockerFun();
+            console.log(data.databaseOrderType);
+            if (data.databaseOrderType=='Spring'){
+                await generateSpringDockerfile(path1);
+            }else if(data.databaseOrderType=='React'){
+                await generateReactDockerfile(path1,data.port);
+
+            }else if (data.databaseOrderType=='Express'){
+                console.log("tmam")
+                await generateExpressDockerfile(path1, data.port);
+            }
             await dockerFun.buildDockerImage(path1,data.applicationName,tag);
+            console.log("Create Image");
             let storage='';
             let ram='';
             let cpu='';
@@ -50,7 +65,7 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
                 namespace: "default",
                 deploymentName: `${data.applicationName}-depl`,
                 serviceName: `${data.applicationName}-srv`,
-                port: 3000,
+                port: data.port,
                 storageSize: `${storage}Gi`,
                 memoryRequest: '512Mi',
                 cpuRequest: '0.5',
@@ -64,15 +79,18 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
             await createAppDeploymentAndService(config);
             console.log("Created Successfully")
             const ingressManager=new IngressManager();
-            const ingress:IngressRule = {
+            const ingress = {
                 host: hosts.Dev,
-                path: `/${data.applicationName}-path/?(.*)`,
+                path: `/${data.applicationName}-path(/|$)(.*)`,
                 serviceName: config.serviceName,
-                servicePort: config.port
-            }
+                servicePort: config.port,
+                annotations: {
+                    'nginx.ingress.kubernetes.io/rewrite-target': '/$1'
+                }
+            };
             const statices: IngressRule = {
                 host: hosts.Dev,
-                path: `/static/?(.*)`,
+                path: `/static(/|$)(.*)`,
                 serviceName: config.serviceName,
                 servicePort: config.port
             }
@@ -86,6 +104,7 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
                 userId: data.userId,
                 imageName: `amrmahmoud377/${data.applicationName}`
             })
+            await orderEngine.save();
             await new AppEngineCreatePublisher(natsWrapper.client).publish({
                 userId: data.userId,
                 applicationName: data.applicationName,
@@ -96,7 +115,6 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
                 namespace: 'default',
                 plan: data.plan.toString()
             });
-            msq.ack();
 
         }catch(error){
             throw new Error("Some thing want wrong try again later.")

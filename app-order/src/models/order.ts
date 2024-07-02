@@ -10,7 +10,8 @@ interface OrderAttrs{
     price: number;
     gitUrl: string;
     applicationName: string;
-    plan: ApplicationPlan
+    plan: ApplicationPlan;
+    port: number;
 }
 
 interface OrderDoc extends mongoose.Document {
@@ -21,13 +22,15 @@ interface OrderDoc extends mongoose.Document {
     price: number;
     gitUrl: string;
     applicationName: string;
-    plan: ApplicationPlan
+    plan: ApplicationPlan;
+    port: number;
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
     build(attrs: OrderAttrs): OrderDoc;
 }
 
+// @ts-ignore
 const orderSchema = new mongoose.Schema({
     userId: {
         type: String,
@@ -48,6 +51,10 @@ const orderSchema = new mongoose.Schema({
         enum: Object.values(applicationOrderType),
     },
     price: {
+        type: Number,
+        required: true,
+    },
+    port: {
         type: Number,
         required: true,
     },

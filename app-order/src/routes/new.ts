@@ -45,18 +45,20 @@ router.post('/api/applications/orders/new', requireAuth,[
         plan: req.body.plan,
         applicationName: req.body.name,
         gitUrl: req.body.url,
+        port: req.body.port,
     });
     await order.save();
     await new ApplicationOrderCreatePublisher(natsWrapper.client).publish({
         userId: req.currentUser!.id,
         status: OrderStatus.Created,
         expiresAt: expirationDate,
-        databaseOrderType: req.body.databaseOrderType,
+        databaseOrderType: req.body.applicationOrderType,
         price: price,
         plan: req.body.plan,
         applicationName: req.body.name,
         gitUrl: req.body.url,
-        orderId: order.id
+        orderId: order.id,
+        port: order.port
     });
 
     res.status(201).send(order);

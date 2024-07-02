@@ -83,7 +83,8 @@ export class ApplicationOrderCreateListener extends Listener<ApplicationOrderCre
                 applicationName: data.applicationName,
                 orderId: order.id,
                 gitUrl: data.gitUrl,
-                plan: data.plan
+                plan: data.plan,
+                port:data.port
             });
             msq.ack();
         } catch (error) {
