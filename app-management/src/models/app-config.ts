@@ -12,6 +12,7 @@ interface ApplicationConfigAttrs{
     status : string;
     host: string;
     plan: string;
+    lastDeployment: string;
 }
 
 interface ApplicationConfigDoc extends mongoose.Document {
@@ -24,6 +25,7 @@ interface ApplicationConfigDoc extends mongoose.Document {
     status : string;
     host: string;
     plan: string;
+    lastDeployment: string;
 }
 
 interface OrderModel extends mongoose.Model<ApplicationConfigDoc> {
@@ -58,6 +60,10 @@ const dataConfigSchema = new mongoose.Schema({
         required: true
     },
     host: {
+        type: String,
+        required: true
+    },
+    lastDeployment: {
         type: String,
         required: true
     },

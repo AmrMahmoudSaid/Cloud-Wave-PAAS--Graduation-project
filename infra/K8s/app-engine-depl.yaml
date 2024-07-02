@@ -18,6 +18,8 @@ spec:
           env:
             - name: NATS_URL
               value: 'http://nats-srv:4222'
+            - name: JENKINS_URL
+              value: 'http://localhost:8080'
             - name: NATS_CLUSTER_ID
               value: ticketing
             - name: NATS_CLIENT_ID
@@ -29,6 +31,16 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+            - name: JENKINS_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: jenkins-api-token
+                  key: JENKINS_API_TOKEN
+            - name: JENKINS_USER
+              valueFrom:
+                secretKeyRef:
+                  name: jenkins-user
+                  key: JENKINS_USER
             - name: DOCKER_HOST
               value: 'unix:///var/run/docker.sock'
           securityContext:

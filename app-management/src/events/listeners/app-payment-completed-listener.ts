@@ -10,6 +10,7 @@ import {
 import {queueGroupName} from "./queue-group-name";
 import {Message} from "node-nats-streaming";
 import {AppConfig} from "../../models/app-config";
+const date = new Date();
 export class AppPaymentCompletedListener extends Listener<ApplicationPaymentCompletedEvent> {
     readonly subject = Subjects.ApplicationPaymentCompleted
     queueGroupName = queueGroupName;
@@ -24,6 +25,7 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
             status : "Creating",
             host: "data.path",
             plan: data.plan.toString(),
+            lastDeployment: date.toString()
         });
         await dataToSave.save();
         msq.ack();

@@ -15,6 +15,7 @@ interface DatabaseConfigAttrs{
     nodePort: string;
     status : string;
     host: string;
+    lastDeployment: string;
 }
 
 interface DatabaseConfigDoc extends mongoose.Document {
@@ -30,6 +31,7 @@ interface DatabaseConfigDoc extends mongoose.Document {
     nodePort: string;
     status : string;
     host: string;
+    lastDeployment: string;
 }
 
 interface OrderModel extends mongoose.Model<DatabaseConfigDoc> {
@@ -76,6 +78,10 @@ const dataConfigSchema = new mongoose.Schema({
         required: true
     },
     host: {
+        type: String,
+        required: true
+    },
+    lastDeployment: {
         type: String,
         required: true
     },

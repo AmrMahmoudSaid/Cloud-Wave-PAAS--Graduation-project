@@ -9,7 +9,7 @@ import {
 import {queueGroupName} from "./queue-group-name";
 import {Message} from "node-nats-streaming";
 import {DatabaseConfig} from "../../models/database-config";
-
+const date = new Date();
 export class DatabaseEngineCompletedListener extends Listener<DatabaseEngineCreateEvent> {
     readonly subject = Subjects.DatabaseEngineCreate
     queueGroupName = queueGroupName;
@@ -42,6 +42,7 @@ export class DatabaseEngineCompletedListener extends Listener<DatabaseEngineCrea
             nodePort: nodePort?.toString(),
             status : podStatus,
             host: loadBalancer,
+            lastDeployment: date.toString()
         });
         await dataToSave.save();
         msq.ack();

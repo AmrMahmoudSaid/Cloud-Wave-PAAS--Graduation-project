@@ -19,6 +19,7 @@ import {natsWrapper} from "../../nats-wrapper";
 import {generateSpringDockerfile} from "../../static-docker-files/generateSpringDockerFile";
 import {generateReactDockerfile} from "../../static-docker-files/generateReactDockerFile";
 import {generateExpressDockerfile} from "../../static-docker-files/generateExpressDockerFile";
+import {createJenkinsJob} from "../../application-deployment-config/jenkins";
 export class AppPaymentCompletedListener extends Listener<ApplicationPaymentCompletedEvent> {
     readonly subject = Subjects.ApplicationPaymentCompleted
     queueGroupName = queueGroupName;
@@ -105,6 +106,7 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
                 imageName: `amrmahmoud377/${data.applicationName}`
             })
             await orderEngine.save();
+            await createJenkinsJob(data.applicationName,path1,data.gitUrl);
             await new AppEngineCreatePublisher(natsWrapper.client).publish({
                 userId: data.userId,
                 applicationName: data.applicationName,
