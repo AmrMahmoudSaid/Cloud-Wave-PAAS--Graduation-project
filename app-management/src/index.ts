@@ -32,7 +32,7 @@ const start = async () => {
         });
         process.on('SIGTERM', ()=> natsWrapper.client.close());
         process.on('SIGINT', ()=> natsWrapper.client.close());
-        await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
+        await mongoose.connect("mongodb://app-management-db-mongo-srv:27017/app");
         // await mongoose.connect('mongodb://localhost:27017/auth2' );
         console.log("DB connection");
         new ApplicationEngineCompletedListener(natsWrapper.client).listen();
