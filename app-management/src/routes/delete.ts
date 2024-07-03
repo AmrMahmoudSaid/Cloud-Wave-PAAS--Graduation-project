@@ -9,22 +9,22 @@ const router = express.Router();
 router.delete('/api/applications/management/:id', requireAuth
     , async (req: Request, res: Response) => {
         const id = req.params.id;
-        const databaseConfig = await AppConfig.findById(id);
-        if (!databaseConfig) {
+        const appConfig = await AppConfig.findById(id);
+        if (!appConfig) {
             throw new NotFound();
         }
-        if (databaseConfig.userId != req.currentUser?.id){
+        if (appConfig.userId != req.currentUser?.id){
             throw new NotAuthorizedError();
         }
         await new AppDeletePublisher(natsWrapper.client).publish({
             userId: req.currentUser!.id,
-            deploymentName: databaseConfig.deploymentName,
-            serviceName: databaseConfig.serviceName,
-            applicationName: databaseConfig.applicationName
+            deploymentName: appConfig.deploymentName,
+            serviceName: appConfig.serviceName,
+            applicationName: appConfig.applicationName
         })
-        databaseConfig.status = "deleted"
-        databaseConfig.save();
-        res.status(200).send(databaseConfig);
+        appConfig.status = "deleted"
+        const app = await AppConfig.findByIdAndDelete(id);
+        res.status(200).send(app);
     })
 
 export {router as deleteDatabase};

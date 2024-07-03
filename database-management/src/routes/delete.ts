@@ -23,8 +23,7 @@ router.delete('/api/database/management/:id', requireAuth
             serviceName: databaseConfig.serviceName
         })
         databaseConfig.status = "deleted"
-        databaseConfig.save();
-        res.status(201).send(databaseConfig);
+        const deletedConfig = await DatabaseConfig.findByIdAndDelete(id);
+        res.status(201).send(deletedConfig);
     })
-
 export {router as deleteDatabase};

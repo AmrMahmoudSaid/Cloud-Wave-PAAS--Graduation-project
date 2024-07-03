@@ -53,6 +53,8 @@ function HomePage() {
   useEffect(() => {
     fetchDatabases();
     fetchApplication();
+    deleteApplication();
+    deleteDatabase();
   }, []);
 
   return (
