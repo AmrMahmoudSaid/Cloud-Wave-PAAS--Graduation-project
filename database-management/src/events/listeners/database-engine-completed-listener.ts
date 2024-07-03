@@ -10,6 +10,10 @@ import {queueGroupName} from "./queue-group-name";
 import {Message} from "node-nats-streaming";
 import {DatabaseConfig} from "../../models/database-config";
 const date = new Date();
+const day = date.toLocaleDateString('en-US', { weekday: 'long' });
+const month = date.toLocaleDateString('en-US', { month: 'long' });
+const year = date.getFullYear();
+const time = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 export class DatabaseEngineCompletedListener extends Listener<DatabaseEngineCreateEvent> {
     readonly subject = Subjects.DatabaseEngineCreate
     queueGroupName = queueGroupName;
@@ -42,7 +46,7 @@ export class DatabaseEngineCompletedListener extends Listener<DatabaseEngineCrea
             nodePort: nodePort?.toString(),
             status : podStatus,
             host: loadBalancer,
-            lastDeployment: date.toString()
+            lastDeployment: `${day}-${month}-${year}:${time}`
         });
         await dataToSave.save();
         msq.ack();

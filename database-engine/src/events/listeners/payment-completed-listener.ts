@@ -94,7 +94,7 @@ export class PaymentCompletedListener extends Listener<PaymentCompletedEvent> {
     }
 }
 
-function generateRandomString(length: number = 26): string {
+function generateRandomString(length: number = 5): string {
     const characters = 'abcdefghijklmnopqrstuvwxyz-';
     let result = '';
     const charactersLength = characters.length;

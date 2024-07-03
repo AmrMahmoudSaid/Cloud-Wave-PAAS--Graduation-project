@@ -11,6 +11,10 @@ import {queueGroupName} from "./queue-group-name";
 import {Message} from "node-nats-streaming";
 import {AppConfig} from "../../models/app-config";
 const date = new Date();
+const day = date.toLocaleDateString('en-US', { weekday: 'long' });
+const month = date.toLocaleDateString('en-US', { month: 'long' });
+const year = date.getFullYear();
+const time = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 export class AppPaymentCompletedListener extends Listener<ApplicationPaymentCompletedEvent> {
     readonly subject = Subjects.ApplicationPaymentCompleted
     queueGroupName = queueGroupName;
@@ -25,7 +29,7 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
             status : "Creating",
             host: "data.path",
             plan: data.plan.toString(),
-            lastDeployment: date.toString()
+            lastDeployment: `${day}-${month}-${year}:${time}`
         });
         await dataToSave.save();
         msq.ack();
