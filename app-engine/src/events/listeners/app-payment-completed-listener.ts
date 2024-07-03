@@ -106,7 +106,7 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
                 imageName: `amrmahmoud377/${data.applicationName}`
             })
             await orderEngine.save();
-            await createJenkinsJob(data.applicationName,path1,data.gitUrl);
+            // await createJenkinsJob(data.applicationName,path1,data.gitUrl);
             await new AppEngineCreatePublisher(natsWrapper.client).publish({
                 userId: data.userId,
                 applicationName: data.applicationName,
