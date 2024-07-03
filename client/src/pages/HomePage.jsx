@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Cont from "./Cont";
 import axios from "axios";
-
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 function HomePage() {
   const [databases, setDatabases] = useState([]);
   const [applications, setApplications] = useState([]);
@@ -28,7 +28,28 @@ function HomePage() {
       console.error("Failed to fetch Applications:", error);
     }
   };
-
+  const deleteDatabase = async (id) => {
+    try {
+      const response = await axios.delete(
+        `https://cloud.dev/api/database/management/${id}`
+      );
+      console.log("Application found:", response.data);
+      setApplications(response.data);
+    } catch (error) {
+      console.error("Failed to fetch Applications:", error);
+    }
+  };
+  const deleteApplication = async (id) => {
+    try {
+      const response = await axios.delete(
+        `https://cloud.dev/api/applications/management/${id}`
+      );
+      console.log("Application found:", response.data);
+      setApplications(response.data);
+    } catch (error) {
+      console.error("Failed to fetch Applications:", error);
+    }
+  };
   useEffect(() => {
     fetchDatabases();
     fetchApplication();
@@ -100,7 +121,12 @@ function HomePage() {
                     <div className="w-1/4">{database.plan}</div>
                     <div className="w-1/4">{database.lastDeployment}</div>
                     <div className="w-1/4">
-                      <button className="text-red-600">Delete</button>
+                      <button
+                        className="text-red-600 pointer"
+                        onClick={() => deleteDatabase(database.id)}
+                      >
+                        <DeleteOutlineOutlinedIcon />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -130,7 +156,12 @@ function HomePage() {
                     <div className="w-1/4">{database.plan}</div>
                     <div className="w-1/4">{database.lastDeployment}</div>
                     <div className="w-1/4">
-                      <button className="text-red-600">Delete</button>
+                      <button
+                        className="text-red-600 pointer"
+                        onClick={() => deleteApplication(applications.id)}
+                      >
+                        <DeleteOutlineOutlinedIcon />
+                      </button>
                     </div>
                   </div>
                 ))}
