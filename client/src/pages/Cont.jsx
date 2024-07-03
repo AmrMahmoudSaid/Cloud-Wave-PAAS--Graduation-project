@@ -138,7 +138,7 @@ function Cont() {
           </svg>
         </a>
       </div>
-      <div className="flex flex-col w-56 border-r border-gray-800">
+      <div className="flex flex-col w-72 border-r border-gray-800">
         <button className="relative text-sm focus:outline-none group">
           <div className="flex items-center justify-between w-full h-16 px-4 border-b border-white hover:bg-gray-600">
             <span className="font-medium">Dropdown</span>
@@ -185,6 +185,11 @@ function Cont() {
           <div className="flex items-center flex-shrink-0 h-10 px-2 mt-2 text-sm font-medium rounded hover:bg-gray-600">
             <Link to="/createdatabase">
               <span className="leading-none">Create Database</span>
+            </Link>
+          </div>
+          <div className="flex items-center flex-shrink-0 h-10 px-2 mt-2 text-sm font-medium rounded hover:bg-gray-600">
+            <Link to="/createapplication">
+              <span className="leading-none">Deploy Application</span>
             </Link>
           </div>
         </div>

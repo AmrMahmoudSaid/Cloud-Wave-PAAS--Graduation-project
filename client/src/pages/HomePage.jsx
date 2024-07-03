@@ -1,6 +1,39 @@
+import { useEffect, useState } from "react";
 import Cont from "./Cont";
+import axios from "axios";
 
 function HomePage() {
+  const [databases, setDatabases] = useState([]);
+  const [applications, setApplications] = useState([]);
+
+  const fetchDatabases = async () => {
+    try {
+      const response = await axios.get(
+        "https://cloud.dev/api/database/management/show"
+      );
+      console.log("Database found:", response.data);
+      setDatabases(response.data);
+    } catch (error) {
+      console.error("Failed to fetch Databases:", error);
+    }
+  };
+  const fetchApplication = async () => {
+    try {
+      const response = await axios.get(
+        "https://cloud.dev/api/applications/management/show"
+      );
+      console.log("Application found:", response.data);
+      setApplications(response.data);
+    } catch (error) {
+      console.error("Failed to fetch Applications:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDatabases();
+    fetchApplication();
+  }, []);
+
   return (
     <div className="flex w-screen h-screen text-white bg-[#041b4d]">
       <Cont />
@@ -8,7 +41,7 @@ function HomePage() {
         <div className="flex items-center justify-between flex-shrink-0 h-16 px-8 border-b border-gray-500">
           <h1 className="text-2xl font-bold">HomePage</h1>
           <button className="relative text-sm focus:outline-none group">
-            <div className="flex items-center justify-between w-32 h-10 px-4 border rounded hover:bg-gray-800">
+            <div className="flex items-center justify-between w-32 h-10 px-4 border rounded hover:bg-[#041b4d] hover:text-white">
               <span className="font-medium">Dropdown</span>
               <svg
                 className="w-4 h-4"
@@ -45,11 +78,66 @@ function HomePage() {
             </div>
           </button>
         </div>
-        <div className="flex-grow p-6 overflow-auto bg-white">
-          <div className="grid grid-cols-3 gap-6">
-            {/* <div className="col-span-3 rounded-lg bg-white border-2 border-solid border-black h-[600px]"></div> */}
-
-            {/* <div className="col-span-3 rounded-lg bg-gray-900 h-[596px]"></div> */}
+        <div className="flex-grow p-6 overflow-auto bg-white px-20">
+          <div className="flex flex-col">
+            <p className="font-bold text-3xl px-2 py-10">My Databases</p>
+            {databases.length > 0 ? (
+              <div className="flex flex-col w-11/12 m-auto font-bold px-2">
+                <div className="flex flex-row justify-between items-center border-b py-2 border-solid border-black">
+                  <div className="w-1/3">Service Name</div>
+                  <div className="w-1/4">Status</div>
+                  <div className="w-1/4">Plan</div>
+                  <div className="w-1/4">Last Deployed</div>
+                  <div className="w-1/4"></div>
+                </div>
+                {databases.map((database, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-row justify-between items-center font-semibold py-2"
+                  >
+                    <div className="w-1/3">{database.deploymentName}</div>
+                    <div className="w-1/4">{database.status}</div>
+                    <div className="w-1/4">{database.plan}</div>
+                    <div className="w-1/4">{database.lastDeployment}</div>
+                    <div className="w-1/4">
+                      <button className="text-red-600">Delete</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="py-4 text-center">There are no databases.</p>
+            )}
+            <p className="font-bold text-3xl px-2 mt-10 py-10">
+              MY Applications
+            </p>
+            {applications.length > 0 ? (
+              <div className="flex flex-col w-11/12 m-auto font-bold px-2">
+                <div className="flex flex-row justify-between items-center border-b py-2 border-solid border-black">
+                  <div className="w-1/3">Service Name</div>
+                  <div className="w-1/4">Status</div>
+                  <div className="w-1/4">Plan</div>
+                  <div className="w-1/4">Last Deployed</div>
+                  <div className="w-1/4"></div>
+                </div>
+                {applications.map((database, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-row justify-between items-center font-semibold py-2"
+                  >
+                    <div className="w-1/3">{database.applicationName}</div>
+                    <div className="w-1/4">{database.status}</div>
+                    <div className="w-1/4">{database.plan}</div>
+                    <div className="w-1/4">{database.lastDeployment}</div>
+                    <div className="w-1/4">
+                      <button className="text-red-600">Delete</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="py-4 text-center">There are no Applications.</p>
+            )}
           </div>
         </div>
       </div>

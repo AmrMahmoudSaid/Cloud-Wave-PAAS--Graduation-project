@@ -1,8 +1,6 @@
 import { useState } from "react";
 import Cont from "./Cont";
-import { BiLogoPostgresql } from "react-icons/bi";
-import { SiMongodb } from "react-icons/si";
-import { GrMysql } from "react-icons/gr";
+
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -15,32 +13,36 @@ import ProCont from "../components/ProCont";
 import SuperCont from "../components/SuperCont";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { LiaDocker } from "react-icons/lia";
+import { IoLogoNodejs } from "react-icons/io5";
+import { RiReactjsLine } from "react-icons/ri";
+import { SiSpringboot } from "react-icons/si";
 
-function AddDatabase() {
-  const [selectedDatabase, setSelectedDatabase] = useState("");
+function AddApplication() {
+  const [selectedApplication, setSelectedApplication] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [databasePassword, setdatabasePassword] = useState("");
+  const [name, setname] = useState("");
+  const [url, seturl] = useState("");
+  const [port, setport] = useState("");
   const navigate = useNavigate();
   const handleDatabaseChange = (e) => {
-    setSelectedDatabase(e.target.value);
+    setSelectedApplication(e.target.value);
   };
 
   const handlePriceChange = (e) => {
     setSelectedPrice(e.target.value);
   };
-  const url = "https://cloud.dev/api/database/orders/new";
+  const URL = "https://cloud.dev/api/applications/orders/new";
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(url, {
-        userName: userName,
-        userPassword: userPassword,
-        databasePassword: databasePassword,
+      const response = await axios.post(URL, {
+        name: name,
+        url: url,
+        port: port,
         plan: selectedPrice,
-        databaseOrderType: selectedDatabase,
+        applicationOrderType: selectedApplication,
       });
 
       // localStorage.setItem("userId", response.data.data.id);
@@ -61,7 +63,7 @@ function AddDatabase() {
       <Cont />
       <div className="flex flex-col flex-grow bg-white text-black">
         <div className="flex items-center justify-between flex-shrink-0 h-16 px-8 border-b border-gray-500">
-          <h1 className="text-2xl font-bold">Create Database Engine</h1>
+          <h1 className="text-2xl font-bold">Create Application Engine</h1>
           <button className="relative text-sm focus:outline-none group">
             <div className="flex items-center justify-between w-32 h-10 px-4 border rounded hover:bg-[#041b4d] hover:text-white">
               <span className="font-medium">Dropdown</span>
@@ -103,34 +105,41 @@ function AddDatabase() {
         <div className="flex-grow p-6 overflow-auto bg-white">
           <div className="flex flex-col">
             <p className="font-bold text-3xl px-2 py-6">
-              Choose a database engine
+              Choose application engine
             </p>
             <RadioGroup
               required
-              value={selectedDatabase}
+              value={selectedApplication}
               onChange={handleDatabaseChange}
             >
               <div className="flex flex-col px-28 mt-20 gap-3">
                 <div className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200">
-                  <FormControlLabel value="mysql" control={<Radio />} />
+                  <FormControlLabel value="DockerImage" control={<Radio />} />
                   <div className="w-6 font-bold h-auto text-blue-800">
-                    <GrMysql />
+                    <LiaDocker />
                   </div>
-                  Mysql
+                  Docker image
                 </div>
                 <div className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200">
-                  <FormControlLabel value="mongo" control={<Radio />} />
+                  <FormControlLabel value="Express" control={<Radio />} />
                   <div className="w-6 font-bold h-auto text-blue-800">
-                    <SiMongodb />
+                    <IoLogoNodejs />
                   </div>
-                  Mongo
+                  Express
                 </div>
                 <div className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200">
-                  <FormControlLabel value="postgres" control={<Radio />} />
+                  <FormControlLabel value="React" control={<Radio />} />
                   <div className="w-6 font-bold h-auto text-blue-800">
-                    <BiLogoPostgresql />
+                    <RiReactjsLine />
                   </div>
-                  PostgreSql
+                  React
+                </div>
+                <div className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200">
+                  <FormControlLabel value="Spring" control={<Radio />} />
+                  <div className="w-6 font-bold h-auto text-blue-800">
+                    <SiSpringboot />
+                  </div>
+                  Spring
                 </div>
               </div>
             </RadioGroup>
@@ -222,35 +231,35 @@ function AddDatabase() {
             </RadioGroup>
             <p className="font-bold text-4xl px-2 py-16">Finalize and Create</p>
             <div className="flex flex-col gap-3 px-[120px]">
-              <p className=" font-semibold">Choose a unique database name</p>
+              <p className=" font-semibold">Choose a unique application name</p>
               <p className="w-1/2 text-sm text-gray-500">
                 Names must be in lowercase. They can be between 3 and 30
                 characters long and may contain dashes.
               </p>
-              <p className="mt-4 font-semibold">Username</p>
+              <p className="mt-4 font-semibold">Application Name</p>
               <input
                 type="text"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                placeholder="Enter your username"
+                value={name}
+                onChange={(e) => setname(e.target.value)}
+                placeholder="Enter application Name"
                 required
                 className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold  py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
               />
-              <p className="mt-4 font-semibold">User Password</p>
+              <p className="mt-4 font-semibold">Github Repo URL</p>
               <input
-                type="password"
-                value={userPassword}
-                onChange={(e) => setUserPassword(e.target.value)}
-                placeholder="Enter your password"
+                type="text"
+                value={url}
+                onChange={(e) => seturl(e.target.value)}
+                placeholder="Enter repository url"
                 required
                 className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
               />
-              <p className="mt-4 font-semibold">Root Password</p>
+              <p className="mt-4 font-semibold">Application Port</p>
               <input
                 type="password"
-                value={databasePassword}
-                onChange={(e) => setdatabasePassword(e.target.value)}
-                placeholder="Enter root password"
+                value={port}
+                onChange={(e) => setport(e.target.value)}
+                placeholder="Enter application port"
                 required
                 className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
               />
@@ -261,8 +270,8 @@ function AddDatabase() {
                 {selectedPrice === "Super" && <SuperCont />}
               </div>
               <input
-                className="bg-[green] items-center justify-center text-center border rounded w-[140px]  mt-5 text-white py-3"
-                value="Create Database"
+                className="bg-[green] items-center justify-center text-center border rounded w-[150px]  mt-5 text-white py-3"
+                value="Deploy Application"
                 onClick={handleSubmit}
               />
             </div>
@@ -273,4 +282,4 @@ function AddDatabase() {
   );
 }
 
-export default AddDatabase;
+export default AddApplication;

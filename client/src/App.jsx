@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import Payment from "./pages/Payment";
 import PaymentForm from "./pages/Payment";
 import AddDatabase from "./pages/AddDatabase";
+import AddApplication from "./pages/AddApplication";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/paymentform" element={<PaymentForm />} />
         <Route path="/createdatabase" element={<AddDatabase />} />
+        <Route path="/createapplication" element={<AddApplication />} />
       </Routes>
     </BrowserRouter>
   );
