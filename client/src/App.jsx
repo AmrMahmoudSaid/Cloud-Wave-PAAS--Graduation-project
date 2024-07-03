@@ -9,7 +9,7 @@ import AddDatabase from "./pages/AddDatabase";
 import AddApplication from "./pages/AddApplication";
 import AppLogs from "./pages/AppLogs";
 import { Helmet } from "react-helmet";
-
+import Callback from "./pages/callback";
 function App() {
   return (
     <>
@@ -28,6 +28,7 @@ function App() {
           <Route path="/createdatabase" element={<AddDatabase />} />
           <Route path="/createapplication" element={<AddApplication />} />
           <Route path="/applogs" element={<AppLogs />} />
+          <Route path="/login/callback" element={<Callback />} />
         </Routes>
       </BrowserRouter>
     </>

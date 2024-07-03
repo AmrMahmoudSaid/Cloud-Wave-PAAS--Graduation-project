@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import axios from "axios";
+import GithubButton from "react-github-login-button";
 
 function LoginForm() {
   const [email, setEmail] = useState("omar@example.com");
@@ -36,6 +37,15 @@ function LoginForm() {
     } catch (error) {
       console.error("Login failed", error);
     }
+  };
+
+  const handleGitHubSignup = (e) => {
+    e.preventDefault();
+    localStorage.setItem("SignType", 1);
+
+    window.location.assign(
+      `https://github.com/login/oauth/authorize?client_id=Ov23liAiGPUlEm4xMIgH&scope=user`
+    );
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-red-500">
@@ -89,9 +99,7 @@ function LoginForm() {
           <div className="w-full h-px bg-gray-300"></div>
         </div>
         <div>
-          <Link to="/github-login" className="text-blue-500">
-            Github Signin
-          </Link>
+          <GithubButton type="light" onClick={handleGitHubSignup} />
         </div>
       </form>
     </div>

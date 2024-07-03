@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import GithubButton from "react-github-login-button";
 
 function SignupForm() {
   const [name, setName] = useState("");
@@ -28,6 +29,15 @@ function SignupForm() {
     } catch (error) {
       console.error("Signup failed", error);
     }
+  };
+
+  const handleGitHubSignup = (e) => {
+    e.preventDefault();
+    localStorage.setItem("SignType", 2);
+
+    window.location.assign(
+      `https://github.com/login/oauth/authorize?client_id=Ov23liAiGPUlEm4xMIgH&scope=user`
+    );
   };
 
   return (
@@ -137,9 +147,7 @@ function SignupForm() {
           <div className="w-full h-px bg-gray-300"></div>
         </div>
         <div>
-          <Link to="/github-login" className="text-blue-500">
-            Github Signup
-          </Link>
+          <GithubButton type="light" onClick={handleGitHubSignup} />
         </div>
       </form>
     </div>
