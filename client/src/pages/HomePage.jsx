@@ -55,7 +55,7 @@ function HomePage() {
     fetchApplication();
     deleteApplication();
     deleteDatabase();
-  }, []);
+  }, [fetchDatabases,fetchApplication]);
 
   return (
     <div className="flex w-screen h-screen text-white bg-[#041b4d]">

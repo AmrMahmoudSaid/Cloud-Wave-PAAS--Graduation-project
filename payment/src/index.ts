@@ -109,7 +109,7 @@ const start = async () => {
         await mongoose.connect("mongodb://payment-mongo-srv:27017/auth");
         console.log("DB connection");
         new UserCreatedListener(natsWrapper.client).listen();
-        new DatabaseDeleteListener(natsWrapper.client).listen();
+        // new DatabaseDeleteListener(natsWrapper.client).listen();
         new DatabaseOrderCompletedListener(natsWrapper.client).listen();
         new ApplicationOrderCreateListener(natsWrapper.client).listen();
     }catch (err){
