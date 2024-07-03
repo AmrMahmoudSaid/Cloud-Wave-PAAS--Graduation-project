@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import Cont from "./Cont";
 import axios from "axios";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import {useNavigate} from "react-router-dom";
 function HomePage() {
   const [databases, setDatabases] = useState([]);
   const [applications, setApplications] = useState([]);
-
+  const navigate =useNavigate()
   const fetchDatabases = async () => {
     try {
       const response = await axios.get(
@@ -165,6 +166,7 @@ function HomePage() {
                       onClick={() => handleClick(application.id)}
                     >
                       {application.applicationName}
+
                     </div>
                     <div className="w-1/4">{application.status}</div>
                     <div className="w-1/4">{application.plan}</div>
