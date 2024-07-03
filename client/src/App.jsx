@@ -7,6 +7,7 @@ import Payment from "./pages/Payment";
 import PaymentForm from "./pages/Payment";
 import AddDatabase from "./pages/AddDatabase";
 import AddApplication from "./pages/AddApplication";
+import AppLogs from "./pages/AppLogs";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/paymentform" element={<PaymentForm />} />
         <Route path="/createdatabase" element={<AddDatabase />} />
         <Route path="/createapplication" element={<AddApplication />} />
+        <Route path="/applogs" element={<AppLogs />} />
       </Routes>
     </BrowserRouter>
   );

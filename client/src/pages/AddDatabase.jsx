@@ -261,7 +261,7 @@ function AddDatabase() {
                 {selectedPrice === "Super" && <SuperCont />}
               </div>
               <input
-                className="bg-[green] items-center justify-center text-center border rounded w-[140px]  mt-5 text-white py-3"
+                className="bg-[green] items-center cursor-pointer justify-center text-center border rounded w-[140px]  mt-5 text-white py-3"
                 value="Create Database"
                 onClick={handleSubmit}
               />

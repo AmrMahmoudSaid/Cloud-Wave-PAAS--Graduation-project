@@ -256,7 +256,7 @@ function AddApplication() {
               />
               <p className="mt-4 font-semibold">Application Port</p>
               <input
-                type="password"
+                type="text"
                 value={port}
                 onChange={(e) => setport(e.target.value)}
                 placeholder="Enter application port"
@@ -270,7 +270,7 @@ function AddApplication() {
                 {selectedPrice === "Super" && <SuperCont />}
               </div>
               <input
-                className="bg-[green] items-center justify-center text-center border rounded w-[150px]  mt-5 text-white py-3"
+                className="bg-[green] cursor-pointer items-center justify-center text-center border rounded w-[150px]  mt-5 text-white py-3"
                 value="Deploy Application"
                 onClick={handleSubmit}
               />

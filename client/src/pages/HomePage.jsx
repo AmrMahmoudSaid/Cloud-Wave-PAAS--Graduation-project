@@ -53,9 +53,11 @@ function HomePage() {
   useEffect(() => {
     fetchDatabases();
     fetchApplication();
-    deleteApplication();
-    deleteDatabase();
-  }, [fetchDatabases,fetchApplication]);
+  }, []);
+  const handleClick = (id) => {
+    localStorage.setItem("appId", id);
+    navigate("/AppLogs");
+  };
 
   return (
     <div className="flex w-screen h-screen text-white bg-[#041b4d]">
@@ -118,7 +120,12 @@ function HomePage() {
                     key={index}
                     className="flex flex-row justify-between items-center font-semibold py-2"
                   >
-                    <div className="w-1/3">{database.deploymentName}</div>
+                    <div
+                      className="w-1/3"
+                      onClick={() => handleClick(database.id)}
+                    >
+                      {database.deploymentName}
+                    </div>
                     <div className="w-1/4">{database.status}</div>
                     <div className="w-1/4">{database.plan}</div>
                     <div className="w-1/4">{database.lastDeployment}</div>
@@ -148,19 +155,24 @@ function HomePage() {
                   <div className="w-1/4">Last Deployed</div>
                   <div className="w-1/4"></div>
                 </div>
-                {applications.map((database, index) => (
+                {applications.map((application, index) => (
                   <div
                     key={index}
                     className="flex flex-row justify-between items-center font-semibold py-2"
                   >
-                    <div className="w-1/3">{database.applicationName}</div>
-                    <div className="w-1/4">{database.status}</div>
-                    <div className="w-1/4">{database.plan}</div>
-                    <div className="w-1/4">{database.lastDeployment}</div>
+                    <div
+                      className="w-1/3"
+                      onClick={() => handleClick(application.id)}
+                    >
+                      {application.applicationName}
+                    </div>
+                    <div className="w-1/4">{application.status}</div>
+                    <div className="w-1/4">{application.plan}</div>
+                    <div className="w-1/4">{application.lastDeployment}</div>
                     <div className="w-1/4">
                       <button
                         className="text-red-600 pointer"
-                        onClick={() => deleteApplication(applications.id)}
+                        onClick={() => deleteApplication(application.id)}
                       >
                         <DeleteOutlineOutlinedIcon />
                       </button>
