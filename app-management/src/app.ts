@@ -11,6 +11,8 @@ import {showApplicationConfig} from "./routes/show";
 import {deleteDatabase} from "./routes/delete";
 import {showApplicationLogs} from "./routes/logs";
 import {applicationConfigIndex} from "./routes";
+import {checkPodHealth} from "./routes/health";
+import {applicationBilling} from "./routes/billing";
 
 const app = express();
 app.set('trust proxy', true);
@@ -24,6 +26,8 @@ app.use(showApplicationLogs);
 app.use(showApplicationConfig);
 app.use(deleteDatabase);
 app.use(applicationConfigIndex);
+app.use(checkPodHealth);
+app.use(applicationBilling);
 app.all('*', () => {
     throw new NotFound();
 })

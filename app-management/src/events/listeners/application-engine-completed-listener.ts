@@ -16,13 +16,13 @@ export class ApplicationEngineCompletedListener extends Listener<ApplicationEngi
 
     async onMessage(data: ApplicationEngineCreateEvent['data'], msq: Message){
         const kubectlFun = new KubectlFun();
-        let podStatus = await kubectlFun.getPodStatus(data.deploymentName);
-        if (!podStatus) {
-            podStatus= 'null'
-        }
         const app = await AppConfig.findOne({applicationName:data.applicationName});
         console.log(app);
         if (app!=null){
+            let podStatus = await kubectlFun.getPodStatus(data.deploymentName);
+            if (!podStatus) {
+                podStatus= 'null'
+            }
             app.namespace=data.namespace;
             app.serviceName= data.serviceName;
             app.nodePort="0";

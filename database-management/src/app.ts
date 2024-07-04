@@ -10,6 +10,7 @@ import {errorHandler, NotFound} from "@cloud-wave/common";
 import {showDatabaseConfig} from "./routes/show";
 import {deleteDatabase} from "./routes/delete";
 import {databaseConfigIndex} from "./routes";
+import {databaseBilling} from "./routes/billing";
 
 const app = express();
 app.set('trust proxy', true);
@@ -22,6 +23,7 @@ app.use(currentUser);
 app.use(showDatabaseConfig);
 app.use(deleteDatabase);
 app.use(databaseConfigIndex);
+app.use(databaseBilling);
 app.all('*', () => {
     throw new NotFound();
 })

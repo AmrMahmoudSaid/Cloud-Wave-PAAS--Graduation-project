@@ -27,6 +27,8 @@ router.get('/api/applications/management/logs/:id', requireAuth
             pod.spec.containers.forEach(container => {
                 console.log(`Container: ${container.name}`);
                 containerName = container.name;
+                container.volumeDevices
+                container.volumeMounts
             });
         });
 
@@ -56,7 +58,7 @@ router.get('/api/applications/management/logs/:id', requireAuth
                 }
             } catch (error) {
                 console.error('Error fetching pod logs:', error);
-                res.write(`data: Error fetching pod logs\n\n`);
+                // res.write(`data: Error fetching pod logs\n\n`);
             }
         };
 
