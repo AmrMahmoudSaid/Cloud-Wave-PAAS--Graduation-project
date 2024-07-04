@@ -44,11 +44,8 @@ const PaymentForm = () => {
       const email = localStorage.getItem("email");
       const password = localStorage.getItem("password");
       const code = localStorage.getItem("code");
-<<<<<<< HEAD
-      if (code) {
-=======
+
       if (code){
->>>>>>> f56e77bd24a7583db63b492fec45ae92f5d8b964
         const response = await fetch("https://cloud.dev/api/users/signup-git", {
           method: "POST",
           headers: {
@@ -56,7 +53,6 @@ const PaymentForm = () => {
           },
           body: JSON.stringify({
             token: token.id,
-<<<<<<< HEAD
             code: code,
           }),
         });
@@ -92,44 +88,7 @@ const PaymentForm = () => {
           navigate("/signup");
         }
       }
-=======
-            code: code
-          }),
-        });
-        localStorage.removeItem("code");
 
-        if (response.status === 201) {
-          navigate("/homepage");
-        }else {
-          navigate("/signup");
-        }
-        const data = await response.json();
-
-        console.log(data);
-      }else {
-        const response = await fetch("https://cloud.dev/api/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            token: token.id,
-            name: name,
-            email: email,
-            password: password,
-          }),
-        });
-        localStorage.removeItem("name");
-        localStorage.removeItem("email");
-        localStorage.removeItem("password");
-        if (response.status === 201) {
-          navigate("/homepage");
-        }else {
-          navigate("/signup");
-        }
-      }
-
->>>>>>> f56e77bd24a7583db63b492fec45ae92f5d8b964
     }
   };
 

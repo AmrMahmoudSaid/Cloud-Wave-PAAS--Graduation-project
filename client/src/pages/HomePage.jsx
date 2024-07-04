@@ -34,7 +34,7 @@ function HomePage() {
   };
   const deleteDatabase = async (id) => {
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `https://cloud.dev/api/database/management/${id}`
       );
       console.log("Application found:", response.data);
@@ -64,7 +64,7 @@ function HomePage() {
   };
   const handleClickDatabase = (id) => {
     localStorage.setItem("databaseId", id);
-    navigate("/datbaselogs");
+    navigate("/databaselogs");
   };
   return (
     <div className="flex w-screen h-screen text-white bg-[#041b4d]">
