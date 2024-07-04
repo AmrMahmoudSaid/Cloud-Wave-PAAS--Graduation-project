@@ -10,34 +10,46 @@ export class Emails {
     url?:string;
     from:string;
     reason?:string;
+    plan: string | undefined;
+    price: number | undefined;
 
 
 
-    constructor(email:string,name:string,url?:string, reason?:string) {
+    constructor(email:string,name:string,url?:string, reason?:string, price?:number, plan?:string) {
         this.to = email;
         this.name =name.split(' ')[0];
         this.url = url;
         // this.from = Cloud Wave <${process.env.GMAIL_EMAIL}>;
         // @ts-ignore
-        this.from =  'shadyamr101010@gmail.com';
+        this.from =  'cloud wave';
         this.reason = reason;
+        this.plan = plan;
+        this.price= price;
     }
     creatTransport(){
         return nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'shadyamr101010@gmail.com',
-                pass: ''
+                user: 'wavecloud64@gmail.com',
+                pass: 'gtgzycokbqdffdwt'
             }
         });
     }
-    async send(templateName:string,subject:string,reason?:string){  // templateName which is a put we send a nice formatted email
+    async send(templateName:string,subject:string,reason?:string, plan?: string, price?:string){  // templateName which is a put we send a nice formatted email
         //1 Render HTML based on a pug template
         let html;
         if (templateName==='welcome'){
             html =pug.renderFile(`${__dirname}/../src/email/welcome.pug`,{
+                firstName: "test",
+                url: this.url,
+                subject
+            })
+        }if (templateName==='payment'){
+            html =pug.renderFile(`${__dirname}/../src/email/paymentEmail.pug`,{
                 firstName: this.name,
                 url: this.url,
+                plan: this.plan,
+                price: this.price,
                 subject
             })
         }
@@ -54,5 +66,8 @@ export class Emails {
     }
     async sendWelcome(){
         await this.send('welcome','Welcome to the Cloud wave Family', 'User create')
+    }
+    async payment(){
+        await this.send('payment','Welcome to the Cloud wave', 'User Payment')
     }
 }

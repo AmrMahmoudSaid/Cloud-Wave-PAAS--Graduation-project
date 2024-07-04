@@ -13,43 +13,52 @@ const Callback = () => {
 
       return () => clearInterval(timerId);
     } else {
-      window.location.href = "/homepage";
+      window.location.href = '/login';
     }
   }, [timeLeft]);
 
   useEffect(() => {
     const getAccessToken = async (code) => {
+      localStorage.setItem("code", code);
+    };
+
+    const creat = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get("code");
       const signType = localStorage.getItem("SignType");
-      const url =
-        signType === 1
-          ? "https://cloud.dev/api/users/login-git"
-          : "https://cloud.dev/api/users/signup-git";
-      try {
+      console.log(code);
+      const url = "https://cloud.dev/api/users/login-git";
+      if (signType === '1') {
+        console.log("login");
         const response = await axios.post(url, {
           code: code,
         });
-        const { access_token } = response.data;
-        console.log("Access Token:", access_token);
-        window.location.href = "/homepage";
-      } catch (error) {
-        console.error("Error getting access token:", error);
+        if (response.status === 200) {
+          window.location.href = "/homepage";
+        } else {
+          alert("something went wrong");
+          window.location.href = "/login";
+        }
+      } else {
+        console.log("payment");
+        window.location.href = "/payment";
       }
     };
 
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
-
     if (code) {
-      console.log(code);
       getAccessToken(code);
+      creat();
     }
   }, []);
+
   return (
-    <div>
-      <style>{`
+      <div>
+        <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
       `}</style>
-      <style>{`
+        <style>{`
         .loading-container {
           display: flex;
           flex-direction: column;
@@ -65,11 +74,11 @@ const Callback = () => {
         }
       `}</style>
 
-      <div className="loading-container">
-        <div className="loading-header">Signing</div>
-        <ClipLoader color={"#123abc"} size={150} />
+        <div className="loading-container">
+          <div className="loading-header">Signing</div>
+          <ClipLoader color={"#123abc"} size={150} />
+        </div>
       </div>
-    </div>
   );
 };
 

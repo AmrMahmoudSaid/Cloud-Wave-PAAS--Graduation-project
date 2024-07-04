@@ -28,10 +28,6 @@ router.post('/api/users/signup-git', [
 ],validateRequest,async (req: Request, res: Response) => {
     const { code, token } = req.body;
     console.log(code);
-    const customer2 = await stripe.customers.create({
-        email: req.body.email,
-        source: token,
-    });
     const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',
         headers: {

@@ -77,13 +77,14 @@ export class DatabaseOrderCompletedListener extends Listener<DatabaseOrderCreate
                 status: OrderStatus.Created,
                 expiresAt: expirationDate,
                 databaseOrderType: data.databaseOrderType,
-                price: data.price,
+                price: planPrice,
                 plan: data.plan,
                 rootPassword: data.rootPassword,
                 databaseName: data.databaseName,
                 userName: data.userName,
                 userPassword: data.userPassword,
-                orderId: order.id
+                orderId: order.id,
+                email: user.email
             });
             msq.ack();
         } catch (error) {

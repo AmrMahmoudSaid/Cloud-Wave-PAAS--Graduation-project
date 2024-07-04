@@ -116,7 +116,7 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
         gitUrl: data.gitUrl,
         deploymentName: `${data.applicationName}-depl`,
         serviceName: `${data.applicationName}-srv`,
-        path: `${hosts.Dev}/${data.applicationName}-path`,
+        path: `${process.env.HOST_URL}/${data.applicationName}-path`,
         namespace: "default",
         plan: data.plan.toString(),
       });

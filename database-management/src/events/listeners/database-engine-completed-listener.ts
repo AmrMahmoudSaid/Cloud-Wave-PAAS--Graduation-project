@@ -46,7 +46,7 @@ export class DatabaseEngineCompletedListener extends Listener<DatabaseEngineCrea
             nodePort: nodePort?.toString(),
             status : podStatus,
             host: loadBalancer,
-            lastDeployment: `${day}-${month}-${year}:${time}`
+            lastDeployment: `${day}-${month}-${year}:${time}`,
             price: data.price
         });
         await dataToSave.save();

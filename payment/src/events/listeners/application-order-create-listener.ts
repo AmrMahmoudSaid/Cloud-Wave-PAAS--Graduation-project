@@ -79,12 +79,13 @@ export class ApplicationOrderCreateListener extends Listener<ApplicationOrderCre
                 status: OrderStatus.Created,
                 expiresAt: expirationDate,
                 databaseOrderType: data.databaseOrderType,
-                price: data.price,
+                price: planPrice,
                 applicationName: data.applicationName,
                 orderId: order.id,
                 gitUrl: data.gitUrl,
                 plan: data.plan,
-                port:data.port
+                port:data.port,
+                email: user.email
             });
             msq.ack();
         } catch (error) {

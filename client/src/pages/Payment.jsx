@@ -43,24 +43,49 @@ const PaymentForm = () => {
       const name = localStorage.getItem("name");
       const email = localStorage.getItem("email");
       const password = localStorage.getItem("password");
-      const response = await fetch("https://cloud.dev/api/users/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: token.id,
-          name: name,
-          email: email,
-          password: password,
-        }),
-      });
-      localStorage.removeItem("name");
-      localStorage.removeItem("email");
-      localStorage.removeItem("password");
+      const code = localStorage.getItem("code");
+      if (code){
+        const response = await fetch("https://cloud.dev/api/users/signup-git", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: token.id,
+            code: code
+          }),
+        });
+        if (response.status === 201) {
+          navigate("/homepage");
+        }else {
+          navigate("/signup");
+        }
+        const data = await response.json();
 
-      const data = await response.json();
-      console.log(data);
+        console.log(data);
+      }else {
+        const response = await fetch("https://cloud.dev/api/users/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: token.id,
+            name: name,
+            email: email,
+            password: password,
+          }),
+        });
+        localStorage.removeItem("name");
+        localStorage.removeItem("email");
+        localStorage.removeItem("password");
+        if (response.status === 200) {
+          navigate("/homepage");
+        }else {
+          navigate("/signup");
+        }
+      }
+
     }
   };
 
