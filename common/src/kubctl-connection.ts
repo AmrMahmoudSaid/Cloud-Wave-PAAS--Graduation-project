@@ -37,3 +37,4 @@ export const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
 export const k8sCoreApi = kc.makeApiClient(k8s.CoreV1Api);
 export const networkingApi = kc.makeApiClient(k8s.NetworkingV1Api);
 export const metricsClient = new k8s.Metrics(kc);
+export const exec = new k8s.Exec(kc);
