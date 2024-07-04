@@ -27,7 +27,7 @@ export class Emails {
             service: 'gmail',
             auth: {
                 user: 'shadyamr101010@gmail.com',
-                pass: 'gtgzycokbqdffdwt'
+                pass: ''
             }
         });
     }
