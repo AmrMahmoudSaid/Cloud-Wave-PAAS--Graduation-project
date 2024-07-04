@@ -33,6 +33,7 @@ const Callback = () => {
         const response = await axios.post(url, {
           code: code,
         });
+        localStorage.removeItem("code");
         if (response.status === 200) {
           window.location.href = "/homepage";
         } else {

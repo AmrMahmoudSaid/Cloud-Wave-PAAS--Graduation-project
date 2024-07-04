@@ -55,6 +55,8 @@ const PaymentForm = () => {
             code: code
           }),
         });
+        localStorage.removeItem("code");
+
         if (response.status === 201) {
           navigate("/homepage");
         }else {
@@ -79,7 +81,7 @@ const PaymentForm = () => {
         localStorage.removeItem("name");
         localStorage.removeItem("email");
         localStorage.removeItem("password");
-        if (response.status === 200) {
+        if (response.status === 201) {
           navigate("/homepage");
         }else {
           navigate("/signup");

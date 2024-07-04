@@ -31,7 +31,7 @@ export class Emails {
             service: 'gmail',
             auth: {
                 user: 'wavecloud64@gmail.com',
-                pass: 'gtgzycokbqdffdwt'
+                pass: 'bjeyuuwkbvahvxpi'
             }
         });
     }

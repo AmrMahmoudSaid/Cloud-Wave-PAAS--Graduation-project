@@ -4,6 +4,8 @@ import { body } from 'express-validator';
 import { validateRequest, BadRequestError } from '@cloud-wave/common';
 import { User } from '../models/user';
 import Stripe from "stripe";
+import {UserCreatedPublisher} from "../event/publisher/user-created-publisher";
+import {natsWrapper} from "../nats-wrapper";
 const router = express.Router();
 
 const CLIENT_ID = 'Ov23liAiGPUlEm4xMIgH';
@@ -88,6 +90,13 @@ router.post('/api/users/signup-git', [
         customerId: customer.id
     });
     await user2.save();
+    await new UserCreatedPublisher(natsWrapper.client).publish({
+        name: user2.name,
+        email: user2.email,
+        id: user2.id,
+        userId: user2.id,
+        customerId: user2.customerId,
+    });
     const userJwt = jwt.sign({
         id: user2.id,
         email: user2.email,
