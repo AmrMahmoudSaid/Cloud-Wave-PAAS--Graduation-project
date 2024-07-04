@@ -16,6 +16,7 @@ export interface PaymentCompletedEvent {
         databaseName: string,
         userName: string,
         userPassword: string,
-        orderId: string
+        orderId: string,
+        email: string
     }
 }

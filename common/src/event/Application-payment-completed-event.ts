@@ -17,6 +17,7 @@ export interface ApplicationPaymentCompletedEvent {
         gitUrl: string,
         applicationName: string,
         orderId: string;
-        port: number
+        port: number;
+        email: string;
     }
 }
