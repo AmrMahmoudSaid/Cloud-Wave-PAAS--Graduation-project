@@ -11,6 +11,7 @@ import {showDatabaseConfig} from "./routes/show";
 import {deleteDatabase} from "./routes/delete";
 import {databaseConfigIndex} from "./routes";
 import {databaseBilling} from "./routes/billing";
+import {showDatabaseLogs} from "./routes/logs";
 
 const app = express();
 app.set('trust proxy', true);
@@ -24,6 +25,7 @@ app.use(showDatabaseConfig);
 app.use(deleteDatabase);
 app.use(databaseConfigIndex);
 app.use(databaseBilling);
+app.use(showDatabaseLogs)
 app.all('*', () => {
     throw new NotFound();
 })
