@@ -1,20 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-app-srv
+  name: ingress-system-srv
   annotations:
-    kubernetes.io/ingress.class: ngrok
+    kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: 'true'
-    nginx.ingress.kubernetes.io/rewrite-target: '/$2'
 spec:
   rules:
-    - host: loved-glider-painfully.ngrok-free.app
+    - host: cloudwave.system
       http:
         paths:
-          - path: /?(.*)
+          - path: /
             pathType: Prefix
             backend:
               service:
-                name: app-service
+                name: jenkins-srv
                 port:
-                  number: 80
+                  number: 8080

@@ -89,6 +89,7 @@ export class PaymentCompletedListener extends Listener<PaymentCompletedEvent> {
             userName: `${data.userName}`,
             userPassword: `${data.userPassword}`,
             serviceName: `${name}-srv`,
+            price: data.price
         })
         msq.ack();
     }

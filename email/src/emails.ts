@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+require('dotenv').config();
 const pug = require('pug')
 const path = require('path')
 const { convert } = require('html-to-text')
@@ -16,23 +17,17 @@ export class Emails {
         this.to = email;
         this.name =name.split(' ')[0];
         this.url = url;
-        // this.from = `Cloud Wave <${process.env.GMAIL_EMAIL}>`;
-        this.from = 'Cloud-Wave-PAAS amrmahmoud1900@gmail.com';
+        // this.from = Cloud Wave <${process.env.GMAIL_EMAIL}>;
+        // @ts-ignore
+        this.from =  'shadyamr101010@gmail.com';
         this.reason = reason;
     }
     creatTransport(){
         return nodemailer.createTransport({
-        //     Server	smtp.sendgrid.net
-        //     Ports
-        //     25, 587	(for unencrypted/TLS connections)
-        // 465	(for SSL connections)
-        // Username	apikey
-            host: 'smtp.sendgrid.net',
-            port: 587,
-            // secure: false,
+            service: 'gmail',
             auth: {
-                user: 'apikey',
-                pass: ""
+                user: 'shadyamr101010@gmail.com',
+                pass: 'gtgzycokbqdffdwt'
             }
         });
     }

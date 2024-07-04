@@ -5,9 +5,10 @@ import path from "path";
 
 const router = express.Router();
 
-router.post('/api/applications/management/webhook', requireAuth
+router.get('/api/applications/management/webhook/:name'
     , async (req: Request, res: Response) => {
         console.log('Received webhook:', req.body);
+        console.log(req.params.name)
         const gitFun = new GitFun();
 
         if (req.body.repository) {

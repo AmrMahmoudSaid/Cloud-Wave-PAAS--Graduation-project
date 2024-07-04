@@ -14,8 +14,10 @@ router.get('/api/applications/management/show', requireAuth
         if (Array.isArray(applicationConfig) && applicationConfig.length > 0) {
             // Iterate through the array and update the status
             applicationConfig.forEach(async config => {
-                if (config.status!= "deleted" && config.status!="waiting"){
+                if (config.status!= "deleted" && config.status!="waiting"&& config.status!='Creating'){
+                    console.log("status:", config.status);
                     config.status = await kubectlFun.getPodStatus(config.deploymentName);
+                    console.log("status:", config.status);
                 }
                 await config.save();
             });

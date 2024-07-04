@@ -47,6 +47,7 @@ export class DatabaseEngineCompletedListener extends Listener<DatabaseEngineCrea
             status : podStatus,
             host: loadBalancer,
             lastDeployment: `${day}-${month}-${year}:${time}`
+            price: data.price
         });
         await dataToSave.save();
         msq.ack();

@@ -47,8 +47,8 @@ export class DockerFun {
                     await this.executeCommand('docker login -u amrmahmoud377 -p 3mr_m7moud');
                     console.log('Logged in to Docker Hub successfully!');
 
-                    await this.executeCommand(`docker push ${imageFullName}`);
-                    console.log(`Docker image ${imageFullName} pushed to Docker Hub successfully!`);
+                    // await this.executeCommand(`docker push ${imageFullName}`);
+                    // console.log(`Docker image ${imageFullName} pushed to Docker Hub successfully!`);
             } catch (error) {
                     console.error('Error building or pushing Docker image:', error);
             }

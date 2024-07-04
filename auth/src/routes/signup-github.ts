@@ -26,9 +26,12 @@ router.post('/api/users/signup-git', [
     body('token').notEmpty().withMessage('You must provide a token'),
     body('code').notEmpty().withMessage('You must provide a code'),
 ],validateRequest,async (req: Request, res: Response) => {
-    const { code } = req.body;
+    const { code, token } = req.body;
     console.log(code);
-
+    const customer2 = await stripe.customers.create({
+        email: req.body.email,
+        source: token,
+    });
     const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',
         headers: {
@@ -83,7 +86,7 @@ router.post('/api/users/signup-git', [
     const password = "null"
     const customer = await stripe.customers.create({
         email: req.body.email,
-        source: req.body.token,
+        source: token,
     });
     const user2 = User.build({email,name,password,githubId,
         customerId: customer.id

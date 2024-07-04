@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import {natsWrapper} from "./nats-wrapper";
 import {AppDeleteListener} from "./events/listeners/app-delete-listener";
 import {AppPaymentCompletedListener} from "./events/listeners/app-payment-completed-listener";
+import {app} from "./app";
 
 const start = async () => {
     if (!process.env.NATS_URL){
@@ -34,5 +35,8 @@ const start = async () => {
         console.log(err);
     }
 };
+app.listen(4000,() =>{
+    console.log('Listening on port 4000');
+});
 start();
 
