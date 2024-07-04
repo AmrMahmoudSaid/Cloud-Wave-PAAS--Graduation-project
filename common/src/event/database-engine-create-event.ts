@@ -12,5 +12,6 @@ export interface DatabaseEngineCreateEvent {
         userName: string,
         userPassword: string,
         serviceName: string,
+        price: string;
     }
 }
