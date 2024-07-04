@@ -10,6 +10,8 @@ import AddApplication from "./pages/AddApplication";
 import AppLogs from "./pages/AppLogs";
 import { Helmet } from "react-helmet";
 import Callback from "./pages/callback";
+import DatabaseLogs from "./pages/DatabaseLogs";
+import Billing from "./pages/Billing";
 function App() {
   return (
     <>
@@ -29,6 +31,8 @@ function App() {
           <Route path="/createapplication" element={<AddApplication />} />
           <Route path="/applogs" element={<AppLogs />} />
           <Route path="/login/callback" element={<Callback />} />
+          <Route path="/databaselogs" element={<DatabaseLogs />} />
+          <Route path="/billing" element={<Billing />} />
         </Routes>
       </BrowserRouter>
     </>

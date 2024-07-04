@@ -17,6 +17,7 @@ import { LiaDocker } from "react-icons/lia";
 import { IoLogoNodejs } from "react-icons/io5";
 import { RiReactjsLine } from "react-icons/ri";
 import { SiSpringboot } from "react-icons/si";
+import Footer from "../components/Footer";
 
 function AddApplication() {
   const [selectedApplication, setSelectedApplication] = useState("");
@@ -63,7 +64,9 @@ function AddApplication() {
       <Cont />
       <div className="flex flex-col flex-grow bg-white text-black">
         <div className="flex items-center justify-between flex-shrink-0 h-16 px-8 border-b border-gray-500">
-          <h1 className="text-2xl font-bold">Create Application Engine</h1>
+          <h1 className="text-2xl font-bold text-[#041b4d] opacity-90">
+            Create Application Engine
+          </h1>
           <button className="relative text-sm focus:outline-none group">
             <div className="flex items-center justify-between w-32 h-10 px-4 border rounded hover:bg-[#041b4d] hover:text-white">
               <span className="font-medium">Dropdown</span>
@@ -104,8 +107,8 @@ function AddApplication() {
         </div>
         <div className="flex-grow p-6 overflow-auto bg-white">
           <div className="flex flex-col">
-            <p className="font-bold text-3xl px-2 py-6">
-              Choose application engine
+            <p className="font-bold text-3xl px-2 py-6 text-[#041b4d] opacity-90">
+              Choose Application Engine
             </p>
             <RadioGroup
               required
@@ -143,7 +146,7 @@ function AddApplication() {
                 </div>
               </div>
             </RadioGroup>
-            <p className="font-bold text-4xl px-2 py-24">
+            <p className="font-bold text-4xl px-2 py-24 text-[#041b4d] opacity-90">
               Pick an instance type
             </p>
             <RadioGroup
@@ -194,7 +197,7 @@ function AddApplication() {
                     <BsCheckLg />
                     <p> Storage: 10</p>
                   </div>
-                  <p className="px-4 py-1 mt-3">
+                  <p className="px-4 py-1 mt-3 ">
                     Business-focused apps, such as custtomer-facing or internal
                     web apps and APIs
                   </p>
@@ -229,7 +232,9 @@ function AddApplication() {
                 </div>
               </div>
             </RadioGroup>
-            <p className="font-bold text-4xl px-2 py-16">Finalize and Create</p>
+            <p className="font-bold text-4xl px-2 py-16 text-[#041b4d] opacity-90">
+              Finalize and Create
+            </p>
             <div className="flex flex-col gap-3 px-[120px]">
               <p className=" font-semibold">Choose a unique application name</p>
               <p className="w-1/2 text-sm text-gray-500">
@@ -277,6 +282,7 @@ function AddApplication() {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     </div>
   );

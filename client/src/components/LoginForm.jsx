@@ -94,12 +94,12 @@ function LoginForm() {
             Create an account
           </Link>
         </div>
-        <div className="mb-4 flex justify-center items-center relative">
+        <div className="mb-4 flex justify-center py-3 items-center relative">
           <span className="absolute bg-white px-2">or</span>
-          <div className="w-full h-px bg-gray-300"></div>
+          <div className="w-full h-[1px]  bg-gray-300"></div>
         </div>
-        <div>
-          <GithubButton type="light" onClick={handleGitHubSignup} />
+        <div className=" font-bold py-6 ml-[40px]">
+          <GithubButton type="dark" onClick={handleGitHubSignup} />
         </div>
       </form>
     </div>

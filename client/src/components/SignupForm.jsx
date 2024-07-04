@@ -137,17 +137,17 @@ function SignupForm() {
         />
 
         <div className="mb-4">
-          New to our platform?
-          <Link to="/signup" className="text-blue-500">
-            Create an account
+          Not your first time?
+          <Link to="/login" className="text-blue-500">
+            Sign into your account
           </Link>
         </div>
         <div className="mb-4 flex justify-center items-center relative">
           <span className="absolute bg-white px-2">or</span>
           <div className="w-full h-px bg-gray-300"></div>
         </div>
-        <div>
-          <GithubButton type="light" onClick={handleGitHubSignup} />
+        <div className=" font-bold ml-[40px]">
+          <GithubButton type="dark" onClick={handleGitHubSignup} />
         </div>
       </form>
     </div>

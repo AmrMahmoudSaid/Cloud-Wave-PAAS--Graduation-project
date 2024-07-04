@@ -15,6 +15,7 @@ import ProCont from "../components/ProCont";
 import SuperCont from "../components/SuperCont";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Footer from "../components/Footer";
 
 function AddDatabase() {
   const [selectedDatabase, setSelectedDatabase] = useState("");
@@ -61,7 +62,9 @@ function AddDatabase() {
       <Cont />
       <div className="flex flex-col flex-grow bg-white text-black">
         <div className="flex items-center justify-between flex-shrink-0 h-16 px-8 border-b border-gray-500">
-          <h1 className="text-2xl font-bold">Create Database Engine</h1>
+          <h1 className="text-2xl font-bold text-[#041b4d] opacity-90">
+            Create Database Engine
+          </h1>
           <button className="relative text-sm focus:outline-none group">
             <div className="flex items-center justify-between w-32 h-10 px-4 border rounded hover:bg-[#041b4d] hover:text-white">
               <span className="font-medium">Dropdown</span>
@@ -102,7 +105,7 @@ function AddDatabase() {
         </div>
         <div className="flex-grow p-6 overflow-auto bg-white">
           <div className="flex flex-col">
-            <p className="font-bold text-3xl px-2 py-6">
+            <p className="font-bold text-3xl px-2 py-6 text-[#041b4d] opacity-90">
               Choose a database engine
             </p>
             <RadioGroup
@@ -134,7 +137,7 @@ function AddDatabase() {
                 </div>
               </div>
             </RadioGroup>
-            <p className="font-bold text-4xl px-2 py-24">
+            <p className="font-bold text-4xl px-2 py-24 text-[#041b4d] opacity-90">
               Pick an instance type
             </p>
             <RadioGroup
@@ -220,7 +223,9 @@ function AddDatabase() {
                 </div>
               </div>
             </RadioGroup>
-            <p className="font-bold text-4xl px-2 py-16">Finalize and Create</p>
+            <p className="font-bold text-4xl px-2 py-16 text-[#041b4d] opacity-90">
+              Finalize and Create
+            </p>
             <div className="flex flex-col gap-3 px-[120px]">
               <p className=" font-semibold">Choose a unique database name</p>
               <p className="w-1/2 text-sm text-gray-500">
@@ -268,6 +273,7 @@ function AddDatabase() {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     </div>
   );

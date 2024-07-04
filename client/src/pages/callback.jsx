@@ -13,7 +13,11 @@ const Callback = () => {
 
       return () => clearInterval(timerId);
     } else {
+<<<<<<< HEAD
+      window.location.href = "/login";
+=======
       window.location.href = '/login';
+>>>>>>> f56e77bd24a7583db63b492fec45ae92f5d8b964
     }
   }, [timeLeft]);
 
@@ -28,7 +32,11 @@ const Callback = () => {
       const signType = localStorage.getItem("SignType");
       console.log(code);
       const url = "https://cloud.dev/api/users/login-git";
+<<<<<<< HEAD
+      if (signType === "1") {
+=======
       if (signType === '1') {
+>>>>>>> f56e77bd24a7583db63b492fec45ae92f5d8b964
         console.log("login");
         const response = await axios.post(url, {
           code: code,

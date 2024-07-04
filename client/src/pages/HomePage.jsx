@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import Cont from "./Cont";
 import axios from "axios";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import NoDatabase from "../components/NoDatabase";
+import NoApps from "../components/NoApps";
+import Footer from "../components/Footer";
 function HomePage() {
   const [databases, setDatabases] = useState([]);
   const [applications, setApplications] = useState([]);
-  const navigate =useNavigate()
+  const navigate = useNavigate();
   const fetchDatabases = async () => {
     try {
       const response = await axios.get(
@@ -55,18 +58,23 @@ function HomePage() {
     fetchDatabases();
     fetchApplication();
   }, []);
-  const handleClick = (id) => {
+  const handleClickApp = (id) => {
     localStorage.setItem("appId", id);
-    navigate("/AppLogs");
+    navigate("/applogs");
   };
-
+  const handleClickDatabase = (id) => {
+    localStorage.setItem("databaseId", id);
+    navigate("/datbaselogs");
+  };
   return (
     <div className="flex w-screen h-screen text-white bg-[#041b4d]">
       <Cont />
-      <div className="flex flex-col flex-grow bg-white text-black">
+      <div className="flex flex-col min-h-screen flex-grow bg-white text-black">
         <div className="flex items-center justify-between flex-shrink-0 h-16 px-8 border-b border-gray-500">
-          <h1 className="text-2xl font-bold">HomePage</h1>
-          <button className="relative text-sm focus:outline-none group">
+          <h1 className="text-2xl font-bold text-[#041b4d] opacity-90">
+            HomePage
+          </h1>
+          <button className="relative text-sm focus:outline-none group ">
             <div className="flex items-center justify-between w-32 h-10 px-4 border rounded hover:bg-[#041b4d] hover:text-white">
               <span className="font-medium">Dropdown</span>
               <svg
@@ -104,9 +112,11 @@ function HomePage() {
             </div>
           </button>
         </div>
-        <div className="flex-grow p-6 overflow-auto bg-white px-20">
-          <div className="flex flex-col">
-            <p className="font-bold text-3xl px-2 py-10">My Databases</p>
+        <div className="flex-grow p-6  overflow-auto bg-white px-20">
+          <div className="flex flex-col ">
+            <p className="font-bold text-3xl px-2 py-10 text-[#041b4d] opacity-90">
+              My Databases
+            </p>
             {databases.length > 0 ? (
               <div className="flex flex-col w-11/12 m-auto font-bold px-2">
                 <div className="flex flex-row justify-between items-center border-b py-2 border-solid border-black">
@@ -123,7 +133,7 @@ function HomePage() {
                   >
                     <div
                       className="w-1/3"
-                      onClick={() => handleClick(database.id)}
+                      onClick={() => handleClickDatabase(database.id)}
                     >
                       {database.deploymentName}
                     </div>
@@ -142,9 +152,9 @@ function HomePage() {
                 ))}
               </div>
             ) : (
-              <p className="py-4 text-center">There are no databases.</p>
+              <NoDatabase />
             )}
-            <p className="font-bold text-3xl px-2 mt-10 py-10">
+            <p className="font-bold text-3xl px-2 mt-10 py-10 text-[#041b4d] opacity-90">
               MY Applications
             </p>
             {applications.length > 0 ? (
@@ -163,10 +173,9 @@ function HomePage() {
                   >
                     <div
                       className="w-1/3"
-                      onClick={() => handleClick(application.id)}
+                      onClick={() => handleClickApp(application.id)}
                     >
                       {application.applicationName}
-
                     </div>
                     <div className="w-1/4">{application.status}</div>
                     <div className="w-1/4">{application.plan}</div>
@@ -183,10 +192,11 @@ function HomePage() {
                 ))}
               </div>
             ) : (
-              <p className="py-4 text-center">There are no Applications.</p>
+              <NoApps />
             )}
           </div>
         </div>
+        <Footer />
       </div>
     </div>
   );

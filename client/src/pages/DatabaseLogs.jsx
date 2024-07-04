@@ -2,24 +2,25 @@ import { useEffect, useRef, useState } from "react";
 import Cont from "./Cont";
 import Footer from "../components/Footer";
 import axios from "axios";
-function AppLogs() {
+function DatabaseLogs() {
   const logsElem = useRef(null);
-  const tokenId = localStorage.getItem("appId");
-  const [apps, setApps] = useState([]);
-  const fetchAppInfo = async () => {
+  const tokenId = localStorage.getItem("databaseId");
+  const [data, setData] = useState([]);
+  const fetchDatabaseInfo = async () => {
     try {
       const response = await axios.get(
-        `https://cloud.dev/api/applications/management/${tokenId}`
+        `https://cloud.dev/api/database/management/${tokenId}`
       );
       console.log("Application found:", response.data);
-      setApps(response.data);
+      setData(response.data);
     } catch (error) {
       console.error("Failed to fetch Applications:", error);
     }
   };
+
   useEffect(() => {
     const connectToLogs = () => {
-      const url = `https://cloud.dev/api/applications/management/logs/${tokenId}`; // Replace with your actual endpoint
+      const url = `https://cloud.dev/api/database/management/logs/${tokenId}`; // Replace with your actual endpoint
 
       const eventSource = new EventSource(url);
 
@@ -39,7 +40,7 @@ function AppLogs() {
         }
       };
     };
-    fetchAppInfo();
+    fetchDatabaseInfo();
     connectToLogs();
   }, [tokenId]);
   return (
@@ -47,7 +48,9 @@ function AppLogs() {
       <Cont />
       <div className="flex flex-col flex-grow bg-white text-black">
         <div className="flex items-center justify-between flex-shrink-0 h-16 px-8 border-b border-gray-500">
-          <h1 className="text-2xl font-bold">Web Service</h1>
+          <h1 className="text-2xl font-bold text-[#041b4d] opacity-90">
+            Database Service
+          </h1>
           <button className="relative text-sm focus:outline-none group">
             <div className="flex items-center justify-between w-32 h-10 px-4 border rounded hover:bg-[#041b4d] hover:text-white">
               <span className="font-medium">Dropdown</span>
@@ -88,7 +91,7 @@ function AppLogs() {
         </div>
         <div className="flex-grow p-6 overflow-auto bg-white">
           <div className="flex flex-col">
-            {apps.map((item, index) => (
+            {data.map((item, index) => (
               <div key={index}>
                 <p className="font-semibold text-3xl px-2 mt-2 text-[#041b4d] opacity-90">
                   {item.serviceName}
@@ -98,13 +101,40 @@ function AppLogs() {
                 </p>
               </div>
             ))}
+
+            {(data.length > 0) &
+            (
+              <div className="flex flex-col w-11/12 m-auto font-bold px-2">
+                <div className="flex flex-row justify-between items-center border-b py-2 border-solid border-black">
+                  <div className="w-1/3">Status</div>
+                  <div className="w-1/4">Port</div>
+                  <div className="w-1/4">Database User</div>
+                  <div className="w-1/4">User Password</div>
+                  <div className="w-1/4">Root Password</div>
+                  <div className="w-1/4">Last Deployment</div>
+                  <div className="w-1/4"></div>
+                </div>
+                {data.map((data, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-row justify-between items-center font-semibold py-2"
+                  >
+                    <div className="w-1/3">{data.status}</div>
+                    <div className="w-1/4">{data.nodePort}</div>
+                    <div className="w-1/4">{data.databaseUsername}</div>
+                    <div className="w-1/4">{data.databaseUsernamePass}</div>
+                    <div className="w-1/4">{data.rootPassword}</div>
+                    <div className="w-1/4">{data.lastDeployment}</div>
+                    <div className="w-1/4"></div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className="bg-black w-11/12 m-auto text-gray-300 text-md font-semibold py-3 px-5 border rounded scroll-smooth  scroll-auto    h-[70vh] overflow-auto mt-10 ">
               <div className="flex flex-row items-center text-center justify-start py-2 gap-5 border-b border-solid border-gray-300 ">
-                <div className="cursor-pointer hover:bg-gray-300 border-r-2 py-2 border-solid border-white hover:text-black w-1/6">
+                <div className="cursor-pointer  border-r-2 py-2 border-solid border-white  w-1/6">
                   Logs
-                </div>
-                <div className="cursor-pointer hover:bg-gray-300 py-2 hover:text-black w-1/6">
-                  Terminal
                 </div>
               </div>
               <pre id="logs" ref={logsElem}></pre>
@@ -117,4 +147,4 @@ function AppLogs() {
   );
 }
 
-export default AppLogs;
+export default DatabaseLogs;
