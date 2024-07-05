@@ -45,7 +45,7 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
         console.log("tmam");
         await generateExpressDockerfile(path1, data.port);
       }
-      await dockerFun.buildDockerImage(path1, data.applicationName, tag);
+      await dockerFun.buildDockerImage(path1, data.applicationName, tag, data.envVariables);
       console.log("Create Image");
       let storage = "";
       let ram = "";

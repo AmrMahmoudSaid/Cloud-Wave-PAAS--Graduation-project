@@ -58,7 +58,8 @@ router.post('/api/applications/orders/new', requireAuth,[
         applicationName: req.body.name,
         gitUrl: req.body.url,
         orderId: order.id,
-        port: order.port
+        port: order.port,
+        envVariables: req.body.envVariables,
     });
 
     res.status(201).send(order);

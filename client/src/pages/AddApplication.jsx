@@ -25,6 +25,7 @@ function AddApplication() {
   const [name, setname] = useState("");
   const [url, seturl] = useState("");
   const [port, setport] = useState("");
+  const [envVariables, setEnvVariables] = useState([{ key: "", value: "" }]);
   const navigate = useNavigate();
   const handleDatabaseChange = (e) => {
     setSelectedApplication(e.target.value);
@@ -32,6 +33,15 @@ function AddApplication() {
 
   const handlePriceChange = (e) => {
     setSelectedPrice(e.target.value);
+  };
+  const handleEnvChange = (index, field, value) => {
+    const newEnvVariables = [...envVariables];
+    newEnvVariables[index][field] = value;
+    setEnvVariables(newEnvVariables);
+  };
+
+  const handleAddEnvVariable = () => {
+    setEnvVariables([...envVariables, { key: "", value: "" }]);
   };
   const URL = "https://cloud.dev/api/applications/orders/new";
   const handleSubmit = async (e) => {
@@ -44,6 +54,7 @@ function AddApplication() {
         port: port,
         plan: selectedPrice,
         applicationOrderType: selectedApplication,
+        envVariables: envVariables,
       });
 
       // localStorage.setItem("userId", response.data.data.id);
@@ -243,46 +254,72 @@ function AddApplication() {
               </p>
               <p className="mt-4 font-semibold">Application Name</p>
               <input
-                type="text"
-                value={name}
-                onChange={(e) => setname(e.target.value)}
-                placeholder="Enter application Name"
-                required
-                className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold  py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setname(e.target.value)}
+                  placeholder="Enter application Name"
+                  required
+                  className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold  py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
               />
               <p className="mt-4 font-semibold">Github Repo URL</p>
               <input
-                type="text"
-                value={url}
-                onChange={(e) => seturl(e.target.value)}
-                placeholder="Enter repository url"
-                required
-                className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
+                  type="text"
+                  value={url}
+                  onChange={(e) => seturl(e.target.value)}
+                  placeholder="Enter repository url"
+                  required
+                  className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
               />
               <p className="mt-4 font-semibold">Application Port</p>
               <input
-                type="text"
-                value={port}
-                onChange={(e) => setport(e.target.value)}
-                placeholder="Enter application port"
-                required
-                className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
+                  type="text"
+                  value={port}
+                  onChange={(e) => setport(e.target.value)}
+                  placeholder="Enter application port"
+                  required
+                  className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
               />
-
+              <div className="w-full flex flex-col items-center justify-center gap-4">
+                <label>Environment Variables:</label>
+                {envVariables.map((env, index) => (
+                    <div key={index} className="w-full flex flex-row items-center gap-4">
+                      <input
+                          type="text"
+                          placeholder="Key"
+                          className="border rounded p-2"
+                          value={env.key}
+                          onChange={(e) => handleEnvChange(index, "key", e.target.value)}
+                      />
+                      <input
+                          type="text"
+                          placeholder="Value"
+                          className="border rounded p-2"
+                          value={env.value}
+                          onChange={(e) => handleEnvChange(index, "value", e.target.value)}
+                      />
+                    </div>
+                ))}
+                <button
+                    className="border rounded p-2 bg-blue-500 text-white"
+                    onClick={handleAddEnvVariable}
+                >
+                  Add Environment Variable
+                </button>
+              </div>
               <div className="w-auto h-auto">
-                {selectedPrice === "Basic" && <BasicCont />}
-                {selectedPrice === "Pro" && <ProCont />}
-                {selectedPrice === "Super" && <SuperCont />}
+                {selectedPrice === "Basic" && <BasicCont/>}
+                {selectedPrice === "Pro" && <ProCont/>}
+                {selectedPrice === "Super" && <SuperCont/>}
               </div>
               <input
-                className="bg-[green] cursor-pointer items-center justify-center text-center border rounded w-[150px]  mt-5 text-white py-3"
-                value="Deploy Application"
-                onClick={handleSubmit}
+                  className="bg-[green] cursor-pointer items-center justify-center text-center border rounded w-[150px]  mt-5 text-white py-3"
+                  value="Deploy Application"
+                  onClick={handleSubmit}
               />
             </div>
           </div>
         </div>
-        <Footer />
+        <Footer/>
       </div>
     </div>
   );

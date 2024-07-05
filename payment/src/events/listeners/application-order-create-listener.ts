@@ -85,7 +85,8 @@ export class ApplicationOrderCreateListener extends Listener<ApplicationOrderCre
                 gitUrl: data.gitUrl,
                 plan: data.plan,
                 port:data.port,
-                email: user.email
+                email: user.email,
+                envVariables: data.envVariables,
             });
             msq.ack();
         } catch (error) {
