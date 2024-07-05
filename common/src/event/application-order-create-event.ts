@@ -18,6 +18,6 @@ export interface ApplicationOrderCreateEvent {
         applicationName: string,
         orderId: string,
         port: number,
-        envVariables: string[]
+        envVariables: { key: string, value: string }[]
     }
 }
