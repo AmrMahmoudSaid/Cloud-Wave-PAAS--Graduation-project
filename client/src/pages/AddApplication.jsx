@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cont from "./Cont";
 
 import Radio from "@mui/material/Radio";
@@ -18,6 +18,8 @@ import { IoLogoNodejs } from "react-icons/io5";
 import { RiReactjsLine } from "react-icons/ri";
 import { SiSpringboot } from "react-icons/si";
 import Footer from "../components/Footer";
+import SignOut from "../components/SignOut";
+import Profile from "../components/Profile";
 
 function AddApplication() {
   const [selectedApplication, setSelectedApplication] = useState("");
@@ -25,8 +27,23 @@ function AddApplication() {
   const [name, setname] = useState("");
   const [url, seturl] = useState("");
   const [port, setport] = useState("");
+  const [repos, setRepos] = useState([]);
   const [envVariables, setEnvVariables] = useState([{ key: "", value: "" }]);
   const navigate = useNavigate();
+  const fetchRepos = async () => {
+    try {
+      const response = await axios.get(
+        "https://cloud.dev/api/applications/order/repos"
+      );
+      console.log("Database found:", response.data);
+      setRepos(response.data);
+    } catch (error) {
+      console.error("Failed to fetch Databases:", error);
+    }
+  };
+  useEffect(() => {
+    fetchRepos();
+  }, []);
   const handleDatabaseChange = (e) => {
     setSelectedApplication(e.target.value);
   };
@@ -42,6 +59,11 @@ function AddApplication() {
 
   const handleAddEnvVariable = () => {
     setEnvVariables([...envVariables, { key: "", value: "" }]);
+  };
+  const handleDeleteEnvVariable = (index) => {
+    const newEnvVariables = [...envVariables];
+    newEnvVariables.splice(index, 1);
+    setEnvVariables(newEnvVariables);
   };
   const URL = "https://cloud.dev/api/applications/orders/new";
   const handleSubmit = async (e) => {
@@ -72,47 +94,26 @@ function AddApplication() {
 
   return (
     <div className="flex w-screen h-screen text-white bg-[#041b4d]">
-      <Cont />
-      <div className="flex flex-col flex-grow bg-white text-black">
+      <div className="flex flex-col w-[312px] border-r border-gray-800">
+        <Cont />
+      </div>
+      <div className="flex flex-col flex-grow bg-white text-black ">
         <div className="flex items-center justify-between flex-shrink-0 h-16 px-8 border-b border-gray-500">
           <h1 className="text-2xl font-bold text-[#041b4d] opacity-90">
             Create Application Engine
           </h1>
-          <button className="relative text-sm focus:outline-none group">
-            <div className="flex items-center justify-between w-32 h-10 px-4 border rounded hover:bg-[#041b4d] hover:text-white">
-              <span className="font-medium">Dropdown</span>
-              <svg
-                className="w-4 h-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
+          <button className="relative flex flex-row gap-2 text-center right-24 items-center text-sm focus:outline-none group">
+            <div className="text-lg font-semibold text-[#041b4d] opacity-90">
+              MY Account
             </div>
-            <div className="absolute z-10 flex-col items-start hidden w-full pb-1 bg-[#041b4d] shadow-lg group-focus:flex">
-              <a
-                className="w-full px-4 py-2 text-left hover:bg-gray-900"
-                href="#"
-              >
-                Menu Item 1
-              </a>
-              <a
-                className="w-full px-4 py-2 text-left hover:bg-gray-900"
-                href="#"
-              >
-                Menu Item 2
-              </a>
-              <a
-                className="w-full px-4 py-2 text-left hover:bg-gray-900"
-                href="#"
-              >
-                Menu Item 3
-              </a>
+            <div className="flex w-8 h-8 rounded-full border bg-[#071952] rounded hover:bg-[#041b4d] hover:text-white">
+              <div className="font-medium text-white text-center items-center m-auto">
+                CV
+              </div>
+            </div>
+            <div className="absolute w-[200px] border rounded border-solid border-black z-10  top-[55px] flex-col right-[2px]  items-start hidden pb-1 bg-white shadow-lg group-focus:flex">
+              <Profile />
+              <SignOut />
             </div>
           </button>
         </div>
@@ -254,72 +255,100 @@ function AddApplication() {
               </p>
               <p className="mt-4 font-semibold">Application Name</p>
               <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setname(e.target.value)}
-                  placeholder="Enter application Name"
-                  required
-                  className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold  py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
+                type="text"
+                value={name}
+                onChange={(e) => setname(e.target.value)}
+                placeholder="Enter application Name"
+                required
+                className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold  py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
               />
               <p className="mt-4 font-semibold">Github Repo URL</p>
-              <input
+              <div className="flex flex-row ">
+                <input
                   type="text"
                   value={url}
                   onChange={(e) => seturl(e.target.value)}
                   placeholder="Enter repository url"
                   required
                   className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
-              />
+                />
+                <select
+                  className="border border-solid border-black font-semibold  rounded ml-5 px-20 py-5 gap-2"
+                  value={url}
+                  onChange={(e) => seturl(e.target.value)}
+                >
+                  <option value="">Select a repository</option>
+                  {repos.map((repo) => (
+                    <option key={repo.id} value={repo.url}>
+                      {repo.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <p className="mt-4 font-semibold">Application Port</p>
               <input
-                  type="text"
-                  value={port}
-                  onChange={(e) => setport(e.target.value)}
-                  placeholder="Enter application port"
-                  required
-                  className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
+                type="text"
+                value={port}
+                onChange={(e) => setport(e.target.value)}
+                placeholder="Enter application port"
+                required
+                className="flex flex-row border border-solid border-black rounded items-center justify-start text-md font-semibold py-4 px-6 w-[500px] bg-white hover:bg-gray-200"
               />
+              <p className="mt-4 font-semibold">Environment Variable</p>
               <div className="w-full flex flex-col items-center justify-center gap-4">
-                <label>Environment Variables:</label>
                 {envVariables.map((env, index) => (
-                    <div key={index} className="w-full flex flex-row items-center gap-4">
-                      <input
-                          type="text"
-                          placeholder="Key"
-                          className="border rounded p-2"
-                          value={env.key}
-                          onChange={(e) => handleEnvChange(index, "key", e.target.value)}
-                      />
-                      <input
-                          type="text"
-                          placeholder="Value"
-                          className="border rounded p-2"
-                          value={env.value}
-                          onChange={(e) => handleEnvChange(index, "value", e.target.value)}
-                      />
-                    </div>
+                  <div
+                    key={index}
+                    className="w-full flex flex-row items-center gap-4"
+                  >
+                    <input
+                      type="text"
+                      placeholder="Key"
+                      className="border rounded p-2"
+                      value={env.key}
+                      onChange={(e) =>
+                        handleEnvChange(index, "key", e.target.value)
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Value"
+                      className="border rounded p-2"
+                      value={env.value}
+                      onChange={(e) =>
+                        handleEnvChange(index, "value", e.target.value)
+                      }
+                    />
+                    <button
+                      className="border rounded p-2 bg-red-500 text-white"
+                      onClick={() => handleDeleteEnvVariable(index)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 ))}
                 <button
-                    className="border rounded p-2 bg-blue-500 text-white"
-                    onClick={handleAddEnvVariable}
+                  className="border rounded p-2 bg-blue-500 text-white"
+                  onClick={handleAddEnvVariable}
                 >
                   Add Environment Variable
                 </button>
               </div>
               <div className="w-auto h-auto">
-                {selectedPrice === "Basic" && <BasicCont/>}
-                {selectedPrice === "Pro" && <ProCont/>}
-                {selectedPrice === "Super" && <SuperCont/>}
+                {selectedPrice === "Basic" && <BasicCont />}
+                {selectedPrice === "Pro" && <ProCont />}
+                {selectedPrice === "Super" && <SuperCont />}
               </div>
               <input
-                  className="bg-[green] cursor-pointer items-center justify-center text-center border rounded w-[150px]  mt-5 text-white py-3"
-                  value="Deploy Application"
-                  onClick={handleSubmit}
+                className="bg-[green] cursor-pointer items-center justify-center text-center border rounded w-[150px]  mt-5 text-white py-3"
+                value="Deploy Application"
+                onClick={handleSubmit}
               />
             </div>
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import icon from "../assets/icon.png";
 
 function Cont() {
   return (
-    <div className="flex flex-col w-72 border-r border-gray-800">
+    <>
       <button className="relative text-sm">
         <div className="flex flex-row items-center w-full h-16 px-4 border-b border-white">
           <div className="w-full gap-2 flex text-center items-center justify-start flex-row h-auto m-auto">
@@ -61,7 +61,7 @@ function Cont() {
           </Link>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
