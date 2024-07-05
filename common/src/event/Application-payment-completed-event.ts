@@ -19,5 +19,6 @@ export interface ApplicationPaymentCompletedEvent {
         orderId: string;
         port: number;
         email: string;
+        envVariables: string[]
     }
 }

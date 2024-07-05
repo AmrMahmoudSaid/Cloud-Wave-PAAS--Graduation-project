@@ -17,6 +17,7 @@ export interface ApplicationOrderCreateEvent {
         gitUrl: string,
         applicationName: string,
         orderId: string,
-        port: number
+        port: number,
+        envVariables: string[]
     }
 }
