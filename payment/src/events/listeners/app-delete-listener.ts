@@ -1,21 +1,20 @@
 import {
     Listener,
-    DatabaseDeleteEvent,
+    ApplicationDeleteEvent,
     Subjects,
     k8sAppsApi, k8sCoreApi, BadRequestError
 } from "@cloud-wave/common";
 import {queueGroupName} from "./queue-group-name";
 import {Message} from "node-nats-streaming";
-import {Order} from "../../models/order";
 import Stripe from "stripe";
+import {Order} from "../../models/order";
 const stripe = new Stripe(process.env.STRIPE_KEY!, {
     apiVersion: '2024-06-20'
 });
-export class DatabaseDeleteListener extends Listener<DatabaseDeleteEvent> {
-    readonly subject = Subjects.DatabaseDelete
+export class AppDeleteListener extends Listener<ApplicationDeleteEvent> {
+    readonly subject = Subjects.ApplicationDelete
     queueGroupName = queueGroupName;
-    async onMessage(data: DatabaseDeleteEvent['data'], msq: Message){
-
+    async onMessage(data: ApplicationDeleteEvent['data'], msq: Message){
         try {
             const order  = await Order.findOne({
                 userId:data.userId,

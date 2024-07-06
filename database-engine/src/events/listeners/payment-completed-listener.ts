@@ -20,78 +20,84 @@ export class PaymentCompletedListener extends Listener<PaymentCompletedEvent> {
     queueGroupName = queueGroupName;
 
     async onMessage(data: PaymentCompletedEvent['data'], msq: Message){
-        const name = data.databaseOrderType+generateRandomString();
-        // const path = generateRandomString();
-        console.log(name);
-        let storage='';
-        let ram='';
-        let cpu='';
-        let port = 0;
-        console.log(data.plan);
-        if (data.plan=='Basic'){
-            cpu = DatabasePlanConfig.CPUBasic;
-            ram = DatabasePlanConfig.RAMBasic;
-            storage = DatabasePlanConfig.StorageBasic;
-        }else if (data.plan =='Pro'){
-            cpu = DatabasePlanConfig.CPUPro;
-            ram = DatabasePlanConfig.RAMPro;
-            storage = DatabasePlanConfig.StoragePro;
-        }else if (data.plan == 'Super'){
-            cpu = DatabasePlanConfig.CPUSuper;
-            ram = DatabasePlanConfig.RAMSuper;
-            storage = DatabasePlanConfig.StorageSuper;
-        }
-        const config = {
-            namespace: 'default',
-            pvcName: `${name}-pvc`,
-            storageSize: `${storage}Gi`,
-            deploymentName: `${name}-depl`,
-            rootPassword: `${data.rootPassword}`,
-            databaseName: `${data.databaseName}`,
-            userName: `${data.userName}`,
-            userPassword: `${data.userPassword}`,
-            serviceName: `${name}-srv`,
-            memoryRequest: '512Mi',
-            cpuRequest: '0.5',
-            memoryLimit: `${ram}Gi`,
-            cpuLimit: cpu,
-            ingressHost: `/${hosts.Dev}`,
-            ingressPath: "/amr"
-        };
-        if (data.databaseOrderType==='mysql'){
-            await createMySQLDeploymentAndServiceWithIngress(config);
-            port = 3306
-        }else if(data.databaseOrderType==='postgres'){
-            await createPostgreSQLDeploymentAndServiceWithIngress(config);
-            port = 5432
-        }else if (data.databaseOrderType==='mongo'){
-            await createMongoDBDeploymentAndService(config);
-            port = 27017
-        }
-        console.log('tmam');
-        // new In
-        // const ingress = new IngressManager();
-        // const ingressRule : IngressRule ={
-        //     host: hosts.Dev,
-        //     path: `/${name}`,
-        //     serviceName: `${name}-srv`,
-        //     servicePort: port
-        // }
-        // await ingressManager.updateIngress(ingress);
+        try {
 
-        await new DatabaseEngineCreatePublisher(natsWrapper.client).publish({
-            userId: data.userId,
-            namespace: 'default',
-            pvcName: `${name}-pvc`,
-            deploymentName: `${name}-depl`,
-            rootPassword: `${data.rootPassword}`,
-            databaseName: `${data.databaseName}`,
-            userName: `${data.userName}`,
-            userPassword: `${data.userPassword}`,
-            serviceName: `${name}-srv`,
-            price: data.price
-        })
-        msq.ack();
+            const name = data.databaseOrderType+generateRandomString();
+            // const path = generateRandomString();
+            console.log(name);
+            let storage='';
+            let ram='';
+            let cpu='';
+            let port = 0;
+            console.log(data.plan);
+            if (data.plan=='Basic'){
+                cpu = DatabasePlanConfig.CPUBasic;
+                ram = DatabasePlanConfig.RAMBasic;
+                storage = DatabasePlanConfig.StorageBasic;
+            }else if (data.plan =='Pro'){
+                cpu = DatabasePlanConfig.CPUPro;
+                ram = DatabasePlanConfig.RAMPro;
+                storage = DatabasePlanConfig.StoragePro;
+            }else if (data.plan == 'Super'){
+                cpu = DatabasePlanConfig.CPUSuper;
+                ram = DatabasePlanConfig.RAMSuper;
+                storage = DatabasePlanConfig.StorageSuper;
+            }
+            const config = {
+                namespace: 'default',
+                pvcName: `${name}-pvc`,
+                storageSize: `${storage}Gi`,
+                deploymentName: `${name}-depl`,
+                rootPassword: `${data.rootPassword}`,
+                databaseName: `${data.databaseName}`,
+                userName: `${data.userName}`,
+                userPassword: `${data.userPassword}`,
+                serviceName: `${name}-srv`,
+                memoryRequest: '512Mi',
+                cpuRequest: '0.5',
+                memoryLimit: `${ram}Gi`,
+                cpuLimit: cpu,
+                ingressHost: `/${hosts.Dev}`,
+                ingressPath: "/amr"
+            };
+            if (data.databaseOrderType==='mysql'){
+                await createMySQLDeploymentAndServiceWithIngress(config);
+                port = 3306
+            }else if(data.databaseOrderType==='postgres'){
+                await createPostgreSQLDeploymentAndServiceWithIngress(config);
+                port = 5432
+            }else if (data.databaseOrderType==='mongo'){
+                await createMongoDBDeploymentAndService(config);
+                port = 27017
+            }
+            console.log('tmam');
+            // new In
+            // const ingress = new IngressManager();
+            // const ingressRule : IngressRule ={
+            //     host: hosts.Dev,
+            //     path: `/${name}`,
+            //     serviceName: `${name}-srv`,
+            //     servicePort: port
+            // }
+            // await ingressManager.updateIngress(ingress);
+
+            await new DatabaseEngineCreatePublisher(natsWrapper.client).publish({
+                userId: data.userId,
+                namespace: 'default',
+                pvcName: `${name}-pvc`,
+                deploymentName: `${name}-depl`,
+                rootPassword: `${data.rootPassword}`,
+                databaseName: `${data.databaseName}`,
+                userName: `${data.userName}`,
+                userPassword: `${data.userPassword}`,
+                serviceName: `${name}-srv`,
+                price: data.price
+            })
+            msq.ack();
+        }catch (err){
+            msq.ack();
+            throw err;
+        }
     }
 }
 

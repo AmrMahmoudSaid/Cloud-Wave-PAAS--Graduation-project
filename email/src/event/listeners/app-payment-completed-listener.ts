@@ -13,7 +13,13 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
     data: ApplicationPaymentCompletedEvent["data"],
     msq: Message
   ) {
-    await new Emails(data.email,data.email,"","",data.price,data.plan.toString()).payment();
-    msq.ack();
+    try {
+
+      await new Emails(data.email,data.email,"","",data.price,data.plan.toString()).payment();
+      msq.ack();
+    }catch (err){
+      msq.ack();
+      throw err;
+    }
   }
 }

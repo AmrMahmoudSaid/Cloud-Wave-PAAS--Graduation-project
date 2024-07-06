@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function SignOut() {
-  const URL = "https://cloud.dev/api/users/signup";
+  const URL = "https://cloud.dev/api/users/signout";
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();

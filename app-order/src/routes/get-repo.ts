@@ -3,7 +3,7 @@ import {requireAuth} from "@cloud-wave/common";
 import axios from "axios";
 
 const router = express.Router();
-router.get('/api/applications/repos', requireAuth, async (req: Request, res: Response) => {
+router.get('/api/applications/orders/repo', requireAuth, async (req: Request, res: Response) => {
     let githubToken = req.currentUser!.accessToken;
     console.log(githubToken);
     if (!githubToken) {

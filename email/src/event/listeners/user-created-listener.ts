@@ -8,8 +8,17 @@ export class UserCreatedListener extends Listener<UserCreateEvent>{
     readonly subject = Subjects.UserCreated;
     queueGroupName = queueGroupName;
     async onMessage(data: UserCreateEvent['data'], msg: Message) {
-        await new Emails(data.email,data.name).sendWelcome();
-        msg.ack();
+        try {
+
+            if (!data.email){
+                data.email = "amrmahmoud1900@gmail.com"
+            }
+            await new Emails(data.email,data.name).sendWelcome();
+            msg.ack();
+        }catch (err){
+            msg.ack()
+            throw err;
+        }
     }
 
 }

@@ -82,6 +82,7 @@ import {DatabaseDeleteListener} from "./events/listeners/database-delete-listene
 import {DatabaseOrderCompletedListener} from "./events/listeners/database-order-completed";
 import mongoose from "mongoose";
 import {ApplicationOrderCreateListener} from "./events/listeners/application-order-create-listener";
+import {AppDeleteListener} from "./events/listeners/app-delete-listener";
 const start = async () => {
     if (!process.env.NATS_URL){
         throw  new Error('NATS_URL doesnt exist');
@@ -109,7 +110,8 @@ const start = async () => {
         await mongoose.connect("mongodb://payment-mongo-srv:27017/auth");
         console.log("DB connection");
         new UserCreatedListener(natsWrapper.client).listen();
-        // new DatabaseDeleteListener(natsWrapper.client).listen();
+        new DatabaseDeleteListener(natsWrapper.client).listen();
+        new AppDeleteListener(natsWrapper.client).listen();
         new DatabaseOrderCompletedListener(natsWrapper.client).listen();
         new ApplicationOrderCreateListener(natsWrapper.client).listen();
     }catch (err){

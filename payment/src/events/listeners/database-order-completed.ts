@@ -68,7 +68,9 @@ export class DatabaseOrderCompletedListener extends Listener<DatabaseOrderCreate
                 id: data.orderId,
                 userId: data.userId,
                 subscriptionId,
-                price: planPrice
+                price: planPrice,
+                appName:data.deploymentName
+
             });
             await order.save();
 

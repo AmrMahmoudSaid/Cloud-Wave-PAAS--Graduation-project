@@ -5,12 +5,14 @@ interface OrderAttrs {
     userId: string;
     subscriptionId: string;
     price: number;
+    appName: string;
 }
 
 interface OrderDoc extends mongoose.Document {
     userId: string;
     subscriptionId: string;
     price: number;
+    appName: string;
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
@@ -28,6 +30,10 @@ const orderSchema = new mongoose.Schema({
         required: true,
     },
     subscriptionId: {
+        type: String,
+        required: true,
+    },
+    appName: {
         type: String,
         required: true,
     }

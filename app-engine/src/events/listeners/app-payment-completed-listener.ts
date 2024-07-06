@@ -121,6 +121,7 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
         plan: data.plan.toString(),
       });
     } catch (error) {
+      msq.ack()
       throw new Error("Some thing want wrong try again later.");
     }
   }

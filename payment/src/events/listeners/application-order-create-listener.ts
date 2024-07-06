@@ -70,7 +70,8 @@ export class ApplicationOrderCreateListener extends Listener<ApplicationOrderCre
                 id: data.orderId,
                 userId: data.userId,
                 subscriptionId,
-                price: planPrice
+                price: planPrice,
+                appName: data.applicationName
             });
             await order.save();
 

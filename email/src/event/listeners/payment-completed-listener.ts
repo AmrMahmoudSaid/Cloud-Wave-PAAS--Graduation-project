@@ -11,7 +11,12 @@ export class PaymentCompletedListener extends Listener<PaymentCompletedEvent> {
     queueGroupName = queueGroupName;
 
     async onMessage(data: PaymentCompletedEvent['data'], msq: Message){
-        await new Emails(data.email,data.userName,"","",data.price,data.plan.toString()).payment();
-        msq.ack();
+        try {
+            await new Emails(data.email,data.userName,"","",data.price,data.plan.toString()).payment();
+            msq.ack();
+        }catch (err){
+            msq.ack();
+            throw err;
+        }
     }
 }

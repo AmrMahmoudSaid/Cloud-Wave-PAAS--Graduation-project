@@ -16,6 +16,8 @@ export interface DatabaseOrderCreateEvent {
         databaseName: string,
         userName: string,
         userPassword: string,
-        orderId: string
+        orderId: string,
+        deploymentName: string
+
     }
 }

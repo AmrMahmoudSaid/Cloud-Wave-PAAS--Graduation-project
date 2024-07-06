@@ -33,7 +33,7 @@ function AddApplication() {
   const fetchRepos = async () => {
     try {
       const response = await axios.get(
-        "https://cloud.dev/api/applications/order/repos"
+        "https://cloud.dev/api/applications/orders/repo"
       );
       console.log("Database found:", response.data);
       setRepos(response.data);
@@ -278,9 +278,9 @@ function AddApplication() {
                   onChange={(e) => seturl(e.target.value)}
                 >
                   <option value="">Select a repository</option>
-                  {repos.map((repo) => (
-                    <option key={repo.id} value={repo.url}>
-                      {repo.name}
+                  {repos.map((repo,index) => (
+                    <option key={index} value={`https://github.com/${repo}.git`}>
+                      {repo}
                     </option>
                   ))}
                 </select>
