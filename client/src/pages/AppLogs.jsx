@@ -13,7 +13,7 @@ function AppLogs() {
   const fitAddon = new FitAddon();
 
   const tokenId = localStorage.getItem("appId");
-  const [apps, setApps] = useState(null); // Initialize as null or an empty object
+  const [apps, setApps] = useState(null);
   const [logg, setlogg] = useState(true);
   const [term, setTerm] = useState(false);
 
