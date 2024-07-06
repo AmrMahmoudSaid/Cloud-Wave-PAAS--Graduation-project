@@ -29,7 +29,7 @@ export default function ContactUs() {
   };
   return (
     <div className="flex w-screen h-screen text-white bg-[#041b4d]">
-      <div className="flex flex-col w-[364px] border-r border-gray-800">
+      <div className="flex flex-col w-[220px] border-r border-gray-800">
         <Cont />
       </div>
       <div className="flex flex-col min-h-screen flex-grow bg-white text-black">

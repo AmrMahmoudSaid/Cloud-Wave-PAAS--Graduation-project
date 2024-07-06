@@ -14,6 +14,7 @@ import DatabaseLogs from "./pages/DatabaseLogs";
 import Billing from "./pages/Billing";
 import UserProfile from "./pages/UserProfile";
 import ContactUs from "./pages/contactUs";
+import AboutUs from "./pages/aboutus";
 function App() {
   return (
     <>
@@ -37,6 +38,8 @@ function App() {
           <Route path="/billing" element={<Billing />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/contactus" element={<ContactUs />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
+          AboutUs
         </Routes>
       </BrowserRouter>
     </>
