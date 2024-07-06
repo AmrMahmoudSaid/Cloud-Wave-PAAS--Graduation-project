@@ -1,9 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import SignOut from "../components/SignOut";
-import Profile from "../components/Profile";
 import Cont from "./Cont";
 
-export default function AboutUs() {
+export default function Aboutus() {
+  const navigate = useNavigate();
   return (
     <div className="flex w-screen h-screen text-white bg-[#041b4d]">
       <div className="flex flex-col w-[220px] border-r border-gray-800">
@@ -24,7 +25,12 @@ export default function AboutUs() {
               </div>
             </div>
             <div className="absolute w-[200px] border rounded border-solid border-black z-10  top-[55px] flex-col right-[2px]  items-start hidden pb-1 bg-white shadow-lg group-focus:flex">
-              <Profile />
+              <div
+                onClick={() => navigate("/profile")}
+                className="w-full font-semibold px-4 py-2 text-left hover:bg-gray-200"
+              >
+                Profile
+              </div>
               <SignOut />
             </div>
           </button>

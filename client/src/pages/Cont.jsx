@@ -41,10 +41,12 @@ function Cont() {
           </Link>
         </div>
         <div className="flex items-center flex-shrink-0 h-10 px-2 mt-2 text-sm font-medium rounded hover:bg-gray-600">
-          <Link to="">
-            <span className="leading-none">Docs</span>
+          <Link to="/help">
+            <span className="leading-none">Help</span>
           </Link>
         </div>
+      </div>
+      <div className="flex flex-col p-4 overflow-auto border-b border-solid border-gray-500">
         <div className="flex items-center flex-shrink-0 h-10 px-2 mt-2 text-sm font-medium rounded hover:bg-gray-600">
           <Link to="/aboutUs">
             <span className="leading-none">About Us</span>

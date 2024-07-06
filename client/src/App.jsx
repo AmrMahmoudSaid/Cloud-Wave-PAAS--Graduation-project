@@ -12,9 +12,11 @@ import { Helmet } from "react-helmet";
 import Callback from "./pages/callback";
 import DatabaseLogs from "./pages/DatabaseLogs";
 import Billing from "./pages/Billing";
-import UserProfile from "./pages/UserProfile";
+import Profile from "./pages/Profile";
 import ContactUs from "./pages/contactUs";
-import AboutUs from "./pages/aboutus";
+import Aboutus from "./pages/aboutus";
+import Help from "./pages/help";
+
 function App() {
   return (
     <>
@@ -36,10 +38,10 @@ function App() {
           <Route path="/login/callback" element={<Callback />} />
           <Route path="/databaselogs" element={<DatabaseLogs />} />
           <Route path="/billing" element={<Billing />} />
-          <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/contactus" element={<ContactUs />} />
-          <Route path="/aboutUs" element={<AboutUs />} />
-          AboutUs
+          <Route path="/aboutus" element={<Aboutus />} />
+          <Route path="/help" element={<Help />} />
         </Routes>
       </BrowserRouter>
     </>

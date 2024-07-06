@@ -7,7 +7,9 @@ import NoDatabase from "../components/NoDatabase";
 import NoApps from "../components/NoApps";
 import Footer from "../components/Footer";
 import SignOut from "../components/SignOut";
-import Profile from "../components/Profile";
+import PendingProg from "../components/PendingProg";
+import CreatingProg from "../components/CreatingProg";
+import RunningProg from "../components/RunningProg";
 function HomePage() {
   const [databases, setDatabases] = useState([]);
   const [applications, setApplications] = useState([]);
@@ -88,7 +90,12 @@ function HomePage() {
               </div>
             </div>
             <div className="absolute w-[200px] border rounded border-solid border-black z-10  top-[55px] flex-col right-[2px]  items-start hidden pb-1 bg-white shadow-lg group-focus:flex">
-              <Profile />
+              <div
+                onClick={() => navigate("/profile")}
+                className="w-full font-semibold px-4 py-2 text-left hover:bg-gray-200"
+              >
+                Profile
+              </div>
               <SignOut />
             </div>
           </button>
@@ -99,38 +106,44 @@ function HomePage() {
               My Databases
             </p>
             {databases.length > 0 ? (
-              <div className="flex flex-col w-11/12 m-auto font-bold px-2">
-                <div className="flex flex-row justify-between items-center border-b py-2 border-solid border-black">
-                  <div className="w-1/3">Service Name</div>
-                  <div className="w-1/4">Status</div>
-                  <div className="w-1/4">Plan</div>
-                  <div className="w-1/4">Last Deployed</div>
-                  <div className="w-1/4"></div>
-                </div>
-                {databases.map((database, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-row justify-between items-center font-semibold py-2"
-                  >
-                    <div
-                      className="w-1/3"
-                      onClick={() => handleClickDatabase(database.id)}
-                    >
-                      {database.deploymentName}
-                    </div>
-                    <div className="w-1/4">{database.status}</div>
-                    <div className="w-1/4">{database.plan}</div>
-                    <div className="w-1/4">{database.lastDeployment}</div>
-                    <div className="w-1/4">
-                      <button
-                        className="text-red-600 pointer"
-                        onClick={() => deleteDatabase(database.id)}
-                      >
-                        <DeleteOutlineOutlinedIcon />
-                      </button>
-                    </div>
+              <div className="flex flex-col py-6 w-11/12 h-[30vh] bg-white  shadow-xl m-auto border border-solid  border-[#041b4d] rounded text-center items-center justify-center">
+                <div className="flex flex-col w-11/12 m-auto font-bold px-2">
+                  <div className="flex flex-row justify-between items-center border-b py-2 border-solid border-black">
+                    <div className="w-1/3">Service Name</div>
+                    <div className="w-1/4">Status</div>
+                    <div className="w-1/4">Plan</div>
+                    <div className="w-1/4">Last Deployed</div>
+                    <div className="w-1/4"></div>
                   </div>
-                ))}
+                  {databases.map((database, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-row justify-between items-center font-semibold py-2"
+                    >
+                      <div
+                        className="w-1/3"
+                        onClick={() => handleClickDatabase(database.id)}
+                      >
+                        {database.deploymentName}
+                      </div>
+                      <div className="w-1/4 text-center items-center">
+                        {database.status == "pending" && <PendingProg />}
+                        {database.status == "creating" && <CreatingProg />}
+                        {database.status == "running" && <RunningProg />}
+                      </div>
+                      <div className="w-1/4">{database.plan}</div>
+                      <div className="w-1/4">{database.lastDeployment}</div>
+                      <div className="w-1/4">
+                        <button
+                          className="text-red-600 pointer"
+                          onClick={() => deleteDatabase(database.id)}
+                        >
+                          <DeleteOutlineOutlinedIcon />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             ) : (
               <NoDatabase />
@@ -139,38 +152,44 @@ function HomePage() {
               MY Applications
             </p>
             {applications.length > 0 ? (
-              <div className="flex flex-col w-11/12 m-auto font-bold px-2">
-                <div className="flex flex-row justify-between items-center border-b py-2 border-solid border-black">
-                  <div className="w-1/3">Service Name</div>
-                  <div className="w-1/4">Status</div>
-                  <div className="w-1/4">Plan</div>
-                  <div className="w-1/4">Last Deployed</div>
-                  <div className="w-1/4"></div>
-                </div>
-                {applications.map((application, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-row justify-between items-center font-semibold py-2"
-                  >
-                    <div
-                      className="w-1/3"
-                      onClick={() => handleClickApp(application.id)}
-                    >
-                      {application.applicationName}
-                    </div>
-                    <div className="w-1/4">{application.status}</div>
-                    <div className="w-1/4">{application.plan}</div>
-                    <div className="w-1/4">{application.lastDeployment}</div>
-                    <div className="w-1/4">
-                      <button
-                        className="text-red-600 pointer"
-                        onClick={() => deleteApplication(application.id)}
-                      >
-                        <DeleteOutlineOutlinedIcon />
-                      </button>
-                    </div>
+              <div className="flex flex-col py-6 w-11/12 h-[30vh] bg-white  shadow-xl m-auto border border-solid  border-[#041b4d] rounded text-center items-center justify-center">
+                <div className="flex flex-col w-11/12 m-auto font-bold px-2">
+                  <div className="flex flex-row justify-between items-center border-b py-2 border-solid border-black">
+                    <div className="w-1/3">Service Name</div>
+                    <div className="w-1/4">Status</div>
+                    <div className="w-1/4">Plan</div>
+                    <div className="w-1/4">Last Deployed</div>
+                    <div className="w-1/4"></div>
                   </div>
-                ))}
+                  {applications.map((application, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-row justify-between items-center font-semibold py-2"
+                    >
+                      <div
+                        className="w-1/3"
+                        onClick={() => handleClickApp(application.id)}
+                      >
+                        {application.applicationName}
+                      </div>
+                      <div className="w-1/4 text-center items-center">
+                        {application.status == "pending" && <PendingProg />}
+                        {application.status == "creatin" && <CreatingProg />}
+                        {application.status == "running" && <RunningProg />}
+                      </div>
+                      <div className="w-1/4">{application.plan}</div>
+                      <div className="w-1/4">{application.lastDeployment}</div>
+                      <div className="w-1/4">
+                        <button
+                          className="text-red-600 pointer"
+                          onClick={() => deleteApplication(application.id)}
+                        >
+                          <DeleteOutlineOutlinedIcon />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             ) : (
               <NoApps />

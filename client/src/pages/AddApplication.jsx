@@ -19,8 +19,6 @@ import { RiReactjsLine } from "react-icons/ri";
 import { SiSpringboot } from "react-icons/si";
 import Footer from "../components/Footer";
 import SignOut from "../components/SignOut";
-import Profile from "../components/Profile";
-
 function AddApplication() {
   const [selectedApplication, setSelectedApplication] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
@@ -112,7 +110,12 @@ function AddApplication() {
               </div>
             </div>
             <div className="absolute w-[200px] border rounded border-solid border-black z-10  top-[55px] flex-col right-[2px]  items-start hidden pb-1 bg-white shadow-lg group-focus:flex">
-              <Profile />
+              <div
+                onClick={() => navigate("/profile")}
+                className="w-full font-semibold px-4 py-2 text-left hover:bg-gray-200"
+              >
+                Profile
+              </div>
               <SignOut />
             </div>
           </button>
@@ -278,8 +281,11 @@ function AddApplication() {
                   onChange={(e) => seturl(e.target.value)}
                 >
                   <option value="">Select a repository</option>
-                  {repos.map((repo,index) => (
-                    <option key={index} value={`https://github.com/${repo}.git`}>
+                  {repos.map((repo, index) => (
+                    <option
+                      key={index}
+                      value={`https://github.com/${repo}.git`}
+                    >
                       {repo}
                     </option>
                   ))}

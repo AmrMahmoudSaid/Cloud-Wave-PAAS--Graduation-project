@@ -1,10 +1,12 @@
 import Footer from "../components/Footer";
 import SignOut from "../components/SignOut";
-import Profile from "../components/Profile";
+
 import Cont from "./Cont";
 import Contact from "../assets/Contactus.jpg";
+import { useNavigate } from "react-router-dom";
 
 export default function ContactUs() {
+  const navigate = useNavigate();
   const onSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -47,7 +49,12 @@ export default function ContactUs() {
               </div>
             </div>
             <div className="absolute w-[200px] border rounded border-solid border-black z-10  top-[55px] flex-col right-[2px]  items-start hidden pb-1 bg-white shadow-lg group-focus:flex">
-              <Profile />
+              <div
+                onClick={() => navigate("/profile")}
+                className="w-full font-semibold px-4 py-2 text-left hover:bg-gray-200"
+              >
+                Profile
+              </div>
               <SignOut />
             </div>
           </button>

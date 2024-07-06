@@ -4,13 +4,13 @@ import Footer from "../components/Footer";
 import axios from "axios";
 
 import SignOut from "../components/SignOut";
-import Profile from "../components/Profile";
+import { useNavigate } from "react-router-dom";
 
 function DatabaseLogs() {
   const logsElem = useRef(null);
   const tokenId = localStorage.getItem("databaseId");
   const [data, setData] = useState(null); // Initialize as null or an empty object
-
+  const navigate = useNavigate();
   const fetchDatabaseInfo = async () => {
     console.log(tokenId);
     if (!tokenId) return;
@@ -74,7 +74,12 @@ function DatabaseLogs() {
               </div>
             </div>
             <div className="absolute w-[200px] border rounded border-solid border-black z-10  top-[55px] flex-col right-[2px]  items-start hidden pb-1 bg-white shadow-lg group-focus:flex">
-              <Profile />
+              <div
+                onClick={() => navigate("/profile")}
+                className="w-full font-semibold px-4 py-2 text-left hover:bg-gray-200"
+              >
+                Profile
+              </div>
               <SignOut />
             </div>
           </button>
