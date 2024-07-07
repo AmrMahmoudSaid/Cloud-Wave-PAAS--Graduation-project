@@ -58,7 +58,7 @@ function Cont() {
           </Link>
         </div>
         <div className="flex items-center flex-shrink-0 h-10 px-2 mt-2 text-sm font-medium rounded hover:bg-gray-600">
-          <Link to="">
+          <Link to="/feedback">
             <span className="leading-none">FeedBack</span>
           </Link>
         </div>

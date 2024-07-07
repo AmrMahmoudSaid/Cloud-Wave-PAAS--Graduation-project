@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import ContactUs from "./pages/contactUs";
 import Aboutus from "./pages/aboutus";
 import Help from "./pages/help";
+import Feedback from "./pages/feedback";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/aboutus" element={<Aboutus />} />
           <Route path="/help" element={<Help />} />
+          <Route path="/feedback" element={<Feedback />} />
         </Routes>
       </BrowserRouter>
     </>

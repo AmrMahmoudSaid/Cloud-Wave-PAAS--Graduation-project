@@ -1,12 +1,14 @@
+import { useState } from "react";
 import Footer from "../components/Footer";
 import SignOut from "../components/SignOut";
-
 import Cont from "./Cont";
 import Contact from "../assets/Contactus.jpg";
 import { useNavigate } from "react-router-dom";
 
 export default function ContactUs() {
   const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
+
   const onSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -26,11 +28,19 @@ export default function ContactUs() {
     }).then((res) => res.json());
 
     if (res.success) {
-      console.log("Success", res);
+      setShowPopup(true);
+      setTimeout(() => setShowPopup(false), 5000);
+      event.target.reset();
     }
   };
+
   return (
-    <div className="flex w-screen h-screen text-white bg-[#041b4d]">
+    <div className="relative flex w-screen h-screen text-white bg-[#041b4d]">
+      {showPopup && (
+        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-8 py-4 rounded shadow-lg text-lg">
+          Submitted Successfully
+        </div>
+      )}
       <div className="flex flex-col w-[220px] border-r border-gray-800">
         <Cont />
       </div>
@@ -59,16 +69,9 @@ export default function ContactUs() {
             </div>
           </button>
         </div>
-        <div className="flex-grow p-6  overflow-auto bg-white px-20">
+        <div className="flex-grow p-6 overflow-auto bg-white px-20">
           <div className="flex flex-col ">
-            <p className="font-bold text-3xl px-2 py-10 text-[#041b4d] opacity-90">
-              {/* <div className="mb-5">
-                <h2 className="font-semibold text-blue-900 text-4xl mb-1">
-                  Get in touch
-                </h2>
-                <hr className="border-none w-30 h-1 bg-blue-900 rounded mb-5" />
-              </div> */}
-            </p>
+            <p className="font-bold text-3xl px-2 py-10 text-[#041b4d] opacity-90"></p>
           </div>
           <div className="flex items-center justify-center w-full">
             <form

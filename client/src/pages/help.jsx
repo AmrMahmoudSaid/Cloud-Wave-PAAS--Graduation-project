@@ -37,10 +37,114 @@ export default function Help() {
           </button>
         </div>
         <div className="flex-grow p-6  overflow-auto bg-white px-20">
-          <div className="flex flex-col ">
-            <p className="font-bold text-3xl px-2 py-10 text-[#041b4d] opacity-90">
+          <div className="flex flex-col">
+            <p className="font-bold text-5xl px-2 py-10 text-[#041b4d] opacity-90">
               Help
             </p>
+            <div className="flex-1 bg-white p-2">
+              <section className="mb-8">
+                <h2 className="text-4xl font-semibold mb-4">Getting Started</h2>
+                <p className="mb-4 text-lg">
+                  Follow these steps to get started with our PaaS application:
+                </p>
+                <ol className="list-decimal list-inside text-lg">
+                  <li className="mb-2">Sign up for an account.</li>
+                  <li className="mb-2">
+                    Connect your CreditCard to your account.
+                  </li>
+                  <li className="mb-2">Log in with your credentials.</li>
+                  <li className="mb-2">Create a new Database.</li>
+                  <li className="mb-2">Create a new project.</li>
+                </ol>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-4xl font-semibold mb-4">
+                  Dashboard Overview
+                </h2>
+                <p className="mb-4 text-lg">
+                  Once logged in, you will be taken to the dashboard where you
+                  can:
+                </p>
+                <ul className="list-disc list-inside text-lg">
+                  <li className="mb-2">View your account details.</li>
+                  <li className="mb-2">Manage your projects.</li>
+                  <li className="mb-2">Manage your Databases.</li>
+                  <li className="mb-2">View your subscribed plans.</li>
+                  <li className="mb-2">Access support resources.</li>
+                </ul>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-4xl font-semibold mb-4">
+                  Creating a New Database
+                </h2>
+                <p className="mb-4 text-lg">To create a new Database:</p>
+                <ol className="list-decimal list-inside text-lg">
+                  <li className="mb-2">
+                    Navigate to the Database section from the dashboard.
+                  </li>
+                  <li className="mb-2">
+                    Click on the "Create{" "}
+                    <a
+                      href="/createdatabase"
+                      className="text-blue-600 hover:underline"
+                    >
+                      New Database
+                    </a>
+                    " button.
+                  </li>
+                  <li className="mb-2">
+                    Fill in the required Database details and save.
+                  </li>
+                </ol>
+              </section>
+
+              <section className="mb-8">
+                <h2 className="text-4xl font-semibold mb-4">
+                  Deploying a New Project
+                </h2>
+                <p className="mb-4 text-lg">To create and deploy a project:</p>
+                <ol className="list-decimal list-inside text-lg">
+                  <li className="mb-2">
+                    Navigate to the Projects section from the dashboard.
+                  </li>
+                  <li className="mb-2">
+                    Click on the "
+                    <a
+                      href="/createapplication"
+                      className="text-blue-600 hover:underline"
+                    >
+                      Deploy Project
+                    </a>
+                    " button.
+                  </li>
+                  <li className="mb-2">
+                    Fill in the required project details and save.
+                  </li>
+                </ol>
+              </section>
+
+              <section>
+                <h2 className="text-4xl font-semibold mb-4">Support</h2>
+                <p className="mb-4 text-lg">If you need help, you can:</p>
+                <ul className="list-disc list-inside text-lg">
+                  <li className="mb-2">
+                    Visit our{" "}
+                    <a
+                      href="/contactUs"
+                      className="text-blue-600 hover:underline"
+                    >
+                      Support Page
+                    </a>
+                    .
+                  </li>
+                  <li className="mb-2">
+                    Contact our support team using the Contact Us page.
+                  </li>
+                </ul>
+              </section>
+            </div>
           </div>
         </div>
         <Footer />

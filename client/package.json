@@ -19,6 +19,7 @@
     "@stripe/stripe-js": "^4.0.0",
     "axios": "^1.7.2",
     "mdb-react-ui-kit": "^8.0.0",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-github-login-button": "^1.0.1",
