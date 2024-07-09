@@ -19,7 +19,7 @@ export class AppDeleteListener extends Listener<ApplicationDeleteEvent> {
             msq.ack();
         }catch (err){
             msq.ack();
-            throw err;
+            console.error(err);
         }
     }
 }

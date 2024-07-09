@@ -12,6 +12,7 @@ import {signupGitRouter} from "./routes/signup-github";
 import {loginGitRouter} from "./routes/signin-github";
 import {errorHandler,NotFound} from "@amtickets377/common"
 import {createCustomer} from "./routes/create-customer";
+import {updateUserRouter} from "./routes/update";
 
 const app = express();
 app.set('trust proxy', true);
@@ -29,6 +30,7 @@ app.use(createCustomer);
 app.use(loginGitRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
+app.use(updateUserRouter);
 app.all('*', () => {
     throw new NotFound();
 })

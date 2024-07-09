@@ -31,7 +31,6 @@ export class AppDeleteListener extends Listener<ApplicationDeleteEvent> {
         } catch (err) {
             console.error('Error deleting subscription:', err);
             msq.ack();
-            throw err;
         }
     }
 }

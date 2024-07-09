@@ -22,7 +22,7 @@ function Billing() {
   };
   const fetchDatabaseBilling = async () => {
     try {
-      const response = await axios.get("/api/database/management/billing");
+      const response = await axios.get("https://cloud.dev/api/database/management/billing");
       setDatabaseBilling(response.data.total);
     } catch (error) {
       console.error("Failed to fetch database billing:", error);

@@ -96,7 +96,7 @@ export class PaymentCompletedListener extends Listener<PaymentCompletedEvent> {
             msq.ack();
         }catch (err){
             msq.ack();
-            throw err;
+            console.log(err);
         }
     }
 }

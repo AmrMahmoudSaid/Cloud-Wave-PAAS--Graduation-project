@@ -48,7 +48,7 @@ router.post('/api/database/orders/new', requireAuth,[
         userName: req.body.userName,
         userPassword: req.body.userPassword,
         orderId: order.id,
-        deploymentName: req.body.deploymentName
+        deploymentName: req.body.userName
     });
 
     res.status(201).send(order);

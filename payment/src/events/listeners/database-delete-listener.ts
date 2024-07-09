@@ -32,7 +32,6 @@ export class DatabaseDeleteListener extends Listener<DatabaseDeleteEvent> {
         } catch (err) {
             console.error('Error deleting subscription:', err);
             msq.ack();
-            throw err;
         }
     }
 }

@@ -52,10 +52,11 @@ export class DatabaseEngineCompletedListener extends Listener<DatabaseEngineCrea
                 price: data.price
             });
             await dataToSave.save();
+            console.log(dataToSave);
             msq.ack();
         }catch (err){
             msq.ack();
-            throw err;
+            console.log(err)
         }
     }
 }

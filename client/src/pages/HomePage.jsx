@@ -109,7 +109,9 @@ function HomePage() {
               <div className="flex flex-col py-6 w-11/12 h-[30vh] bg-white  shadow-xl m-auto border border-solid  border-[#041b4d] rounded text-center items-center justify-center">
                 <div className="flex flex-col w-11/12 m-auto font-bold px-2">
                   <div className="flex flex-row justify-between items-center border-b py-2 border-solid border-black">
-                    <div className="w-1/3">Service Name</div>
+                    <div className="w-1/3 text-blue-600 hover:underline cursor-pointer">
+                      Service Name
+                    </div>
                     <div className="w-1/4">Status</div>
                     <div className="w-1/4">Plan</div>
                     <div className="w-1/4">Last Deployed</div>
@@ -127,9 +129,9 @@ function HomePage() {
                         {database.deploymentName}
                       </div>
                       <div className="w-1/4 text-center items-center">
-                        {database.status == "pending" && <PendingProg />}
-                        {database.status == "creating" && <CreatingProg />}
-                        {database.status == "running" && <RunningProg />}
+                        {database.status == "Pending" && <PendingProg />}
+                        {database.status == "Creating" && <CreatingProg />}
+                        {database.status == "Running" && <RunningProg />}
                       </div>
                       <div className="w-1/4">{database.plan}</div>
                       <div className="w-1/4">{database.lastDeployment}</div>
@@ -155,15 +157,17 @@ function HomePage() {
               <div className="flex flex-col py-6 w-11/12 h-[30vh] bg-white  shadow-xl m-auto border border-solid  border-[#041b4d] rounded text-center items-center justify-center">
                 <div className="flex flex-col w-11/12 m-auto font-bold px-2">
                   <div className="flex flex-row justify-between items-center border-b py-2 border-solid border-black">
-                    <div className="w-1/3">Service Name</div>
+                    <div className="w-1/3 text-blue-600 hover:underline cursor-pointer">
+                      Service Name
+                    </div>
                     <div className="w-1/4">Status</div>
                     <div className="w-1/4">Plan</div>
                     <div className="w-1/4">Last Deployed</div>
                     <div className="w-1/4"></div>
                   </div>
                   {applications.map((application, index) => (
-                    <div
-                      key={index}
+                      <div
+                          key={index}
                       className="flex flex-row justify-between items-center font-semibold py-2"
                     >
                       <div
@@ -173,9 +177,9 @@ function HomePage() {
                         {application.applicationName}
                       </div>
                       <div className="w-1/4 text-center items-center">
-                        {application.status == "pending" && <PendingProg />}
-                        {application.status == "creatin" && <CreatingProg />}
-                        {application.status == "running" && <RunningProg />}
+                        {application.status == "Pending" && <PendingProg />}
+                        {application.status == "Creating" && <CreatingProg />}
+                        {application.status == "Running" && <RunningProg />}
                       </div>
                       <div className="w-1/4">{application.plan}</div>
                       <div className="w-1/4">{application.lastDeployment}</div>

@@ -9,10 +9,13 @@ router.get('/api/applications/management/:id', requireAuth
     , async (req: Request, res: Response) => {
         const appConfig = await AppConfig.findById(req.params.id);
         if (!appConfig) {
-            throw new Error("Missing database config");
+            console.log("not found");
+            res.status(404).send("Not found");
         }
         const kubectlFun = new KubectlFun();
+        // @ts-ignore
         appConfig.status = await kubectlFun.getPodStatus(appConfig.deploymentName);
+        // @ts-ignore
         await appConfig.save();
         const appConfig2 = await AppConfig.findById(req.params.id);
 

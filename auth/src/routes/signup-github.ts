@@ -101,7 +101,8 @@ router.post('/api/users/signup-git', [
         id: user2.id,
         email: user2.email,
         githubId: user2.githubId,
-        accessToken
+        accessToken,
+        name: user2.name
     },process.env.JWT_KEY!);
     req.session ={
         jwt: userJwt

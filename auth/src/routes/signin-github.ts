@@ -75,7 +75,8 @@ router.post('/api/users/login-git', async (req: Request, res: Response) => {
         id: user.id,
         email: user.email,
         githubId: user.githubId,
-        accessToken
+        accessToken,
+        name: user.name
     },process.env.JWT_KEY!);
     req.session ={
         jwt: userJwt

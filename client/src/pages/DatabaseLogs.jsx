@@ -120,7 +120,7 @@ function DatabaseLogs() {
               </>
             )}
 
-            <div className="bg-black w-[800px] m-auto text-gray-300 text-md font-semibold py-3 px-5 border rounded scroll-smooth scroll-auto h-[70vh] overflow-auto mt-10">
+            <div className="bg-black w-[1000px] m-auto text-gray-300 text-md font-semibold py-3 px-5 border rounded scroll-smooth scroll-auto h-[70vh] overflow-auto mt-10">
               <div className="flex flex-row items-center text-center justify-start py-2 gap-5 border-b border-solid border-gray-300">
                 <div className="cursor-pointer border-r-2 py-2 border-solid border-white w-1/6">
                   Logs

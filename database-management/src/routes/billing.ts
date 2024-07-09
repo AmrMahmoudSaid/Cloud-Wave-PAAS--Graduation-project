@@ -10,15 +10,10 @@ const router = express.Router();
 router.get('/api/database/management/billing', requireAuth
     , async (req: Request, res: Response) => {
         // @ts-ignore
-        if (!ObjectId.isValid(req.currentUser?.id)) {
-            return res.status(400).send({ error: 'Invalid user ID' });
-        }
-
-        // @ts-ignore
-        const userId = new ObjectId(req.currentUser.id);
-
+        console.log(req.currentUser?.id);
+        console.log(req.currentUser?.id);
         const appConfig = await DatabaseConfig.find({
-            userId: userId
+            userId: req.currentUser?.id
         });
         let sum =0;
         for (const appConfig1 of appConfig) {

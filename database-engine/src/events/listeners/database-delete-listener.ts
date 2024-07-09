@@ -21,7 +21,7 @@ export class DatabaseDeleteListener extends Listener<DatabaseDeleteEvent> {
             msq.ack();
         }catch(err){
             msq.ack();
-            throw err;
+            console.error(err);
         }
     }
 }

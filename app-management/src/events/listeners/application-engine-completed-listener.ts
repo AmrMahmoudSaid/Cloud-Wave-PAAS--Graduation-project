@@ -30,9 +30,7 @@ export class ApplicationEngineCompletedListener extends Listener<ApplicationEngi
             app.host=data.path;
             app.deploymentName=data.deploymentName;
             await app.save();
-        }else {
-            msq.ack();
-            throw new Error("Could not find a deployment name");
+            console.log(app);
         }
         msq.ack();
     }

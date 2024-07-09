@@ -34,7 +34,7 @@ interface OrderModel extends mongoose.Model<ApplicationConfigDoc> {
 
 
 
-const dataConfigSchema = new mongoose.Schema({
+const appConfigSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true,
@@ -83,10 +83,10 @@ const dataConfigSchema = new mongoose.Schema({
     }
 });
 
-dataConfigSchema.statics.build =(attrs: ApplicationConfigAttrs) =>{
+appConfigSchema.statics.build =(attrs: ApplicationConfigAttrs) =>{
     return new AppConfig(attrs);
 }
 
-const AppConfig = mongoose.model<ApplicationConfigDoc, OrderModel>('Order', dataConfigSchema);
+const AppConfig = mongoose.model<ApplicationConfigDoc, OrderModel>('AppConfig', appConfigSchema);
 
 export {AppConfig};

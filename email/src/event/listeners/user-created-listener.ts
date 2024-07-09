@@ -16,8 +16,8 @@ export class UserCreatedListener extends Listener<UserCreateEvent>{
             await new Emails(data.email,data.name).sendWelcome();
             msg.ack();
         }catch (err){
-            msg.ack()
-            throw err;
+            console.log(err);
+            msg.ack();
         }
     }
 

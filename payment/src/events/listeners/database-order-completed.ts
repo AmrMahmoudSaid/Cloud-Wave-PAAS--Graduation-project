@@ -64,6 +64,8 @@ export class DatabaseOrderCompletedListener extends Listener<DatabaseOrderCreate
                 expand: ['latest_invoice.payment_intent'],
             });
             const subscriptionId = subscription.id;
+            console.log("ammmr");
+            console.log(data);
             const order = Order.build({
                 id: data.orderId,
                 userId: data.userId,
@@ -91,7 +93,7 @@ export class DatabaseOrderCompletedListener extends Listener<DatabaseOrderCreate
             msq.ack();
         } catch (error) {
             console.log(error);
-            throw new BadRequestError('Error in payment');
+            msq.ack();
         }
     }
 }

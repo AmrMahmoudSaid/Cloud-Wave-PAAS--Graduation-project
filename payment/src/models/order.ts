@@ -53,7 +53,8 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
         _id: attrs.id,
         userId: attrs.userId,
         price: attrs.price,
-        subscriptionId: attrs.subscriptionId
+        subscriptionId: attrs.subscriptionId,
+        appName: attrs.appName
     })
 }
 

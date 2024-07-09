@@ -122,7 +122,7 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
       });
     } catch (error) {
       msq.ack()
-      throw new Error("Some thing want wrong try again later.");
+      console.log(error)
     }
   }
 }

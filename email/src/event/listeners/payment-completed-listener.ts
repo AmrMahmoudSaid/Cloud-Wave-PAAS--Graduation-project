@@ -15,8 +15,8 @@ export class PaymentCompletedListener extends Listener<PaymentCompletedEvent> {
             await new Emails(data.email,data.userName,"","",data.price,data.plan.toString()).payment();
             msq.ack();
         }catch (err){
+            console.log(err);
             msq.ack();
-            throw err;
         }
     }
 }

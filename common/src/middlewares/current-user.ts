@@ -7,6 +7,7 @@ interface UserPayload {
     email: string;
     githubId: string;
     accessToken: string;
+    name: string;
 }
 //to add UserPayload to req
 declare global{

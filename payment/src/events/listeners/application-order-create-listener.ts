@@ -92,7 +92,7 @@ export class ApplicationOrderCreateListener extends Listener<ApplicationOrderCre
             msq.ack();
         } catch (error) {
             console.log(error);
-            throw new BadRequestError('Error in payment');
+            msq.ack();
         }
     }
 }

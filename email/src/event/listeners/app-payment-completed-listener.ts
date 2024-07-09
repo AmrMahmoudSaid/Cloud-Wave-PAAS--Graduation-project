@@ -18,8 +18,8 @@ export class AppPaymentCompletedListener extends Listener<ApplicationPaymentComp
       await new Emails(data.email,data.email,"","",data.price,data.plan.toString()).payment();
       msq.ack();
     }catch (err){
+      console.log(err)
       msq.ack();
-      throw err;
     }
   }
 }

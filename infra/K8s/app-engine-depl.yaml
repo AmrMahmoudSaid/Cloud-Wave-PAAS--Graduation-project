@@ -19,7 +19,7 @@ spec:
             - name: NATS_URL
               value: 'http://nats-srv:4222'
             - name: HOST_URL
-              value: 'https://c765-41-46-119-148.ngrok-free.app'
+              value: 'https://95bf-41-47-52-77.ngrok-free.app'
             - name: JENKINS_URL
               value: 'http://jenkins-srv:8080/'
             - name: NATS_CLUSTER_ID

@@ -35,11 +35,11 @@ function Cont() {
         </div>
       </div>
       <div className="flex flex-col p-4 overflow-auto border-b border-solid border-gray-500">
-        <div className="flex items-center flex-shrink-0 h-10 px-2 mt-2 text-sm font-medium rounded hover:bg-gray-600">
-          <Link to="/billing">
-            <span className="leading-none">Billing</span>
-          </Link>
-        </div>
+        {/*<div className="flex items-center flex-shrink-0 h-10 px-2 mt-2 text-sm font-medium rounded hover:bg-gray-600">*/}
+        {/*  <Link to="/billing">*/}
+        {/*    <span className="leading-none">Billing</span>*/}
+        {/*  </Link>*/}
+        {/*</div>*/}
         <div className="flex items-center flex-shrink-0 h-10 px-2 mt-2 text-sm font-medium rounded hover:bg-gray-600">
           <Link to="/help">
             <span className="leading-none">Help</span>
