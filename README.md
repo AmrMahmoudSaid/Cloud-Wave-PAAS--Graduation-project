@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="/image/logo/logo-removebg-preview (1).png" height="200" width="200"></a>
+  <img src="/image/logo/logo-removebg-preview (1).png" height="180" width="300"></a>
 </p>
 
 
-#### CLOUD WAVE is a gradation project which aims to build a [Platform as a Service](https://cloud.google.com/learn/what-is-paas) for small merchants to start accepting payment really easy throw API integration without worrying about any [PCI](https://www.pcisecuritystandards.org/)  that simplifies the development, deployment, and management of various types of applications. Cloud Wave allows developers to focus on innovation while we handle the infrastructure and operational complexities.
+#### CLOUD WAVE is a gradation project which aims to build a [Platform as a Service](https://cloud.google.com/learn/what-is-paas)  that simplifies the development, deployment, and management of various types of applications. Cloud Wave allows developers to focus on innovation while we handle the infrastructure and operational complexities.
 #### Objectives Achieved:
 
 🔧 Spring, Express, React, or General Application Management:
